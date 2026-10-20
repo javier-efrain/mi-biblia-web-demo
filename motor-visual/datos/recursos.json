@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "recursos": [
+    {
+      "schemaVersion": 1,
+      "estadoEditorial": "borrador",
+      "demostracion": true,
+      "id": "portada-demo",
+      "tipo": "portada",
+      "src": "recursos/portada-demo.svg",
+      "alt": "DEMO · Portada geométrica 16:9",
+      "dimensiones": {
+        "ancho": 1600,
+        "alto": 900
+      },
+      "leyenda": "Geometría sintética de demostración. No representa lugares ni acontecimientos reales.",
+      "autoria": "Prototipo técnico Mi Biblia Web",
+      "derechos": "Recurso geométrico creado para esta demostración."
+    },
+    {
+      "schemaVersion": 1,
+      "estadoEditorial": "borrador",
+      "demostracion": true,
+      "id": "diagrama-demo",
+      "tipo": "diagrama",
+      "src": "recursos/diagrama-vertical-demo.svg",
+      "alt": "DEMO · Diagrama de puntos A y B",
+      "dimensiones": {
+        "ancho": 800,
+        "alto": 1200
+      },
+      "leyenda": "DEMO: composición geométrica vertical. Dos círculos dorados señalan los elementos A y B, unidos por una línea. No representa lugares ni acontecimientos reales.",
+      "autoria": "Prototipo técnico Mi Biblia Web",
+      "derechos": "Recurso geométrico creado para esta demostración."
+    }
+  ]
+}

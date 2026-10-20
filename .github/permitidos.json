@@ -1,0 +1,33 @@
+{
+  "repositorioFuente": "javier-efrain/mi-biblia-web",
+  "ramaFuente": "desarrollo-motor-visual",
+  "archivos": [
+    "motor-visual/css/motor.css",
+    "motor-visual/datos/catalogo.json",
+    "motor-visual/datos/estudios/piloto-tecnico-dos.json",
+    "motor-visual/datos/estudios/piloto-tecnico-tres.json",
+    "motor-visual/datos/estudios/piloto-tecnico.json",
+    "motor-visual/datos/recursos.json",
+    "motor-visual/datos/recursos/diagrama-vertical-demo.svg",
+    "motor-visual/datos/recursos/portada-demo.svg",
+    "motor-visual/demo.html",
+    "motor-visual/js/componentes/descubrimiento.js",
+    "motor-visual/js/componentes/dom.js",
+    "motor-visual/js/componentes/explorador.js",
+    "motor-visual/js/componentes/lector.js",
+    "motor-visual/js/componentes/lectura-horizontal.js",
+    "motor-visual/js/componentes/portada.js",
+    "motor-visual/js/componentes/preferencias.js",
+    "motor-visual/js/componentes/selector-enfoque.js",
+    "motor-visual/js/componentes/selector-modo.js",
+    "motor-visual/js/componentes/visor.js",
+    "motor-visual/js/estado/lectura.js",
+    "motor-visual/js/estado/navegacion.js",
+    "motor-visual/js/estado/preferencias.js",
+    "motor-visual/js/iniciar.js",
+    "motor-visual/js/servicios/biblia.js",
+    "motor-visual/js/servicios/contenidos.js",
+    "motor-visual/js/servicios/validacion.js",
+    "motor-visual/pruebas/fixtures/contenido-sintetico.json"
+  ]
+}

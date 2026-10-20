@@ -1,0 +1,129 @@
+name: Demostración técnica con publicación aprobada
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 * * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: demo-pages
+  cancel-in-progress: false
+
+jobs:
+  preparar:
+    if: >-
+      github.repository == 'javier-efrain/mi-biblia-web-demo' &&
+      github.ref == 'refs/heads/publicacion-demo' &&
+      (github.event_name == 'workflow_dispatch' || vars.PUBLICACION_DEMO_HABILITADA == 'true')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      revision: ${{ steps.paquete.outputs.revision }}
+      huella: ${{ steps.paquete.outputs.huella }}
+      nueva: ${{ steps.publicada.outputs.cache-hit != 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Leer solo los 27 archivos del commit fuente
+        id: paquete
+        run: python .github/scripts/paquete.py --actualizar --salida _site --informe candidato.json
+      - name: Comprobar validadores
+        run: python -m unittest discover -s .github/scripts -p 'test_*.py' -v
+      - name: Instalar herramientas de prueba
+        run: |
+          python -m pip install -r .github/requirements-pruebas.txt
+          python -m playwright install --with-deps chromium
+      - name: Probar el paquete bajo la subruta de Pages
+        run: python .github/scripts/probar_paquete.py --paquete _site --informe pruebas.json
+      - name: Mostrar el commit pendiente de aprobación
+        env:
+          REVISION: ${{ steps.paquete.outputs.revision }}
+          HUELLA: ${{ steps.paquete.outputs.huella }}
+        run: |
+          python - <<'PY'
+          import os
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+              f.write('## Demostración técnica sintética\n\n')
+              f.write('Fuente: `desarrollo-motor-visual`\n\n')
+              f.write('Commit fuente: `' + os.environ['REVISION'] + '`\n\n')
+              f.write('Huella del paquete de 27 archivos: `' + os.environ['HUELLA'] + '`\n\n')
+              f.write('Publicar requiere la variable de habilitación y la aprobación del entorno github-pages.\n')
+          PY
+      - name: Guardar evidencia para revisar
+        uses: actions/upload-artifact@v4
+        with:
+          name: revision-candidata
+          path: |
+            candidato.json
+            pruebas.json
+          retention-days: 7
+      - name: Empaquetar únicamente _site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+          retention-days: 7
+      - name: Detectar si esta misma versión ya se publicó
+        id: publicada
+        uses: actions/cache/restore@v4
+        with:
+          path: .estado-publicacion
+          key: demo-publicada-${{ steps.paquete.outputs.huella }}
+          lookup-only: true
+
+  comprobar-aprobacion:
+    needs: preparar
+    if: vars.PUBLICACION_DEMO_HABILITADA == 'true' && needs.preparar.outputs.nueva == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - name: Fallar si el entorno no exige aprobación manual del propietario
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const {data} = await github.request('GET /repos/{owner}/{repo}/environments/{environment_name}', {
+              ...context.repo, environment_name: 'github-pages'
+            });
+            const protegido = (data.protection_rules || []).some(r =>
+              r.type === 'required_reviewers' && (r.reviewers || []).some(x =>
+                x.type === 'User' && x.reviewer.login === 'javier-efrain'));
+            if (!protegido) throw new Error('Falta aprobación obligatoria de javier-efrain en github-pages. No se publicará.');
+
+  publicar:
+    needs: [preparar, comprobar-aprobacion]
+    if: vars.PUBLICACION_DEMO_HABILITADA == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - name: Usar Pages ya habilitado por el propietario, sin activarlo automáticamente
+        uses: actions/configure-pages@v5
+        with:
+          enablement: false
+      - name: Publicar solo después de la aprobación manual
+        id: despliegue
+        uses: actions/deploy-pages@v4
+      - name: Recordar la versión publicada
+        env:
+          HUELLA: ${{ needs.preparar.outputs.huella }}
+        run: |
+          mkdir -p .estado-publicacion
+          printf '%s\n' "$HUELLA" > .estado-publicacion/huella
+      - uses: actions/cache/save@v4
+        with:
+          path: .estado-publicacion
+          key: demo-publicada-${{ needs.preparar.outputs.huella }}
