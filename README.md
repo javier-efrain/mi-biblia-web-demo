@@ -39,3 +39,14 @@ python .github/scripts/probar_paquete.py --paquete /tmp/mi-biblia-paquete --info
 ```
 
 Requiere Python, Playwright y Chromium; puede indicarse `CHROMIUM_PATH`. Usar una carpeta de salida vacía. Los servidores efímeros de pruebas se cierran al finalizar. La demostración es pública y tiene `noindex`; esa directiva no la convierte en privada.
+
+## Composición editorial de los enfoques
+
+- Estudio + Visual: banner, versículos, Contexto, Exégesis, Enseñanzas y recursos integrados; sin botón de pantalla completa integrado.
+- Devocional + Visual: banner, versículos y reflexión; sin recursos educativos intercalados.
+- Estudio + Solo texto: versículos y secciones del estudio, con acceso opcional a recursos.
+- Devocional + Solo texto: versículos y reflexión, con acceso opcional a recursos.
+
+Solo texto carga el contenido textual separado de la biblioteca visual. Al abrir un recurso, el modal permite pantalla completa reutilizando su mismo explorador. Cerrar restaura la posición y el foco. Volver de Devocional a Estudio recupera las instancias de los visores, zoom y selección.
+
+La regla anterior «Solo texto sin estudios» queda sustituida por esta composición. Las restricciones de datos sintéticos, archivos permitidos y publicación automática no cambian.

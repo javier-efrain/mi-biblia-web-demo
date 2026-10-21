@@ -131,6 +131,8 @@ def probar(paquete):
                         comprobar(r.locator('img').is_visible() and r.locator('.mv-panel p').is_visible(),
                                   etiqueta+': imagen limpia con descripción')
                         buscar_rol(pagina,'button',name='Devocional',exact=True).click()
+                        comprobar(pagina.locator('.mv-recurso').count()==0 and localizar(pagina,'.mv-devocional').count()==1,etiqueta+': Devocional sin recursos intercalados')
+                        buscar_rol(pagina,'button',name='Estudio',exact=True).click()
                         r.locator('[data-control="puntos"]').click()
                         expect(r.locator('.mv-panel output')).to_have_text(re.compile(r'^2 / \d+$'))
                         comprobar(r.locator('[data-elemento="punto-b"]').get_attribute('aria-pressed')=='true',
@@ -150,20 +152,7 @@ def probar(paquete):
                             return Math.abs(v.width/v.height-.75)<.01&&Math.abs(p.width/p.height-2/3)<.01&&p.width<=v.width+1&&p.height<=v.height+1;}'''),
                                   etiqueta+': imagen 2:3 completa dentro del visor 3:4')
                         comprobar(r.get_by_role('button',name='Ampliar visor',exact=True).count()==0,etiqueta+': visor integrado sin Ampliar visor')
-                        abrir=r.get_by_role('button',name='Pantalla completa',exact=True)
-                        abrir.scroll_into_view_if_needed();posicion=pagina.evaluate('scrollY')
-                        r.evaluate('e=>{window.__recursoCompleto=e;window.__visorCompleto=e.querySelector(".mv-visor")}')
-                        abrir.click();modal=pagina.locator('dialog.mv-completa[open]');expect(modal).to_be_visible();pagina.wait_for_timeout(100)
-                        comprobar(modal.evaluate('e=>e.querySelector(".mv-visor")===window.__visorCompleto'),etiqueta+': pantalla completa reutiliza la misma instancia')
-                        comprobar(modal.evaluate('e=>e.clientWidth>=innerWidth-2&&e.clientHeight>=innerHeight-2'),etiqueta+': pantalla completa ocupa el navegador')
-                        comprobar(modal.locator('.mv-viewport').evaluate('e=>getComputedStyle(e).aspectRatio')=='auto',etiqueta+': pantalla completa sin marco 3:4')
-                        modal.get_by_role('button',name='Aumentar zoom',exact=True).click()
-                        expect(modal.locator('.mv-visor output')).to_have_text('125 %')
-                        comprobar(modal.locator('[data-elemento="punto-b"]').get_attribute('aria-pressed')=='true',etiqueta+': pantalla completa conserva selección')
-                        pagina.keyboard.press('Escape');expect(pagina.locator('dialog')).to_have_count(0);pagina.wait_for_timeout(100)
-                        comprobar(abs(pagina.evaluate('scrollY')-posicion)<2 and r.evaluate('e=>e===window.__recursoCompleto'),etiqueta+': cerrar devuelve recurso y posición')
-                        expect(abrir).to_be_focused()
-                        r.get_by_role('button',name='Restablecer',exact=True).click()
+                        comprobar(pagina.locator('.mv-abrir-completa').count()==0,etiqueta+': sin pantalla completa integrada')
                         buscar_rol(pagina,'button',name='Restablecer tamaño de letra a 12 px',exact=True).click()
                         expect(pagina.get_by_label('Tamaño de lectura',exact=True)).to_have_text('12 px')
                         anterior_tamano=12
@@ -226,13 +215,22 @@ def probar(paquete):
                             cdp.detach()
                         buscar_rol(pagina,'button',name='Estudio',exact=True).click()
                         buscar_rol(pagina,'button',name='Solo texto bíblico',exact=True).click()
-                        comprobar(localizar(pagina,'[data-educativo],img').count()==0,etiqueta+': Solo texto desmonta recursos')
+                        comprobar(localizar(pagina,'.mv-recurso,img').count()==0,etiqueta+': Solo texto desmonta recursos')
                         icono=localizar(pagina,'[data-recurso-acceso]').first;icono.scroll_into_view_if_needed();posicion=pagina.evaluate('scrollY')
                         comprobar('Ver recurso visual' in icono.inner_text() and 'Ver recurso visual' in icono.get_attribute('aria-label'),etiqueta+': acceso con texto y nombre accesible coherentes')
                         inicio=len(solicitadas)
                         icono.click();esperar_selector(pagina,'dialog .mv-visor')
                         comprobar(localizar(pagina,'.mv-recurso').count()==1 and localizar(pagina,'img').count()==1,etiqueta+': Solo texto abre un solo recurso')
                         localizar(pagina,'dialog [data-elemento="punto-b"]').click()
+                        modal=pagina.locator('dialog[open]');modal.locator('.mv-visor').evaluate('e=>window.__visorCompleto=e')
+                        modal.get_by_role('button',name='Pantalla completa',exact=True).click();pagina.wait_for_timeout(100)
+                        comprobar(modal.evaluate('e=>e.classList.contains("mv-completa")&&e.querySelector(".mv-visor")===window.__visorCompleto'),etiqueta+': pantalla completa reutiliza el mismo visor modal')
+                        comprobar(modal.evaluate('e=>e.clientWidth>=innerWidth-2&&e.clientHeight>=innerHeight-2'),etiqueta+': pantalla completa ocupa el navegador')
+                        modal.get_by_role('button',name='Aumentar zoom',exact=True).click();expect(modal.locator('.mv-visor output')).to_have_text('125 %')
+                        comprobar(modal.locator('[data-elemento="punto-b"]').get_attribute('aria-pressed')=='true',etiqueta+': pantalla completa conserva selección')
+                        modal.get_by_role('button',name='Salir de pantalla completa',exact=True).click()
+                        comprobar(modal.evaluate('e=>!e.classList.contains("mv-completa")&&e.querySelector(".mv-visor")===window.__visorCompleto'),etiqueta+': salir recupera el modal sin duplicar el visor')
+
                         expect(localizar(pagina,'dialog [data-marcador="punto-b"]')).to_have_attribute('aria-pressed','true')
                         pagina.keyboard.press('Escape');expect(localizar(pagina,'dialog')).to_have_count(0);pagina.wait_for_timeout(60)
                         expect(icono).to_be_focused()
@@ -244,10 +242,24 @@ def probar(paquete):
                             pagina.on('request',registrar_texto)
                             pagina.goto(url+'&modo=texto&enfoque='+enfoque)
                             esperar_selector(pagina,'#motor[data-listo="true"]')
-                            comprobar(localizar(pagina,'[data-educativo],img').count()==0 and
-                                      not any('/datos/estudios/' in u or '/datos/recursos' in u or '/componentes/explorador.js' in u for u in registro),
+                            comprobar(localizar(pagina,'.mv-recurso,img').count()==0 and
+                                      not any('/datos/recursos' in u or '/componentes/explorador.js' in u or u.endswith('.svg') for u in registro),
                                       etiqueta+': carga inicial Solo texto '+enfoque+' aislada')
+                            comprobar(localizar(pagina,'.mv-cierre').count()==1 and localizar(pagina,'.mv-contexto').count()==(1 if enfoque=='estudio' else 0) and localizar(pagina,'.mv-devocional').count()==(1 if enfoque=='devocional' else 0),
+                                      etiqueta+': Solo texto '+enfoque+' muestra las secciones correctas')
+                            comprobar(any('/datos/estudios/' in u for u in registro),etiqueta+': Solo texto carga únicamente los contenidos textuales antes de abrir recursos')
+                            acceso=localizar(pagina,'[data-recurso-acceso]').first;acceso.click();pagina.wait_for_selector('dialog .mv-visor')
+                            modal=pagina.locator('dialog[open]');modal.get_by_role('button',name='Pantalla completa',exact=True).click()
+                            comprobar(modal.evaluate('e=>e.classList.contains("mv-completa")'),etiqueta+': Solo texto '+enfoque+' conserva pantalla completa opcional')
+                            pagina.keyboard.press('Escape');expect(pagina.locator('dialog')).to_have_count(0)
                             pagina.remove_listener('request',registrar_texto)
+                        registro=[]
+                        pagina.on('request',registrar_texto)
+                        pagina.goto(url+'&modo=visual&enfoque=devocional');esperar_selector(pagina,'#motor[data-listo="true"]')
+                        comprobar(localizar(pagina,'.mv-portada').count()==1 and localizar(pagina,'.mv-devocional').count()==1 and pagina.locator('.mv-recurso,.mv-contexto,.mv-abrir-completa').count()==0,
+                                  etiqueta+': Devocional Visual muestra banner y reflexión sin estudios ni recursos intercalados')
+                        comprobar(not any('diagrama-vertical-demo.svg' in u or 'componentes/explorador.js' in u for u in registro),etiqueta+': Devocional Visual no descarga visores educativos')
+                        pagina.remove_listener('request',registrar_texto)
                     contexto.close()
                 navegador.close()
         finally:
