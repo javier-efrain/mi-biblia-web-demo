@@ -35,12 +35,13 @@ def probar(paquete):
         for paso in range(total):
             comprobar(abs(hoja.bounding_box()['height']-altura)<1 and altura<=260,etiqueta+f': altura estable {paso+1}/{total}')
             if paso<total-1:nav.locator('button').last.click()
-        comprobar(hoja.evaluate('''e=>{
+        final=hoja.evaluate('''e=>{
           const h=e.getBoundingClientRect(),w=document.createTreeWalker(e.firstChild,NodeFilter.SHOW_TEXT);let n,ultimo;
           while((n=w.nextNode())) if(n.textContent.trim()) ultimo=n;
           const fin=ultimo.textContent.trimEnd().length,r=document.createRange();r.setStart(ultimo,fin-1);r.setEnd(ultimo,fin);
-          const p=r.getBoundingClientRect();return p.left>=h.left-1&&p.right<=h.right+1&&p.top>=h.top-1&&p.bottom<=h.bottom+1;
-        }'''),etiqueta+': final del texto accesible')
+          const p=r.getBoundingClientRect();return {ok:p.left>=h.left-1&&p.right<=h.right+1&&p.top>=h.top-1&&p.bottom<=h.bottom+1,hoja:h.toJSON(),letra:p.toJSON(),scroll:e.scrollLeft,ancho:e.scrollWidth,texto:ultimo.textContent};
+        }''')
+        comprobar(final['ok'],etiqueta+': final del texto accesible'+(' '+str(final) if not final['ok'] else ''))
         for _ in range(total-original):nav.locator('button').first.click()
     with tempfile.TemporaryDirectory() as temporal:
         shutil.copytree(paquete,Path(temporal)/'mi-biblia-web-demo')
