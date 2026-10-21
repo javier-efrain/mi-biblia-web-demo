@@ -58,7 +58,12 @@ def probar(paquete):
                         pagina.wait_for_function("[...document.querySelectorAll('img')].every(i=>i.complete&&i.naturalWidth>0)")
                         expect(pagina.locator('.mv-aviso')).to_have_text(AVISO)
                         comprobar(pagina.locator('.mv-aviso').is_visible(),etiqueta+': aviso visible y recursos completos')
-                        comprobar(pagina.locator('body').evaluate('e=>e.dataset.apariencia === "oscuro"'),etiqueta+': apariencia oscura')
+                        comprobar(pagina.locator('body').evaluate('e=>e.dataset.apariencia === "claro"'),etiqueta+': apariencia editorial clara')
+                        comprobar(pagina.locator('.mv-texto > p').first.evaluate('e=>getComputedStyle(e).fontSize')=='12px',
+                                  etiqueta+': tamaño inicial de lectura a 12 px')
+                        comprobar(pagina.get_by_role('button',name='Modo oscuro',exact=True).count()==0 and
+                                  pagina.locator('.mv-descubrimiento').count()==0,
+                                  etiqueta+': sin controles ni descubrimiento retirados')
                         r = pagina.locator('.mv-recurso').first
                         r.locator('[data-elemento="punto-b"]').click()
                         expect(r.locator('[data-marcador="punto-b"]')).to_have_attribute('aria-pressed','true')
@@ -93,17 +98,19 @@ def probar(paquete):
                         r.get_by_role('button',name='Cerrar visor').click()
                         expect(r.locator('.mv-panel output')).to_have_text('2 / 2')
                         comprobar(True,etiqueta+': modal opcional preserva estado')
-                        pagina.get_by_role('button',name='Restablecer tamaño de letra a 8 px',exact=True).click()
-                        anterior_tamano=8
-                        for tamano in [8,20,30]:
-                            for _ in range((tamano-anterior_tamano)//2):
-                                pagina.get_by_role('button',name='Aumentar tamaño de letra',exact=True).click()
+                        pagina.get_by_role('button',name='Restablecer tamaño de letra a 12 px',exact=True).click()
+                        expect(pagina.get_by_label('Tamaño de lectura',exact=True)).to_have_text('12 px')
+                        anterior_tamano=12
+                        for tamano in [8,12,20,30]:
+                            control='Aumentar tamaño de letra' if tamano>anterior_tamano else 'Reducir tamaño de letra'
+                            for _ in range(abs(tamano-anterior_tamano)//2):
+                                pagina.get_by_role('button',name=control,exact=True).click()
                             anterior_tamano=tamano
                             expect(pagina.get_by_label('Tamaño de lectura',exact=True)).to_have_text(f'{tamano} px')
                             comprobar(pagina.evaluate('document.documentElement.scrollWidth<=innerWidth') and
                                       r.locator('.mv-panel .mv-hoja').evaluate('e=>e.scrollWidth<=e.clientWidth'),
                                       etiqueta+f': lectura {tamano} px sin desbordamiento')
-                        pagina.get_by_role('button',name='Restablecer tamaño de letra a 8 px',exact=True).click()
+                        pagina.get_by_role('button',name='Restablecer tamaño de letra a 12 px',exact=True).click()
                         if nombre=='movil' and relato=='demo-dos':
                             r.locator('[data-elemento="punto-a"]').click()
                             hoja = r.locator('.mv-panel .mv-hoja')
@@ -143,7 +150,10 @@ def probar(paquete):
             servidor.shutdown();servidor.server_close()
     comprobar(not informe['erroresJS'] and not informe['fallosHTTP'] and not informe['solicitudesNoPermitidas'],
               'Sin errores JavaScript, errores HTTP ni solicitudes fuera del paquete')
-    comprobar(solicitadas==rutas,'Las 27 rutas del paquete fueron solicitadas correctamente')
+    # El paquete conserva la lista estricta de 27 archivos. Descubrimiento ya no se monta.
+    modulo_retirado='/mi-biblia-web-demo/motor-visual/js/componentes/descubrimiento.js'
+    comprobar(solicitadas==rutas-{modulo_retirado},
+              'Las 26 rutas necesarias cargan correctamente; descubrimiento no se descarga')
     informe['ok']=True
     return informe
 
