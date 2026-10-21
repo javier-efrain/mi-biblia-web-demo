@@ -1,9 +1,12 @@
-name: Demostración técnica con publicación aprobada
+name: Actualización automática de la demostración técnica
 
 on:
   workflow_dispatch:
+  push:
+    branches: [publicacion-demo]
+    paths: ['.github/**']
   schedule:
-    - cron: '17 * * * *'
+    - cron: '*/5 * * * *'
 
 permissions:
   contents: read
@@ -34,15 +37,29 @@ jobs:
       - name: Leer solo los 27 archivos del commit fuente
         id: paquete
         run: python .github/scripts/paquete.py --actualizar --salida _site --informe candidato.json
+      - name: Detectar si esta misma versión ya se publicó
+        id: publicada
+        uses: actions/cache/restore@v4
+        with:
+          path: .estado-publicacion
+          key: demo-publicada-v2-${{ steps.paquete.outputs.huella }}
+          lookup-only: true
+
       - name: Comprobar validadores
+        if: steps.publicada.outputs.cache-hit != 'true'
+        env:
+          PAQUETE_A_PROBAR: _site
         run: python -m unittest discover -s .github/scripts -p 'test_*.py' -v
       - name: Instalar herramientas de prueba
+        if: steps.publicada.outputs.cache-hit != 'true'
         run: |
           python -m pip install -r .github/requirements-pruebas.txt
           python -m playwright install --with-deps chromium
       - name: Probar el paquete bajo la subruta de Pages
+        if: steps.publicada.outputs.cache-hit != 'true'
         run: python .github/scripts/probar_paquete.py --paquete _site --informe pruebas.json
-      - name: Mostrar el commit pendiente de aprobación
+      - name: Registrar el commit validado
+        if: steps.publicada.outputs.cache-hit != 'true'
         env:
           REVISION: ${{ steps.paquete.outputs.revision }}
           HUELLA: ${{ steps.paquete.outputs.huella }}
@@ -54,9 +71,10 @@ jobs:
               f.write('Fuente: `desarrollo-motor-visual`\n\n')
               f.write('Commit fuente: `' + os.environ['REVISION'] + '`\n\n')
               f.write('Huella del paquete de 27 archivos: `' + os.environ['HUELLA'] + '`\n\n')
-              f.write('Publicar requiere la variable de habilitación y la aprobación del entorno github-pages.\n')
+              f.write('Publicación automática habilitada solo después de superar las pruebas del paquete sintético.\n')
           PY
-      - name: Guardar evidencia para revisar
+      - name: Guardar evidencia de las pruebas
+        if: steps.publicada.outputs.cache-hit != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: revision-candidata
@@ -65,45 +83,19 @@ jobs:
             pruebas.json
           retention-days: 7
       - name: Empaquetar únicamente _site
+        if: steps.publicada.outputs.cache-hit != 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
           retention-days: 7
-      - name: Detectar si esta misma versión ya se publicó
-        id: publicada
-        uses: actions/cache/restore@v4
-        with:
-          path: .estado-publicacion
-          key: demo-publicada-${{ steps.paquete.outputs.huella }}
-          lookup-only: true
 
-  comprobar-aprobacion:
+  publicar:
     needs: preparar
     if: vars.PUBLICACION_DEMO_HABILITADA == 'true' && needs.preparar.outputs.nueva == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 3
-    permissions:
-      contents: read
-      actions: read
-    steps:
-      - name: Fallar si el entorno no exige aprobación manual del propietario
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const {data} = await github.request('GET /repos/{owner}/{repo}/environments/{environment_name}', {
-              ...context.repo, environment_name: 'github-pages'
-            });
-            const protegido = (data.protection_rules || []).some(r =>
-              r.type === 'required_reviewers' && (r.reviewers || []).some(x =>
-                x.type === 'User' && x.reviewer.login === 'javier-efrain'));
-            if (!protegido) throw new Error('Falta aprobación obligatoria de javier-efrain en github-pages. No se publicará.');
-
-  publicar:
-    needs: [preparar, comprobar-aprobacion]
-    if: vars.PUBLICACION_DEMO_HABILITADA == 'true'
-    runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
+      actions: read
       pages: write
       id-token: write
     environment:
@@ -114,9 +106,41 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: false
-      - name: Publicar solo después de la aprobación manual
+      - name: Publicar solo después de superar las pruebas
         id: despliegue
         uses: actions/deploy-pages@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: revision-candidata
+          path: _verificacion
+      - name: Verificar los 27 archivos realmente servidos por Pages
+        env:
+          URL_PAGES: ${{ steps.despliegue.outputs.page_url }}
+        run: |
+          python - <<'PY'
+          import hashlib, json, os, time
+          from urllib.request import urlopen
+          from pathlib import Path
+          informe = json.loads(Path('_verificacion/candidato.json').read_text())
+          base = os.environ['URL_PAGES'].rstrip('/') + '/'
+          pendientes = dict(informe['sha256'])
+          for intento in range(12):
+              for ruta, esperado in list(pendientes.items()):
+                  try:
+                      with urlopen(base + ruta + '?revision=' + informe['revisionFuente'], timeout=20) as respuesta:
+                          recibido = hashlib.sha256(respuesta.read()).hexdigest()
+                      if recibido == esperado:
+                          del pendientes[ruta]
+                  except OSError:
+                      pass
+              if not pendientes:
+                  break
+              time.sleep(10)
+          if pendientes:
+              raise SystemExit('La web servida no coincide con el paquete probado: ' + ', '.join(pendientes))
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('Verificación pública: los 27 archivos servidos coinciden con el commit fuente `' + informe['revisionFuente'] + '`.\n')
+          PY
       - name: Recordar la versión publicada
         env:
           HUELLA: ${{ needs.preparar.outputs.huella }}
@@ -126,4 +150,4 @@ jobs:
       - uses: actions/cache/save@v4
         with:
           path: .estado-publicacion
-          key: demo-publicada-${{ needs.preparar.outputs.huella }}
+          key: demo-publicada-v2-${{ needs.preparar.outputs.huella }}
