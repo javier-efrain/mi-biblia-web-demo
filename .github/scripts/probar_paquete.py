@@ -18,6 +18,30 @@ class Silencioso(SimpleHTTPRequestHandler):
     def log_message(self,*args): pass
 
 
+# Las regresiones por relato apuntan al activo sin esconder los otros relatos.
+def localizar(pagina, selector):
+    locales = ('.mv-cierre','.mv-contexto','.mv-devocional','.mv-recurso','.mv-viewport',
+               '.mv-portada','.mv-panel','.mv-visor','.mv-hoja','.mv-texto','.mv-plano',
+               '.mv-titulo-relato','[data-marcador','[data-elemento','[data-recurso-acceso',
+               'input[type=range]','input[type="range"]')
+    raiz = 'dialog[open]' if pagina.locator('dialog[open]').count() else '.mv-relato[data-activo=true]'
+    partes = []
+    for parte in selector.split(','):
+        limpia = parte.strip().removeprefix('#motor ').strip()
+        partes.append(raiz+' '+limpia if limpia.startswith(locales) or limpia.startswith('[data-versiculo]') else parte)
+    return pagina.locator(','.join(partes))
+
+
+def buscar_rol(pagina, rol, **opciones):
+    if opciones.get('name') in ['Exégesis','Enseñanzas']:
+        return localizar(pagina,'.mv-cierre').get_by_role(rol,**opciones)
+    return pagina.get_by_role(rol,**opciones)
+
+
+def esperar_selector(pagina, selector, **opciones):
+    return localizar(pagina,selector).first.wait_for(state='visible',**opciones)
+
+
 def probar(paquete):
     hashes = validar(paquete)
     informe = {'ok':False,'archivos':len(hashes),'casos':[],'erroresJS':[],
@@ -70,23 +94,33 @@ def probar(paquete):
                         etiqueta = nombre+' '+relato
                         url = origen+f'/mi-biblia-web-demo/motor-visual/demo.html?relato={relato}'
                         pagina.goto(url+'&modo=visual')
-                        pagina.wait_for_selector('#motor[data-listo="true"]')
-                        pagina.wait_for_selector('.mv-visor img')
+                        esperar_selector(pagina,'#motor[data-listo="true"]')
+                        esperar_selector(pagina,'.mv-visor img')
                         pagina.wait_for_function("[...document.querySelectorAll('img')].every(i=>i.complete&&i.naturalWidth>0)")
-                        expect(pagina.locator('.mv-aviso')).to_have_text(AVISO)
-                        comprobar(pagina.locator('.mv-aviso').is_visible(),etiqueta+': aviso visible y recursos completos')
-                        comprobar(pagina.locator('body').evaluate('e=>e.dataset.apariencia === "claro"'),etiqueta+': apariencia editorial clara')
-                        comprobar(pagina.locator('.mv-texto > p').first.evaluate('e=>getComputedStyle(e).fontSize')=='12px',
+                        expect(localizar(pagina,'.mv-aviso')).to_have_text(AVISO)
+                        comprobar(localizar(pagina,'.mv-aviso').is_visible(),etiqueta+': aviso visible y recursos completos')
+                        comprobar(localizar(pagina,'body').evaluate('e=>e.dataset.apariencia === "claro"'),etiqueta+': apariencia editorial clara')
+                        comprobar(localizar(pagina,'.mv-texto > p').first.evaluate('e=>getComputedStyle(e).fontSize')=='12px',
                                   etiqueta+': tamaño inicial de lectura a 12 px')
-                        comprobar(pagina.get_by_role('button',name='Modo oscuro',exact=True).count()==0 and
-                                  pagina.locator('.mv-descubrimiento').count()==0,
+                        comprobar(buscar_rol(pagina,'button',name='Modo oscuro',exact=True).count()==0 and
+                                  localizar(pagina,'.mv-descubrimiento').count()==0,
                                   etiqueta+': sin controles ni descubrimiento retirados')
-                        comprobar(pagina.locator('.mv-navegacion').evaluate('e=>e===e.parentElement.lastElementChild'),etiqueta+': capítulos al final')
-                        comprobar_paginacion(pagina.locator('.mv-contexto'),etiqueta+' contexto')
-                        comprobar_paginacion(pagina.locator('.mv-cierre'),etiqueta+' exégesis')
-                        pagina.get_by_role('button',name='Enseñanzas',exact=True).click()
-                        comprobar_paginacion(pagina.locator('.mv-cierre'),etiqueta+' enseñanzas')
-                        r = pagina.locator('.mv-recurso').first
+                        comprobar(localizar(pagina,'.mv-navegacion').evaluate('e=>e===e.parentElement.lastElementChild'),etiqueta+': capítulos al final')
+                        cantidad=2 if relato!='demo-tres' else 1
+                        comprobar(pagina.locator('.mv-relato').count()==cantidad,etiqueta+': todos los relatos del capítulo montados')
+                        comprobar(pagina.locator('.mv-texto [data-versiculo]').count()==(4 if cantidad==2 else 3),etiqueta+': capítulo completo sin versos duplicados')
+                        comprobar_paginacion(localizar(pagina,'.mv-contexto'),etiqueta+' contexto')
+                        comprobar_paginacion(localizar(pagina,'.mv-cierre'),etiqueta+' exégesis')
+                        buscar_rol(pagina,'button',name='Enseñanzas',exact=True).click()
+                        comprobar_paginacion(localizar(pagina,'.mv-cierre'),etiqueta+' enseñanzas')
+                        if relato=='demo-uno':
+                            pagina.evaluate('window.__capituloContinuo=[...document.querySelectorAll(".mv-relato")]')
+                            for destino in ['demo-dos','demo-uno']:
+                                pagina.locator(f'[data-relato-indice="{destino}"]').click()
+                                expect(pagina.locator('#motor')).to_have_attribute('data-relato',destino)
+                                comprobar(pagina.evaluate('window.__capituloContinuo.every((e,i)=>e===document.querySelectorAll(".mv-relato")[i])'),etiqueta+': índice conserva relatos '+destino)
+                            pagina.wait_for_timeout(600)
+                        r = localizar(pagina,'.mv-recurso').first
                         r.locator('[data-elemento="punto-b"]').click()
                         expect(r.locator('[data-marcador="punto-b"]')).to_have_attribute('aria-pressed','true')
                         r.locator('.mv-panel nav button').last.click()
@@ -96,7 +130,7 @@ def probar(paquete):
                                   etiqueta+': puntos y botones ocultos')
                         comprobar(r.locator('img').is_visible() and r.locator('.mv-panel p').is_visible(),
                                   etiqueta+': imagen limpia con descripción')
-                        pagina.get_by_role('button',name='Devocional',exact=True).click()
+                        buscar_rol(pagina,'button',name='Devocional',exact=True).click()
                         r.locator('[data-control="puntos"]').click()
                         expect(r.locator('.mv-panel output')).to_have_text(re.compile(r'^2 / \d+$'))
                         comprobar(r.locator('[data-elemento="punto-b"]').get_attribute('aria-pressed')=='true',
@@ -115,21 +149,35 @@ def probar(paquete):
                             p=e.querySelector('.mv-plano').getBoundingClientRect();
                             return Math.abs(v.width/v.height-.75)<.01&&Math.abs(p.width/p.height-2/3)<.01&&p.width<=v.width+1&&p.height<=v.height+1;}'''),
                                   etiqueta+': imagen 2:3 completa dentro del visor 3:4')
-                        comprobar(r.locator(':scope > button').count()==0,etiqueta+': visor integrado sin Ampliar visor')
-                        pagina.get_by_role('button',name='Restablecer tamaño de letra a 12 px',exact=True).click()
+                        comprobar(r.get_by_role('button',name='Ampliar visor',exact=True).count()==0,etiqueta+': visor integrado sin Ampliar visor')
+                        abrir=r.get_by_role('button',name='Pantalla completa',exact=True)
+                        abrir.scroll_into_view_if_needed();posicion=pagina.evaluate('scrollY')
+                        r.evaluate('e=>{window.__recursoCompleto=e;window.__visorCompleto=e.querySelector(".mv-visor")}')
+                        abrir.click();modal=pagina.locator('dialog.mv-completa[open]');expect(modal).to_be_visible();pagina.wait_for_timeout(100)
+                        comprobar(modal.evaluate('e=>e.querySelector(".mv-visor")===window.__visorCompleto'),etiqueta+': pantalla completa reutiliza la misma instancia')
+                        comprobar(modal.evaluate('e=>e.clientWidth>=innerWidth-2&&e.clientHeight>=innerHeight-2'),etiqueta+': pantalla completa ocupa el navegador')
+                        comprobar(modal.locator('.mv-viewport').evaluate('e=>getComputedStyle(e).aspectRatio')=='auto',etiqueta+': pantalla completa sin marco 3:4')
+                        modal.get_by_role('button',name='Aumentar zoom',exact=True).click()
+                        expect(modal.locator('.mv-visor output')).to_have_text('125 %')
+                        comprobar(modal.locator('[data-elemento="punto-b"]').get_attribute('aria-pressed')=='true',etiqueta+': pantalla completa conserva selección')
+                        pagina.keyboard.press('Escape');expect(pagina.locator('dialog')).to_have_count(0);pagina.wait_for_timeout(100)
+                        comprobar(abs(pagina.evaluate('scrollY')-posicion)<2 and r.evaluate('e=>e===window.__recursoCompleto'),etiqueta+': cerrar devuelve recurso y posición')
+                        expect(abrir).to_be_focused()
+                        r.get_by_role('button',name='Restablecer',exact=True).click()
+                        buscar_rol(pagina,'button',name='Restablecer tamaño de letra a 12 px',exact=True).click()
                         expect(pagina.get_by_label('Tamaño de lectura',exact=True)).to_have_text('12 px')
                         anterior_tamano=12
                         for tamano in [8,12,20,30]:
                             control='Aumentar tamaño de letra' if tamano>anterior_tamano else 'Reducir tamaño de letra'
                             for _ in range(abs(tamano-anterior_tamano)//2):
-                                pagina.get_by_role('button',name=control,exact=True).click()
+                                buscar_rol(pagina,'button',name=control,exact=True).click()
                             anterior_tamano=tamano
                             comprobar_paginacion(r.locator('.mv-panel .mv-estudio'),etiqueta+f' marcador {tamano}px')
                             expect(pagina.get_by_label('Tamaño de lectura',exact=True)).to_have_text(f'{tamano} px')
                             comprobar(pagina.evaluate('document.documentElement.scrollWidth<=innerWidth') and
                                       r.locator('.mv-panel .mv-hoja').evaluate('e=>e.clientHeight<=260'),
                                       etiqueta+f': lectura {tamano} px sin desbordamiento')
-                        pagina.get_by_role('button',name='Restablecer tamaño de letra a 12 px',exact=True).click()
+                        buscar_rol(pagina,'button',name='Restablecer tamaño de letra a 12 px',exact=True).click()
                         if nombre=='movil' and relato=='demo-dos':
                             r.locator('[data-elemento="punto-a"]').click()
                             hoja = r.locator('.mv-panel .mv-hoja')
@@ -167,31 +215,36 @@ def probar(paquete):
                             comprobar(int(r.locator('.mv-visor output').inner_text().split()[0])>=180,etiqueta+': pellizco amplía la imagen')
                             comprobar(r.evaluate('''e=>{const p=e.querySelector('.mv-plano').getBoundingClientRect(),m=e.querySelector('[data-marcador="punto-b"]').getBoundingClientRect();
                               return Math.abs((m.x+m.width/2-p.x)/p.width-.75)<.01&&Math.abs((m.y+m.height/2-p.y)/p.height-.5)<.01;}'''),etiqueta+': pellizco mantiene marcadores alineados')
+                            x,y=centro_visor();antes=pagina.evaluate('scrollY');pan=visor.evaluate('e=>({x:e.scrollLeft,y:e.scrollTop})')
+                            tocar([{'id':1,'x':x,'y':y}],[{'id':1,'x':x-40,'y':y-60}])
+                            comprobar(abs(pagina.evaluate('scrollY')-antes)<2 and visor.evaluate('e=>e.scrollLeft')>pan['x']+20 and visor.evaluate('e=>e.scrollTop')>pan['y']+30,
+                                      etiqueta+': un dedo desplaza imagen ampliada en ambos ejes sin mover la página')
                             x,y=centro_visor()
                             tocar([{'id':1,'x':x-90,'y':y},{'id':2,'x':x+90,'y':y}],
                                   [{'id':1,'x':x-40,'y':y},{'id':2,'x':x+40,'y':y}])
                             comprobar(int(r.locator('.mv-visor output').inner_text().split()[0])==100,etiqueta+': pellizco reduce la imagen')
                             cdp.detach()
-                        pagina.get_by_role('button',name='Estudio',exact=True).click()
-                        pagina.get_by_role('button',name='Solo texto bíblico',exact=True).click()
-                        comprobar(pagina.locator('[data-educativo],img').count()==0,etiqueta+': Solo texto desmonta recursos')
-                        icono=pagina.locator('[data-recurso-acceso]').first;icono.scroll_into_view_if_needed();posicion=pagina.evaluate('scrollY')
+                        buscar_rol(pagina,'button',name='Estudio',exact=True).click()
+                        buscar_rol(pagina,'button',name='Solo texto bíblico',exact=True).click()
+                        comprobar(localizar(pagina,'[data-educativo],img').count()==0,etiqueta+': Solo texto desmonta recursos')
+                        icono=localizar(pagina,'[data-recurso-acceso]').first;icono.scroll_into_view_if_needed();posicion=pagina.evaluate('scrollY')
+                        comprobar('Ver recurso visual' in icono.inner_text() and 'Ver recurso visual' in icono.get_attribute('aria-label'),etiqueta+': acceso con texto y nombre accesible coherentes')
                         inicio=len(solicitadas)
-                        icono.click();pagina.wait_for_selector('dialog .mv-visor')
-                        comprobar(pagina.locator('.mv-recurso').count()==1 and pagina.locator('img').count()==1,etiqueta+': Solo texto abre un solo recurso')
-                        pagina.locator('dialog [data-elemento="punto-b"]').click()
-                        expect(pagina.locator('dialog [data-marcador="punto-b"]')).to_have_attribute('aria-pressed','true')
-                        pagina.keyboard.press('Escape');expect(pagina.locator('dialog')).to_have_count(0);pagina.wait_for_timeout(60)
+                        icono.click();esperar_selector(pagina,'dialog .mv-visor')
+                        comprobar(localizar(pagina,'.mv-recurso').count()==1 and localizar(pagina,'img').count()==1,etiqueta+': Solo texto abre un solo recurso')
+                        localizar(pagina,'dialog [data-elemento="punto-b"]').click()
+                        expect(localizar(pagina,'dialog [data-marcador="punto-b"]')).to_have_attribute('aria-pressed','true')
+                        pagina.keyboard.press('Escape');expect(localizar(pagina,'dialog')).to_have_count(0);pagina.wait_for_timeout(60)
                         expect(icono).to_be_focused()
-                        comprobar(abs(pagina.evaluate('scrollY')-posicion)<2 and pagina.locator('#motor').get_attribute('data-modo')=='texto',
+                        comprobar(abs(pagina.evaluate('scrollY')-posicion)<2 and localizar(pagina,'#motor').get_attribute('data-modo')=='texto',
                                   etiqueta+': cerrar conserva posición, foco y Solo texto')
                         for enfoque in ['estudio','devocional']:
                             registro=[]
                             def registrar_texto(r): registro.append(r.url)
                             pagina.on('request',registrar_texto)
                             pagina.goto(url+'&modo=texto&enfoque='+enfoque)
-                            pagina.wait_for_selector('#motor[data-listo="true"]')
-                            comprobar(pagina.locator('[data-educativo],img').count()==0 and
+                            esperar_selector(pagina,'#motor[data-listo="true"]')
+                            comprobar(localizar(pagina,'[data-educativo],img').count()==0 and
                                       not any('/datos/estudios/' in u or '/datos/recursos' in u or '/componentes/explorador.js' in u for u in registro),
                                       etiqueta+': carga inicial Solo texto '+enfoque+' aislada')
                             pagina.remove_listener('request',registrar_texto)

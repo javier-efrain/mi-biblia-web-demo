@@ -2,7 +2,7 @@
 
 Publicación aislada con datos e imágenes sintéticos. No contiene texto bíblico RVC, materiales definitivos de V15 ni los 394 archivos originales del sitio principal.
 
-## Actualización automática — Etapa 4, Bloque 2
+## Actualización automática
 
 El flujo [demo.yml](.github/workflows/demo.yml) consulta aproximadamente cada cinco minutos la rama `desarrollo-motor-visual` de `javier-efrain/mi-biblia-web`. GitHub puede demorar las ejecuciones programadas. No necesita ejecutar ni aprobar manualmente cada actualización. También se inicia al actualizar las herramientas `.github/` de esta rama; **Run workflow** queda disponible como recuperación.
 
@@ -24,13 +24,13 @@ La programación requiere que `publicacion-demo` siga siendo la rama predetermin
 
 [Probar el lector visual](https://javier-efrain.github.io/mi-biblia-web-demo/motor-visual/demo.html?relato=demo-dos&modo=visual).
 
-Conserva el diseño claro marfil/salvia, tamaño inicial 12 px y rango 8–30 px. El Bloque 2 añade paneles paginados compactos, navegación de capítulo al pie, visor integrado, gestos de dos dedos y recursos bajo demanda desde Solo texto.
+Conserva el diseño claro marfil/salvia, tamaño inicial 12 px y rango 8–30 px. El Bloque 3 añade capítulos continuos, índice con título y referencia, arrastre de imagen según el zoom y pantalla completa con la misma instancia del explorador. Se mantienen cajas paginadas compactas y recursos bajo demanda desde Solo texto; los accesos ahora dicen «Ver recurso visual».
 
 Los archivos `motor-visual/` guardados en esta rama son la instantánea inicial. La web se construye desde el commit fuente más reciente, identificado en Actions; no se sincronizan mediante commits automáticos. Los informes `paquete-inicial.json` y `pruebas-iniciales.json` son evidencia histórica.
 
 ## Pruebas y reproducción local
 
-Chromium en escritorio 1280×900 y móvil simulado 390×844; tamaños 8/12/20/30 px, selección y paginación, gestos táctiles, zoom, recursos bajo demanda y aislamiento de Solo texto. Un teléfono físico sigue pendiente.
+Chromium en escritorio 1280×900 y móvil simulado 390×844; tamaños 8/12/20/30 px, selección y paginación, lectura continua e índice, gestos táctiles, arrastre de imagen ampliada en ambos ejes, pantalla completa compartida, zoom, recursos bajo demanda y aislamiento de Solo texto. Un teléfono físico sigue pendiente.
 
 ```sh
 python .github/scripts/paquete.py --actualizar --salida /tmp/mi-biblia-paquete --informe /tmp/mi-biblia-paquete.json
