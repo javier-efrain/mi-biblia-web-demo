@@ -187,6 +187,188 @@
           ]
         }
       ]
+    },
+    {
+      "schemaVersion": 1,
+      "estadoEditorial": "en_revision",
+      "demostracion": false,
+      "id": "mc-12-13-17",
+      "titulo": "El tributo al César",
+      "presentacion": "¿A quién pertenece nuestra fidelidad?",
+      "referenciaEtiqueta": "Marcos 12:13–17 · Reina-Valera 1909 · revisión editorial pendiente",
+      "referencia": {
+        "version": "RV1909",
+        "libro": "marcos",
+        "rangos": [
+          {
+            "capitulo": 12,
+            "desde": 13,
+            "hasta": 17
+          }
+        ]
+      },
+      "estudioId": "mc-12-13-17-v16",
+      "portadaId": "mc-12-13-17-portada",
+      "coleccionId": "marcos-desarrollo",
+      "orden": 1,
+      "recursos": [
+        {
+          "id": "mc-12-16-denario",
+          "recursoId": "mc-12-13-17-denario",
+          "presentacion": "interactivo",
+          "anclajeBiblico": {
+            "version": "RV1909",
+            "libro": "marcos",
+            "capitulo": 12,
+            "versiculo": 16,
+            "posicion": "despues"
+          },
+          "marcadores": [
+            {
+              "id": "denario-retrato",
+              "x": 0.25,
+              "y": 0.25,
+              "titulo": "Retrato de Tiberio",
+              "certezaHistorica": "Recurso ilustrativo de revisión. La inscripción visible en la moneda generada digitalmente no reproduce con precisión el ejemplar numismático; consultar la transcripción histórica en la explicación.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "Retrato de Tiberio",
+                  "parrafos": [
+                    "El anverso de algunos denarios del reinado de Tiberio muestra su retrato laureado. La corona de laurel era un símbolo de autoridad y victoria."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "denario-inscripcion",
+              "x": 0.23,
+              "y": 0.11,
+              "titulo": "Inscripción imperial",
+              "certezaHistorica": "Recurso ilustrativo de revisión. La inscripción visible en la moneda generada digitalmente no reproduce con precisión el ejemplar numismático; consultar la transcripción histórica en la explicación.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "Inscripción imperial",
+                  "parrafos": [
+                    "En un denario documentado de Tiberio aparece TI CAESAR DIVI AVG F AVGVSTVS, título que lo identifica como hijo del divinizado Augusto. La inscripción en esta imagen artística no es una reproducción exacta."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "denario-reverso",
+              "x": 0.73,
+              "y": 0.27,
+              "titulo": "Figura del reverso",
+              "certezaHistorica": "Recurso ilustrativo de revisión. La inscripción visible en la moneda generada digitalmente no reproduce con precisión el ejemplar numismático; consultar la transcripción histórica en la explicación.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "Figura del reverso",
+                  "parrafos": [
+                    "El reverso presenta una figura femenina sentada. Su identificación precisa es discutida; frecuentemente se la asocia con Livia o con una personificación."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "denario-sacerdotal",
+              "x": 0.77,
+              "y": 0.11,
+              "titulo": "Pontifex Maximus",
+              "certezaHistorica": "Recurso ilustrativo de revisión. La inscripción visible en la moneda generada digitalmente no reproduce con precisión el ejemplar numismático; consultar la transcripción histórica en la explicación.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "Pontifex Maximus",
+                  "parrafos": [
+                    "La inscripción PONTIF MAXIM abrevia Pontifex Maximus, título sacerdotal romano del emperador. La leyenda de la imagen artística puede contener letras incorrectas."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mc-12-17-trampa",
+          "recursoId": "mc-12-13-17-infografia",
+          "presentacion": "interactivo",
+          "anclajeBiblico": {
+            "version": "RV1909",
+            "libro": "marcos",
+            "capitulo": 12,
+            "versiculo": 17,
+            "posicion": "despues"
+          },
+          "marcadores": [
+            {
+              "id": "trampa-intencion",
+              "x": 0.28,
+              "y": 0.14,
+              "titulo": "Una intención hostil",
+              "certezaHistorica": "Recurso ilustrativo de revisión. La inscripción visible en la moneda generada digitalmente no reproduce con precisión el ejemplar numismático; consultar la transcripción histórica en la explicación.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "Una intención hostil",
+                  "parrafos": [
+                    "Marcos declara que los enviados buscan atrapar a Jesús en sus palabras, no realizar una consulta neutral."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "trampa-alternativas",
+              "x": 0.5,
+              "y": 0.5,
+              "titulo": "Las dos alternativas",
+              "certezaHistorica": "Recurso ilustrativo de revisión. La inscripción visible en la moneda generada digitalmente no reproduce con precisión el ejemplar numismático; consultar la transcripción histórica en la explicación.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "Las dos alternativas",
+                  "parrafos": [
+                    "Una negativa al tributo podía dar pie a acusaciones ante Roma; una respuesta afirmativa sin matices podía suscitar rechazo entre quienes veían el dominio romano como opresivo."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "trampa-respuesta",
+              "x": 0.53,
+              "y": 0.72,
+              "titulo": "La respuesta de Jesús",
+              "certezaHistorica": "Recurso ilustrativo de revisión. La inscripción visible en la moneda generada digitalmente no reproduce con precisión el ejemplar numismático; consultar la transcripción histórica en la explicación.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "La respuesta de Jesús",
+                  "parrafos": [
+                    "Jesús distingue entre obligaciones ante el César y la responsabilidad fundamental ante Dios. No presenta a la autoridad humana como absoluta."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "trampa-aplicacion",
+              "x": 0.5,
+              "y": 0.9,
+              "titulo": "Una enseñanza para la vida",
+              "certezaHistorica": "Recurso ilustrativo de revisión. La inscripción visible en la moneda generada digitalmente no reproduce con precisión el ejemplar numismático; consultar la transcripción histórica en la explicación.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "Una enseñanza para la vida",
+                  "parrafos": [
+                    "La fidelidad a Dios orienta la manera de cumplir las responsabilidades civiles, sin reducir la fe a una postura política."
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }
