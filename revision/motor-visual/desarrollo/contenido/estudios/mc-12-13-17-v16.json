@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 1,
+  "estadoEditorial": "en_revision",
+  "demostracion": false,
+  "id": "mc-12-13-17-v16",
+  "relatoId": "mc-12-13-17",
+  "fuentes": [
+    "Marcos 12:13–17, Reina-Valera 1909",
+    "Modelo estructural: mc-12-1-12-v15.json",
+    "Museo Británico: denario de Tiberio (referencia numismática, no identificación de la moneda del relato)"
+  ],
+  "secciones": [
+    {
+      "id": "contexto",
+      "tipo": "contexto",
+      "titulo": "Contexto",
+      "paginas": [
+        {
+          "id": "contexto-1",
+          "titulo": "Una confrontación que continúa",
+          "parrafos": [
+            "Jesús se encuentra en Jerusalén durante los días previos a su crucifixión. Los dirigentes habían cuestionado su autoridad (Marcos 11:27–33). Tras la parábola de los labradores malvados, quisieron prenderlo, pero temían a la multitud (Marcos 12:12).",
+            "La pregunta sobre el tributo no es una consulta aislada. Forma parte de un conflicto creciente en el que algunos adversarios buscan una declaración que puedan utilizar contra Jesús."
+          ],
+          "referencias": [
+            "Marcos 11:27–33",
+            "Marcos 12:1–13"
+          ]
+        },
+        {
+          "id": "contexto-2",
+          "titulo": "Judea bajo dominio romano",
+          "parrafos": [
+            "Desde el año 6 d. C., Judea estuvo bajo administración romana directa. Los tributos recordaban la subordinación política de la población y podían suscitar tensiones religiosas y sociales.",
+            "La situación no permite suponer una única actitud judía ante Roma. Existían respuestas diversas al dominio imperial; tampoco debe confundirse este tributo con todas las demás contribuciones económicas o religiosas."
+          ],
+          "referencias": [
+            "Marcos 12:14"
+          ]
+        },
+        {
+          "id": "contexto-3",
+          "titulo": "Fariseos y herodianos",
+          "parrafos": [
+            "Marcos identifica a los enviados como algunos fariseos y herodianos. Los fariseos constituían un movimiento judío dedicado a la interpretación y observancia de la Ley; la identificación exacta de los herodianos es menos clara, aunque el nombre sugiere vínculos con el entorno de Herodes.",
+            "No son partidos modernos ni representan automáticamente a todos los miembros de sus grupos. Lo decisivo en el relato es su colaboración para sorprender a Jesús en sus palabras."
+          ],
+          "referencias": [
+            "Marcos 3:6",
+            "Marcos 12:13"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "exegesis",
+      "tipo": "exegesis",
+      "titulo": "Exégesis",
+      "paginas": [
+        {
+          "id": "exegesis-1",
+          "titulo": "La intención detrás de la pregunta",
+          "parrafos": [
+            "Marcos 12:13 declara desde el inicio que los enviados buscan atrapar a Jesús mediante sus palabras. El lector conoce así la intención oculta antes de escuchar la pregunta.",
+            "La escena no debe leerse como un diálogo neutral sobre economía. Los interlocutores esperan una respuesta que pueda perjudicar a Jesús ante las autoridades o ante parte del pueblo."
+          ],
+          "referencias": [
+            "Marcos 12:12–13"
+          ]
+        },
+        {
+          "id": "exegesis-2",
+          "titulo": "El elogio que prepara la trampa",
+          "parrafos": [
+            "Los interrogadores llaman Maestro a Jesús y elogian su sinceridad e independencia. Aunque describen cualidades verdaderas, dentro de esta escena las palabras funcionan como adulación estratégica.",
+            "Preguntan si es lícito pagar tributo al César. No preguntan si Roma efectivamente lo cobra, sino si ese pago es correcto desde una perspectiva moral y religiosa."
+          ],
+          "referencias": [
+            "Marcos 12:14"
+          ]
+        },
+        {
+          "id": "exegesis-3",
+          "titulo": "Una alternativa peligrosa",
+          "parrafos": [
+            "Una negativa tajante al tributo podía ser utilizada para acusar a Jesús de desobediencia al poder imperial. Una afirmación sin matices podía desacreditarlo ante quienes rechazaban el dominio romano.",
+            "Jesús reconoce la hipocresía de los interrogadores y se niega a quedar encerrado en el sí o no que intentan imponerle."
+          ],
+          "referencias": [
+            "Marcos 12:14–15"
+          ]
+        },
+        {
+          "id": "exegesis-4",
+          "titulo": "La moneda y la imagen imperial",
+          "parrafos": [
+            "Jesús pide que le traigan una moneda. El relato la identifica como denario en otras traducciones del texto griego, aunque la RV1909 dice «la moneda» en 12:15. La pregunta se centra en la imagen y la inscripción.",
+            "Algunos denarios del reinado de Tiberio muestran su retrato y títulos imperiales. Un ejemplar de esa época es una referencia educativa apropiada, pero Marcos no especifica qué emisión exacta fue presentada; no podemos identificar la moneda de la escena con certeza."
+          ],
+          "referencias": [
+            "Marcos 12:15–16",
+            "Mateo 22:19"
+          ]
+        },
+        {
+          "id": "exegesis-5",
+          "titulo": "Dar al César lo que le corresponde",
+          "parrafos": [
+            "El verbo griego apodídōmi puede significar dar, devolver o pagar lo debido. No corresponde construir toda la interpretación sobre uno solo de esos matices.",
+            "Jesús reconoce obligaciones vinculadas con la autoridad humana, pero el pasaje no constituye una aprobación ilimitada de cualquier gobierno o exigencia política."
+          ],
+          "referencias": [
+            "Marcos 12:17"
+          ]
+        },
+        {
+          "id": "exegesis-6",
+          "titulo": "Dar a Dios lo que pertenece a Dios",
+          "parrafos": [
+            "La segunda parte de la respuesta establece que las obligaciones civiles no eliminan la responsabilidad fundamental ante Dios. La autoridad política es limitada; Dios es el Creador y Señor.",
+            "Es posible relacionar la imagen del César en la moneda con la creación del ser humano a imagen de Dios (Génesis 1:26–27). Esa conexión es una reflexión teológica posible, no una comparación que Marcos formule explícitamente."
+          ],
+          "referencias": [
+            "Marcos 12:17",
+            "Génesis 1:26–27"
+          ]
+        },
+        {
+          "id": "exegesis-7",
+          "titulo": "El asombro final",
+          "parrafos": [
+            "Los interrogadores querían forzar a Jesús a elegir entre dos respuestas comprometedoras. Él distingue responsabilidades sin absolutizar el poder del César.",
+            "Marcos concluye que se maravillaron. La respuesta no evade simplemente la pregunta: la sitúa dentro de una visión más amplia de la fidelidad a Dios."
+          ],
+          "referencias": [
+            "Marcos 12:17"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ensenanzas",
+      "tipo": "ensenanzas",
+      "titulo": "Enseñanzas",
+      "paginas": [
+        {
+          "id": "ensenanzas-1",
+          "titulo": "Idea teológica central",
+          "parrafos": [
+            "Las responsabilidades ante las autoridades humanas deben comprenderse dentro de la soberanía de Dios. Jesús reconoce obligaciones civiles legítimas sin atribuir al César una autoridad absoluta.",
+            "La fidelidad a Dios no se reduce al cumplimiento de normas públicas ni desaparece ante las exigencias políticas."
+          ],
+          "referencias": [
+            "Marcos 12:17"
+          ]
+        },
+        {
+          "id": "ensenanzas-2",
+          "titulo": "El peligro de las falsas alternativas",
+          "parrafos": [
+            "La pregunta de los adversarios oculta la dimensión fundamental del problema. No toda cuestión compleja se resuelve aceptando las dos opciones propuestas por quien pregunta.",
+            "La integridad requiere discernir las intenciones, considerar el contexto y no utilizar la verdad como instrumento para perjudicar a otros."
+          ],
+          "referencias": [
+            "Marcos 12:13–15"
+          ]
+        },
+        {
+          "id": "ensenanzas-3",
+          "titulo": "Responsabilidad y conciencia",
+          "parrafos": [
+            "La vida social implica deberes compartidos. La fe no es una excusa automática para ignorarlos, pero el respeto a las autoridades tampoco convierte toda decisión gubernamental en moralmente correcta.",
+            "Romanos 13:1–7 y Hechos 5:29 aportan perspectivas que deben interpretarse en sus contextos, sin hacer que uno de esos pasajes borre al otro."
+          ],
+          "referencias": [
+            "Romanos 13:1–7",
+            "Hechos 5:29"
+          ]
+        },
+        {
+          "id": "ensenanzas-4",
+          "titulo": "Preguntas para la vida",
+          "parrafos": [
+            "¿Distingo entre mis responsabilidades civiles y mi fidelidad a Dios? ¿Permito que una lealtad política o económica ocupe el lugar que no le corresponde?",
+            "¿Hago preguntas para comprender la verdad o para confirmar lo que ya decidí? ¿Qué decisión concreta puedo tomar hoy con mayor integridad?"
+          ],
+          "referencias": [
+            "Marcos 12:13–17"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "devocional",
+      "tipo": "devocional",
+      "titulo": "¿A quién le pertenece tu corazón?",
+      "paginas": [
+        {
+          "id": "devocional-1",
+          "titulo": "Una moneda entre las manos",
+          "parrafos": [
+            "Una moneda pasa de mano en mano y parece un objeto corriente. Pero aquel día, frente a Jesús, se convirtió en el centro de una conversación profunda.",
+            "Sus adversarios querían atraparlo. Jesús preguntó de quién eran la imagen y la inscripción. La respuesta parecía evidente, pero todavía quedaba algo más importante por considerar."
+          ],
+          "referencias": [
+            "Marcos 12:15–17"
+          ]
+        },
+        {
+          "id": "devocional-2",
+          "titulo": "Lo que entregamos cada día",
+          "parrafos": [
+            "Todos tenemos responsabilidades: trabajar, cumplir compromisos, administrar recursos y convivir con otros. Muchas de esas obligaciones son legítimas y necesarias.",
+            "Podemos atenderlas con diligencia y, sin embargo, olvidar la pregunta decisiva: ¿qué lugar estamos dando a Dios en nuestras decisiones?"
+          ],
+          "referencias": [
+            "Marcos 12:17"
+          ]
+        },
+        {
+          "id": "devocional-3",
+          "titulo": "La imagen que llevamos",
+          "parrafos": [
+            "La moneda llevaba la imagen de una autoridad humana. Génesis enseña que el ser humano fue creado a imagen de Dios.",
+            "Esta comparación es una aplicación espiritual, no una explicación explícita de Marcos. Nos recuerda que nuestro valor más profundo no depende del dinero, el cargo o el reconocimiento de los demás."
+          ],
+          "referencias": [
+            "Génesis 1:26–27",
+            "Marcos 12:16–17"
+          ]
+        },
+        {
+          "id": "devocional-4",
+          "titulo": "Para meditar",
+          "parrafos": [
+            "Resulta sencillo calcular cuánto debemos pagar o qué esperan los demás. Hoy podemos hacernos una pregunta diferente: ¿estoy dando a Dios el lugar que le corresponde en mi vida?",
+            "Reconocer su autoridad implica considerar nuestras palabras, decisiones y prioridades, incluso cuando nadie observa lo que hacemos."
+          ],
+          "referencias": [
+            "Marcos 12:17"
+          ]
+        },
+        {
+          "id": "devocional-5",
+          "titulo": "Un paso concreto",
+          "parrafos": [
+            "Durante esta semana elegí una decisión cotidiana que solés tomar por costumbre, conveniencia o presión externa.",
+            "Antes de actuar, preguntate si refleja tu fidelidad a Dios. Buscá una acción concreta que exprese integridad, responsabilidad y amor al prójimo."
+          ],
+          "referencias": [
+            "Marcos 12:17"
+          ]
+        },
+        {
+          "id": "devocional-6",
+          "titulo": "Oración",
+          "parrafos": [
+            "Señor, gracias porque mi vida tiene valor delante de vos. Ayudame a cumplir mis responsabilidades con justicia y a no poner ninguna autoridad humana en el lugar que solo te corresponde.",
+            "Enseñame a reconocer tu voluntad en mis decisiones, a vivir con integridad y a recordar que mi fidelidad más profunda te pertenece. Amén."
+          ],
+          "referencias": []
+        }
+      ]
+    }
+  ]
+}
