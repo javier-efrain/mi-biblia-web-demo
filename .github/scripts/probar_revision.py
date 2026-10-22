@@ -54,7 +54,7 @@ with tempfile.TemporaryDirectory() as temp:
       sin_avisos(page,label)
       comprobar_fichas(page,label)
       verses=page.locator('.mv-texto > p').evaluate_all('es=>es.map(e=>[...e.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE).map(n=>n.textContent).join("").trim())')
-      check(verses==expected,label+' 12 versículos RV1909 completos')
+      check(verses==expected,label+f' 12 versículos RV1909 completos (recibidos={len(verses)}, esperados={len(expected)}, muestra={verses[:2]!r})')
       check(page.locator('.mv-portada').count()==(1 if modo=='visual' else 0),label+' portada')
       check(page.locator('.mv-recurso').count()==(2 if modo=='visual' and enfoque=='estudio' else 0),label+' recursos según composición')
       check(page.locator('.mv-contexto').count()==(1 if enfoque=='estudio' else 0),label+' contexto')
