@@ -1,0 +1,8 @@
+RECURSOS PARA MI BIBLIA WEB — ESTUDIO 2
+
+Colocar los tres archivos en revision/motor-visual/desarrollo/contenido/recursos/
+Rama de integración: integracion-estudio2-marcos-12-13-17
+
+AVISO: las inscripciones de la ilustración del denario son inexactas; el recurso está marcado en revisión y debe sustituirse por fotografía numismática verificada antes de su aprobación histórica.
+La portada y la infografía contienen texto incrustado, aprobado visualmente por el usuario.
+No se ha probado la web en navegador ni publicado la integración.
