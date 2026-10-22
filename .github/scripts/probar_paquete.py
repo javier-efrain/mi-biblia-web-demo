@@ -14,6 +14,15 @@ from playwright.sync_api import sync_playwright, expect
 from paquete import validar, AVISO
 
 
+def ajustar_zoom(salida, porcentaje):
+    barra=salida.locator('..')
+    actual=int(salida.get_attribute('data-zoom'))
+    assert 100 <= int(porcentaje) <= 400 and (int(porcentaje)-actual)%25 == 0
+    nombre='Aumentar zoom' if int(porcentaje)>actual else 'Reducir zoom'
+    for _ in range(abs(int(porcentaje)-actual)//25):
+        barra.get_by_role('button',name=nombre,exact=True).click()
+
+
 class Silencioso(SimpleHTTPRequestHandler):
     def log_message(self,*args): pass
 
@@ -23,7 +32,7 @@ def localizar(pagina, selector):
     locales = ('.mv-cierre','.mv-contexto','.mv-devocional','.mv-recurso','.mv-viewport',
                '.mv-portada','.mv-panel','.mv-visor','.mv-hoja','.mv-texto','.mv-plano',
                '.mv-titulo-relato','[data-marcador','[data-elemento','[data-recurso-acceso',
-               'input[type=range]','input[type="range"]')
+               '[data-zoom]','[data-zoom]')
     raiz = 'dialog[open]' if pagina.locator('dialog[open]').count() else '.mv-relato[data-activo=true]'
     partes = []
     for parte in selector.split(','):
@@ -128,8 +137,8 @@ def probar(paquete):
                         r.locator('[data-control="puntos"]').click()
                         comprobar(r.locator('[data-marcador]:visible,[data-elemento]:visible').count()==0,
                                   etiqueta+': puntos y botones ocultos')
-                        comprobar(r.locator('img').is_visible() and r.locator('.mv-panel p').is_visible(),
-                                  etiqueta+': imagen limpia con descripción')
+                        comprobar(r.locator('img').is_visible() and r.locator('.mv-panel').is_hidden(),
+                                  etiqueta+': imagen limpia sin panel de reemplazo')
                         buscar_rol(pagina,'button',name='Devocional',exact=True).click()
                         comprobar(pagina.locator('.mv-recurso').count()==0 and localizar(pagina,'.mv-devocional').count()==1,etiqueta+': Devocional sin recursos intercalados')
                         buscar_rol(pagina,'button',name='Estudio',exact=True).click()
@@ -137,8 +146,8 @@ def probar(paquete):
                         expect(r.locator('.mv-panel output')).to_have_text(re.compile(r'^2 / \d+$'))
                         comprobar(r.locator('[data-elemento="punto-b"]').get_attribute('aria-pressed')=='true',
                                   etiqueta+': selección y página conservadas entre enfoques')
-                        rango = r.locator('input[type="range"]')
-                        rango.fill('300'); rango.dispatch_event('input')
+                        rango = r.locator('[data-zoom]')
+                        ajustar_zoom(rango,300)
                         visor = r.locator('.mv-viewport')
                         visor.evaluate('e=>e.scrollTo(80,120)')
                         comprobar(r.evaluate('''e=>{const p=e.querySelector('.mv-plano').getBoundingClientRect(),
@@ -146,7 +155,7 @@ def probar(paquete):
                             return Math.abs((b.x+b.width/2-p.x)/p.width-.75)<.01&&Math.abs((b.y+b.height/2-p.y)/p.height-.5)<.01;}'''),
                                   etiqueta+': zoom y desplazamiento mantienen puntos alineados')
                         r.get_by_role('button',name='Restablecer',exact=True).click()
-                        expect(rango).to_have_value('100')
+                        expect(rango).to_have_attribute('data-zoom','100')
                         comprobar(r.evaluate('''e=>{const v=e.querySelector('.mv-viewport').getBoundingClientRect(),
                             p=e.querySelector('.mv-plano').getBoundingClientRect();
                             return Math.abs(v.width/v.height-.75)<.01&&Math.abs(p.width/p.height-2/3)<.01&&p.width<=v.width+1&&p.height<=v.height+1;}'''),

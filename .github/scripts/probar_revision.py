@@ -10,6 +10,15 @@ checks=[]
 def check(ok,name):
  assert ok,name
  checks.append(name)
+def ajustar_zoom(salida, porcentaje):
+    barra=salida.locator('..')
+    actual=int(salida.get_attribute('data-zoom'))
+    assert 100 <= int(porcentaje) <= 400 and (int(porcentaje)-actual)%25 == 0
+    nombre='Aumentar zoom' if int(porcentaje)>actual else 'Reducir zoom'
+    for _ in range(abs(int(porcentaje)-actual)//25):
+        barra.get_by_role('button',name=nombre,exact=True).click()
+
+
 class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
 # Simula exactamente el prefijo de GitHub Pages.
@@ -45,8 +54,19 @@ with tempfile.TemporaryDirectory() as temp:
        if enfoque=='estudio':
         page.locator('[data-elemento="vina-1"]').click()
         check(page.locator('[data-marcador="vina-1"]').get_attribute('aria-pressed')=='true',label+' selección sincronizada')
-        slider=page.locator('.mv-recurso').first.locator('input');slider.fill('250');slider.dispatch_event('input')
-        check(slider.input_value()=='250',label+' zoom')
+        recurso=page.locator('.mv-recurso').first
+        barra=recurso.locator('.mv-herramientas')
+        check(barra.locator('button').count()==4 and barra.locator('input').count()==0,label+' barra compacta sin deslizador')
+        check(recurso.locator('[data-elemento]').first.get_attribute('aria-pressed')=='true',label+' primer elemento seleccionado')
+        check(recurso.locator('.mv-panel h4').inner_text()=='La viña',label+' explicación inicial')
+        check(recurso.locator('.mv-visor > small').count()==0 and not recurso.locator('.mv-ficha-recurso').get_attribute('open'),label+' sin descripción general permanente')
+        pagina_explicativa=recurso.locator('.mv-panel output').inner_text()
+        barra.get_by_role('button',name='Ocultar puntos',exact=True).click()
+        check(recurso.locator('.mv-panel').is_hidden() and recurso.locator('.mv-elementos').is_hidden() and recurso.locator('[data-marcador]:visible').count()==0,label+' ocultación completa')
+        barra.get_by_role('button',name='Mostrar puntos',exact=True).click()
+        check(recurso.locator('.mv-panel output').inner_text()==pagina_explicativa and recurso.locator('[data-elemento]').first.get_attribute('aria-pressed')=='true',label+' selección y página restauradas')
+        slider=recurso.locator('[data-zoom]');ajustar_zoom(slider,250)
+        check(slider.get_attribute('data-zoom')=='250',label+' zoom')
       check(page.evaluate('document.documentElement.scrollWidth<=innerWidth'),label+' sin desbordamiento')
     # Comprueba que el mismo sitio sigue sirviendo la demo sintética independiente.
     page.goto(base+'motor-visual/demo.html?relato=demo-dos&modo=visual')
