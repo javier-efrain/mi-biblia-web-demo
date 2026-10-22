@@ -31,7 +31,7 @@
     "revision/motor-visual/js/servicios/validacion.js"
   ],
   "sha256": {
-    "revision/motor-visual/css/motor.css": "84fed00c78ff07103674f92d1fd031231a0b64e28dab7e3c13d4a9f80d80ba32",
+    "revision/motor-visual/css/motor.css": "55f603fbeb383a3d2403ab8243f528a5bb865d3823b7cf598fd3e24fce914af5",
     "revision/motor-visual/desarrollo/contenido/biblia/marcos.json": "18087f91cb595721fed25fd59bd50e080b99fdc87b62d495c53e08bb760bf170",
     "revision/motor-visual/desarrollo/contenido/catalogo.json": "7913ae3d8b4c3df02487d95021298b7e4e9826352d0f248b46f8c4c3f05b0e97",
     "revision/motor-visual/desarrollo/contenido/estudios/mc-12-1-12-v15.json": "cc50093991c7530f243645c9fe4818653c767ba699632949a03d23ec21d90667",
@@ -44,7 +44,7 @@
     "revision/motor-visual/desarrollo/iniciar.js": "c56c32e4784a60a8d19610c78e6d09d9ca035384f40f1d6cb1ac56094c91444a",
     "revision/motor-visual/desarrollo/revision.css": "3d4325021f63958688e16cd612b07f1f9fa110ce4712654c7309a9c8b497b6b1",
     "revision/motor-visual/js/componentes/dom.js": "57db4d5c38267bb0ac46d0997700e30cf11b588a7875d38dcdc91fef5962889a",
-    "revision/motor-visual/js/componentes/explorador.js": "ec076ac6e60e53f8ee2a6b982fb49bb54252644471485bfedc68340e513bb574",
+    "revision/motor-visual/js/componentes/explorador.js": "d29d399125b65bc18c04d2f489e922896265ac82573c7436886278be3c07e602",
     "revision/motor-visual/js/componentes/lector.js": "d4d1f429b38f1a964dd18dcf9e7b00132468494a94ec82a7ecebb446fb175b22",
     "revision/motor-visual/js/componentes/lectura-horizontal.js": "5163a5a2ed48e448a3431647dee5dea9d337ed2f8eaaaf314781dcb3dd3c35e5",
     "revision/motor-visual/js/componentes/portada.js": "bcc93ba63559f60c691b4c75034605933a73263ca8cca9616eed2e593993485a",

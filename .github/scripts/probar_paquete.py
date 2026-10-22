@@ -135,10 +135,10 @@ def probar(paquete):
                         r.locator('.mv-panel nav button').last.click()
                         expect(r.locator('.mv-panel output')).to_have_text(re.compile(r'^2 / \d+$'))
                         r.locator('[data-control="puntos"]').click()
-                        comprobar(r.locator('[data-marcador]:visible,[data-elemento]:visible').count()==0,
-                                  etiqueta+': puntos y botones ocultos')
-                        comprobar(r.locator('img').is_visible() and r.locator('.mv-panel').is_hidden(),
-                                  etiqueta+': imagen limpia sin panel de reemplazo')
+                        comprobar(r.locator('[data-marcador]:visible').count()==0 and r.locator('[data-elemento]:visible').count()>0,
+                                  etiqueta+': solo puntos ocultos')
+                        comprobar(r.locator('img').is_visible() and r.locator('.mv-panel').is_visible(),
+                                  etiqueta+': imagen sin puntos y panel conservado')
                         buscar_rol(pagina,'button',name='Devocional',exact=True).click()
                         comprobar(pagina.locator('.mv-recurso').count()==0 and localizar(pagina,'.mv-devocional').count()==1,etiqueta+': Devocional sin recursos intercalados')
                         buscar_rol(pagina,'button',name='Estudio',exact=True).click()
