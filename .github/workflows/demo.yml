@@ -2,11 +2,6 @@ name: Actualización automática de la demostración técnica
 
 on:
   workflow_dispatch:
-  push:
-    branches: [publicacion-demo]
-    paths: ['.github/**', 'revision/**']
-  schedule:
-    - cron: '*/5 * * * *'
 
 permissions:
   contents: read
