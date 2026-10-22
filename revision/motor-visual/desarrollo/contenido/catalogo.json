@@ -369,6 +369,282 @@
           ]
         }
       ]
+    },
+    {
+      "schemaVersion": 1,
+      "estadoEditorial": "en_revision",
+      "demostracion": false,
+      "id": "mc-12-18-27",
+      "titulo": "La resurrección y los saduceos",
+      "presentacion": "Una pregunta sobre la muerte, una respuesta sobre la vida",
+      "referenciaEtiqueta": "Marcos 12:18–27 · Reina-Valera 1909 · revisión editorial",
+      "referencia": {
+        "version": "RV1909",
+        "libro": "marcos",
+        "rangos": [
+          {
+            "capitulo": 12,
+            "desde": 18,
+            "hasta": 27
+          }
+        ]
+      },
+      "estudioId": "mc-12-18-27-v17",
+      "portadaId": "mc-12-18-27-portada",
+      "coleccionId": "marcos-desarrollo",
+      "orden": 2,
+      "recursos": [
+        {
+          "id": "mc-12-19-levirato",
+          "recursoId": "mc-12-18-27-levirato",
+          "presentacion": "interactivo",
+          "anclajeBiblico": {
+            "version": "RV1909",
+            "libro": "marcos",
+            "capitulo": 12,
+            "versiculo": 19,
+            "posicion": "despues"
+          },
+          "marcadores": [
+            {
+              "id": "levirato-ley",
+              "x": 0.23,
+              "y": 0.83,
+              "titulo": "La ley de Moisés",
+              "certezaHistorica": "Representación artística educativa; la composición visual no constituye evidencia arqueológica ni retrato documentado.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "La ley de Moisés",
+                  "parrafos": [
+                    "Deuteronomio 25:5–10 regula una situación específica: hermanos que viven juntos, uno muere sin descendencia y el otro asume una obligación familiar con la viuda.",
+                    "La ley procura preservar el nombre del difunto y contempla un procedimiento público si el hermano se niega."
+                  ],
+                  "referencias": [
+                    "Deuteronomio 25:5–10"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "levirato-mujer",
+              "x": 0.17,
+              "y": 0.19,
+              "titulo": "La mujer del ejemplo",
+              "certezaHistorica": "Representación artística educativa; la composición visual no constituye evidencia arqueológica ni retrato documentado.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "La mujer del ejemplo",
+                  "parrafos": [
+                    "La mujer del relato no representa una persona históricamente identificada. Los saduceos presentan un caso hipotético para cuestionar la resurrección.",
+                    "Los matrimonios se producen sucesivamente, no al mismo tiempo."
+                  ],
+                  "referencias": [
+                    "Marcos 12:20–23"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "levirato-siete",
+              "x": 0.72,
+              "y": 0.22,
+              "titulo": "Los siete hermanos",
+              "certezaHistorica": "Representación artística educativa; la composición visual no constituye evidencia arqueológica ni retrato documentado.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "Los siete hermanos",
+                  "parrafos": [
+                    "Cada uno de los siete hermanos se casa sucesivamente con la misma mujer, pero todos mueren sin dejar descendencia.",
+                    "El número siete lleva la dificultad planteada por los saduceos a su máxima expresión."
+                  ],
+                  "referencias": [
+                    "Marcos 12:20–22"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "levirato-secuencia",
+              "x": 0.5,
+              "y": 0.54,
+              "titulo": "La secuencia del caso",
+              "certezaHistorica": "Representación artística educativa; la composición visual no constituye evidencia arqueológica ni retrato documentado.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "La secuencia del caso",
+                  "parrafos": [
+                    "Las flechas representan matrimonios sucesivos seguidos de la muerte de cada hermano. No representan matrimonios simultáneos.",
+                    "La pregunta final es de cuál sería esposa la mujer en la resurrección."
+                  ],
+                  "referencias": [
+                    "Marcos 12:20–23"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "levirato-pregunta",
+              "x": 0.78,
+              "y": 0.85,
+              "titulo": "La pregunta de los saduceos",
+              "certezaHistorica": "Representación artística educativa; la composición visual no constituye evidencia arqueológica ni retrato documentado.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "La pregunta de los saduceos",
+                  "parrafos": [
+                    "El argumento supone que el matrimonio terrenal continuará de idéntica manera después de la resurrección.",
+                    "Jesús rechaza esa premisa y explica que la vida resucitada será diferente."
+                  ],
+                  "referencias": [
+                    "Marcos 12:23–25"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mc-12-26-zarza",
+          "recursoId": "mc-12-18-27-zarza",
+          "presentacion": "interactivo",
+          "anclajeBiblico": {
+            "version": "RV1909",
+            "libro": "marcos",
+            "capitulo": 12,
+            "versiculo": 26,
+            "posicion": "despues"
+          },
+          "marcadores": [
+            {
+              "id": "zarza-fuego",
+              "x": 0.18,
+              "y": 0.2,
+              "titulo": "La zarza que no se consumía",
+              "certezaHistorica": "Representación artística educativa; la composición visual no constituye evidencia arqueológica ni retrato documentado.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "La zarza que no se consumía",
+                  "parrafos": [
+                    "Éxodo 3 describe una zarza que ardía sin consumirse. La especie de planta y el lugar exacto no pueden identificarse con certeza.",
+                    "La ilustración es una representación artística, no una reconstrucción verificable."
+                  ],
+                  "referencias": [
+                    "Éxodo 3:1–3"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "zarza-moises",
+              "x": 0.76,
+              "y": 0.22,
+              "titulo": "Moisés",
+              "certezaHistorica": "Representación artística educativa; la composición visual no constituye evidencia arqueológica ni retrato documentado.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "Moisés",
+                  "parrafos": [
+                    "Moisés se encontraba cuidando el rebaño de su suegro cuando se acercó a observar la zarza.",
+                    "El relato de Éxodo presenta este encuentro como el inicio de una misión decisiva para Israel."
+                  ],
+                  "referencias": [
+                    "Éxodo 3:1–4"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "zarza-revelacion",
+              "x": 0.39,
+              "y": 0.5,
+              "titulo": "Dios se revela",
+              "certezaHistorica": "Representación artística educativa; la composición visual no constituye evidencia arqueológica ni retrato documentado.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "Dios se revela",
+                  "parrafos": [
+                    "Dios llama a Moisés y se identifica como el Dios de Abraham, Isaac y Jacob.",
+                    "Esta identidad es el punto del texto que Jesús cita en su respuesta a los saduceos."
+                  ],
+                  "referencias": [
+                    "Éxodo 3:4–6"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "zarza-patriarcas",
+              "x": 0.84,
+              "y": 0.5,
+              "titulo": "Abraham, Isaac y Jacob",
+              "certezaHistorica": "Representación artística educativa; la composición visual no constituye evidencia arqueológica ni retrato documentado.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "Abraham, Isaac y Jacob",
+                  "parrafos": [
+                    "Los tres patriarcas habían muerto antes de la época de Moisés. Dios, sin embargo, se presenta en relación con ellos.",
+                    "La imagen es simbólica y no afirma que sepamos cómo se veían los patriarcas."
+                  ],
+                  "referencias": [
+                    "Éxodo 3:6",
+                    "Marcos 12:26"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "zarza-jesus",
+              "x": 0.35,
+              "y": 0.8,
+              "titulo": "El argumento de Jesús",
+              "certezaHistorica": "Representación artística educativa; la composición visual no constituye evidencia arqueológica ni retrato documentado.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "El argumento de Jesús",
+                  "parrafos": [
+                    "Jesús utiliza Éxodo 3:6 para defender la resurrección: Dios no es Dios de muertos, sino de vivos.",
+                    "Los intérpretes debaten los detalles del razonamiento. Algunos destacan la continuidad de la relación de Dios con los patriarcas; otros, la fidelidad al pacto. No depende únicamente del tiempo verbal «Yo soy»."
+                  ],
+                  "referencias": [
+                    "Marcos 12:26–27"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "zarza-escritura",
+              "x": 0.83,
+              "y": 0.84,
+              "titulo": "La cita de Éxodo",
+              "certezaHistorica": "Representación artística educativa; la composición visual no constituye evidencia arqueológica ni retrato documentado.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "La cita de Éxodo",
+                  "parrafos": [
+                    "Jesús remite al libro de Moisés y a la escena de la zarza. Éxodo 3:6 no describe directamente la resurrección corporal; Jesús desarrolla su argumento teológico desde la identidad de Dios.",
+                    "El rollo de la ilustración es un recurso simbólico, no un manuscrito antiguo identificado."
+                  ],
+                  "referencias": [
+                    "Éxodo 3:6",
+                    "Marcos 12:26–27"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }
