@@ -48,6 +48,54 @@
       "leyenda": "Reconstrucción ilustrativa de una construcción de piedra caliza en la antigua Judea. Tocá «Mostrar puntos» para explorar los elementos y sus explicaciones.\n\nReconstrucción posible, no identificación arqueológica. El sentido arquitectónico exacto de «cabeza del ángulo» es debatido; el énfasis del pasaje es el rechazo y la reivindicación.",
       "autoria": "Generada con ChatGPT para Mi Biblia Web, según declaración del responsable del proyecto.",
       "derechos": "Procedencia declarada por el responsable; publicación de revisión propuesta, pendiente de autorización final. Sin atribuciones obligatorias conocidas según su declaración."
+    },
+    {
+      "schemaVersion": 1,
+      "estadoEditorial": "en_revision",
+      "demostracion": false,
+      "id": "mc-12-13-17-portada",
+      "tipo": "portada",
+      "src": "recursos/marcos-12-13-17-portada.jpg",
+      "alt": "Jesús muestra una moneda a sus interrogadores en Jerusalén; portada narrativa con título El tributo al César",
+      "dimensiones": {
+        "ancho": 1672,
+        "alto": 941
+      },
+      "leyenda": "Escena artística de Marcos 12:13–17; los rasgos personales y el entorno exacto son reconstrucciones.",
+      "autoria": "Generada con ChatGPT para Mi Biblia Web; recurso artístico de revisión.",
+      "derechos": "Generación original para el proyecto; revisión editorial pendiente."
+    },
+    {
+      "schemaVersion": 1,
+      "estadoEditorial": "en_revision",
+      "demostracion": false,
+      "id": "mc-12-13-17-denario",
+      "tipo": "imagen",
+      "src": "recursos/marcos-12-13-17-denario.webp",
+      "alt": "Ilustración educativa del anverso y reverso de un denario de Tiberio, con detalles ampliados",
+      "dimensiones": {
+        "ancho": 1086,
+        "alto": 1448
+      },
+      "leyenda": "Recurso ilustrativo basado en monedas del reinado de Tiberio. Las inscripciones grabadas por el generador no son numismáticamente exactas; las transcripciones históricas se explican en los controles interactivos.",
+      "autoria": "Generada con ChatGPT para Mi Biblia Web; recurso artístico de revisión.",
+      "derechos": "Generación original para el proyecto; revisión editorial pendiente."
+    },
+    {
+      "schemaVersion": 1,
+      "estadoEditorial": "en_revision",
+      "demostracion": false,
+      "id": "mc-12-13-17-infografia",
+      "tipo": "imagen",
+      "src": "recursos/marcos-12-13-17-trampa.webp",
+      "alt": "Infografía sobre la pregunta del tributo, sus dos respuestas comprometedoras y la enseñanza de Jesús",
+      "dimensiones": {
+        "ancho": 1086,
+        "alto": 1448
+      },
+      "leyenda": "Infografía interpretativa del desarrollo narrativo de Marcos 12:13–17. Las reacciones hipotéticas son escenarios posibles, no hechos descritos por Marcos.",
+      "autoria": "Generada con ChatGPT para Mi Biblia Web; recurso artístico de revisión.",
+      "derechos": "Generación original para el proyecto; revisión editorial pendiente."
     }
   ]
 }
