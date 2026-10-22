@@ -522,8 +522,8 @@
           "marcadores": [
             {
               "id": "zarza-fuego",
-              "x": 0.18,
-              "y": 0.2,
+              "x": 0.25,
+              "y": 0.22,
               "titulo": "La zarza que no se consumía",
               "certezaHistorica": "Representación artística educativa; la composición visual no constituye evidencia arqueológica ni retrato documentado.",
               "paginas": [
@@ -542,8 +542,8 @@
             },
             {
               "id": "zarza-moises",
-              "x": 0.76,
-              "y": 0.22,
+              "x": 0.12,
+              "y": 0.52,
               "titulo": "Moisés",
               "certezaHistorica": "Representación artística educativa; la composición visual no constituye evidencia arqueológica ni retrato documentado.",
               "paginas": [
@@ -562,7 +562,7 @@
             },
             {
               "id": "zarza-revelacion",
-              "x": 0.39,
+              "x": 0.37,
               "y": 0.5,
               "titulo": "Dios se revela",
               "certezaHistorica": "Representación artística educativa; la composición visual no constituye evidencia arqueológica ni retrato documentado.",
@@ -582,7 +582,7 @@
             },
             {
               "id": "zarza-patriarcas",
-              "x": 0.84,
+              "x": 0.86,
               "y": 0.5,
               "titulo": "Abraham, Isaac y Jacob",
               "certezaHistorica": "Representación artística educativa; la composición visual no constituye evidencia arqueológica ni retrato documentado.",
@@ -603,8 +603,8 @@
             },
             {
               "id": "zarza-jesus",
-              "x": 0.35,
-              "y": 0.8,
+              "x": 0.22,
+              "y": 0.78,
               "titulo": "El argumento de Jesús",
               "certezaHistorica": "Representación artística educativa; la composición visual no constituye evidencia arqueológica ni retrato documentado.",
               "paginas": [
@@ -644,7 +644,8 @@
             }
           ]
         }
-      ]
+      ],
+      "mostrarPresentacion": true
     }
   ]
 }

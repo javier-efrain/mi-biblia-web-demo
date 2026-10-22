@@ -52,6 +52,7 @@ export async function crearMotor({ root, catalogo, biblia, contenidos, inicial, 
     const referencia=nodo('p',{className:'mv-referencia'},relato.referenciaEtiqueta);
     const cuerpo=nodo('div',{className:'mv-cuerpo'},mensaje('Cargando texto…'));
     const articulo=nodo('article',{className:'mv-relato','data-relato-contenido':relato.id,'aria-labelledby':titulo.id},titulo,referencia,cuerpo);
+    if (relato.mostrarPresentacion && relato.presentacion) referencia.before(nodo('p',{className:'mv-referencia'},relato.presentacion));
     root.querySelector('.mv-capitulo-lectura').append(articulo);
     try {
       const pasaje = await biblia.obtenerPasaje(relato.referencia);

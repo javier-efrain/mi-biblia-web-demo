@@ -10,5 +10,19 @@
     "textoBiblico": "Reina-Valera 1909; autorizado por el usuario para la revisión pública. RVC excluida.",
     "alcance": "La declaración de procedencia no constituye una auditoría de similitud con todas las obras de terceros."
   },
-  "avisoEditorial": "VERSIÓN DE REVISIÓN. Texto bíblico: Reina-Valera 1909. Estudios e imágenes en revisión editorial. No es RVC ni la edición definitiva. La demostración sintética permanece separada."
+  "avisoEditorial": "VERSIÓN DE REVISIÓN. Texto bíblico: Reina-Valera 1909. Estudios e imágenes en revisión editorial. No es RVC ni la edición definitiva. La demostración sintética permanece separada.",
+  "verificacionEstudio3": {
+    "textoBiblico": {
+      "version": "RV1909",
+      "referencia": "Marcos 12:18–27",
+      "fuente": "https://ebible.org/spaRV1909/MRK12.htm",
+      "contraste": "https://es.wikisource.org/wiki/Biblia_Reina-Valera_1909/Marcos/12",
+      "resultado": "Diez versículos cotejados. Se corrigió el pronombre él de 12:18 conforme a eBible; Wikisource conserva el sin tilde. Resto del pasaje coincidente.",
+      "fecha": "2026-10-22"
+    },
+    "imagenes": {
+      "origen": "ZIP estudio3_recursos_web.zip proporcionado por el usuario para publicación",
+      "verificacion": "Tres WebP incorporados sin alterar sus bytes; portada panorámica sin título incrustado y dos láminas verticales 2:3. Coordenadas contrastadas visualmente con las imágenes."
+    }
+  }
 }

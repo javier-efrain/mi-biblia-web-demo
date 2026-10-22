@@ -70,7 +70,7 @@ export function validarRecursos(biblioteca) {
     exigir(['portada', 'mapa', 'imagen', 'diagrama'].includes(r.tipo), 'Tipo inválido.');
     exigir([r.src, r.alt, r.leyenda, r.autoria, r.derechos].every(texto), 'Metadatos de recurso incompletos.');
     exigir(r.dimensiones && [r.dimensiones.ancho, r.dimensiones.alto].every(n => Number.isInteger(n) && n > 0), 'Dimensiones inválidas.');
-    if (r.tipo === 'portada') exigir(Math.abs(r.dimensiones.ancho * 9 - r.dimensiones.alto * 16) <= 16, 'La portada debe ser 16:9.');
+    if (r.tipo === 'portada') exigir(r.dimensiones.ancho > r.dimensiones.alto, 'La portada debe ser horizontal.');
   }
   return biblioteca;
 }

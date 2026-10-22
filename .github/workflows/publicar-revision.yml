@@ -19,7 +19,7 @@ jobs:
   publicar:
     if: github.repository == 'javier-efrain/mi-biblia-web-demo'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     permissions:
       contents: read
       pages: write
@@ -59,13 +59,25 @@ jobs:
       - name: Preparar sitio de revisión
         run: |
           mkdir -p _site
-          cp -R revision _site/revision
+          python .github/scripts/paquete.py --actualizar --salida _site --informe inventario.json
+          PAQUETE_A_PROBAR=_site python -m unittest discover -s .github/scripts -p 'test_*.py' -v
+          python .github/scripts/revision.py --sitio _site --informe inventario.json --incorporar
           cat > _site/index.html <<'HTML'
           <!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=revision/motor-visual/desarrollo/index.html"><title>Mi Biblia Web · Revisión</title><a href="revision/motor-visual/desarrollo/index.html">Abrir revisión</a></html>
           HTML
+      - name: Probar tres estudios en escritorio y móvil
+        run: |
+          python -m pip install -r .github/requirements-pruebas.txt
+          python -m playwright install --with-deps chromium
+          python .github/scripts/probar_revision.py --sitio _site --informe pruebas-revision.json
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
       - name: Publicar GitHub Pages
         id: deploy
         uses: actions/deploy-pages@v4
+      - name: Verificar lector publicado
+        env:
+          URL_PAGES: ${{ steps.deploy.outputs.page_url }}
+        run: |
+          python .github/scripts/probar_revision.py --sitio _site --url "$URL_PAGES" --informe pruebas-publicas.json

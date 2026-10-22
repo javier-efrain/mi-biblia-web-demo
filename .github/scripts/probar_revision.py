@@ -1,122 +1,108 @@
+"""Regresión del catálogo editorial completo, también contra la URL de Pages."""
 from functools import partial
-from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer
 from pathlib import Path
-import importlib.util,json,sys,threading,tempfile
+import argparse,json,os,tempfile,threading
 from playwright.sync_api import sync_playwright,expect
-import argparse,os
-parser=argparse.ArgumentParser();parser.add_argument('--sitio',type=Path,required=True);parser.add_argument('--informe',type=Path,required=True);parser.add_argument('--url');args=parser.parse_args()
-SITIO=args.sitio.resolve()
+p=argparse.ArgumentParser();p.add_argument('--sitio',type=Path,required=True);p.add_argument('--informe',type=Path,required=True);p.add_argument('--url');args=p.parse_args()
+sitio=args.sitio.resolve();contenido=sitio/'revision/motor-visual/desarrollo/contenido'
+catalogo=json.loads((contenido/'catalogo.json').read_text());libro=json.loads((contenido/'biblia/marcos.json').read_text())
 checks=[]
-registro=json.loads((SITIO/'revision/motor-visual/desarrollo/contenido/registro-v15.json').read_text())
+registro=json.loads((contenido/'registro-v15.json').read_text())
 avisos=[registro['avisoEditorial'],*registro['advertenciasHistoricas']]
-def sin_avisos(page,label):
- texto=page.locator('body').inner_text()
- check(all(aviso not in texto for aviso in avisos),label+' cuatro avisos fuera de la lectura')
-def comprobar_fichas(page,label):
- for ficha in page.locator('.mv-ficha-recurso').all():
-  ficha.locator('summary').click()
-  sin_avisos(page,label+' ficha abierta')
-  check(bool(ficha.locator('p').first.inner_text().strip()),label+' descripción restante conservada')
-  ficha.locator('summary').click()
-def check(ok,name):
- assert ok,name
- checks.append(name)
-def ajustar_zoom(salida, porcentaje):
-    barra=salida.locator('..')
-    actual=int(salida.get_attribute('data-zoom'))
-    assert 100 <= int(porcentaje) <= 400 and (int(porcentaje)-actual)%25 == 0
-    nombre='Aumentar zoom' if int(porcentaje)>actual else 'Reducir zoom'
-    for _ in range(abs(int(porcentaje)-actual)//25):
-        barra.get_by_role('button',name=nombre,exact=True).click()
-
-
+def check(ok,label):
+ assert ok,label
+ checks.append(label)
 class Handler(SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
-# Simula exactamente el prefijo de GitHub Pages.
 with tempfile.TemporaryDirectory() as temp:
- raiz=Path(temp);(raiz/'mi-biblia-web-demo').symlink_to(SITIO,target_is_directory=True)
- server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=raiz))
- threading.Thread(target=server.serve_forever,daemon=True).start()
+ raiz=Path(temp);(raiz/'mi-biblia-web-demo').symlink_to(sitio,target_is_directory=True)
+ server=ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=raiz));threading.Thread(target=server.serve_forever,daemon=True).start()
  try:
-  with sync_playwright() as p:
-   browser=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH'),args=['--no-sandbox'])
-   for device,config in [('escritorio',{'viewport':{'width':1280,'height':900}}),('movil',{'viewport':{'width':390,'height':844},'is_mobile':True,'has_touch':True})]:
-    ctx=browser.new_context(**config);page=ctx.new_page();errors=[];bad=[]
-    page.on('pageerror',lambda e:errors.append(str(e)))
-    page.on('response',lambda r:bad.append(r.url) if r.status>=400 else None)
+  with sync_playwright() as pw:
+   browser=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH'),args=['--no-sandbox'])
+   for ancho in [1280,390,393]:
+    ctx=browser.new_context(viewport={'width':ancho,'height':900 if ancho==1280 else 844},is_mobile=ancho<500,has_touch=ancho<500)
+    page=ctx.new_page();errores=[];fallos=[]
+    page.on('pageerror',lambda e:errores.append(str(e)));page.on('response',lambda r:fallos.append(r.url) if r.status>=400 else None)
     base=args.url.rstrip('/')+'/' if args.url else f'http://127.0.0.1:{server.server_port}/mi-biblia-web-demo/'
-    expected=list(json.loads((SITIO/'revision/motor-visual/desarrollo/contenido/biblia/marcos.json').read_text())['capitulos']['12'][str(i)] for i in range(1,13))
     for modo in ['visual','texto']:
      for enfoque in ['estudio','devocional']:
-      label=f'{device}/{modo}/{enfoque}'
-      page.goto(base+f'revision/motor-visual/desarrollo/index.html?relato=mc-12-1-12&modo={modo}&enfoque={enfoque}')
+      label=f'{ancho}/{modo}/{enfoque}'
+      page.goto(base+f'revision/motor-visual/desarrollo/index.html?relato=mc-12-18-27&modo={modo}&enfoque={enfoque}')
       page.wait_for_selector('#motor[data-listo=true]')
-      sin_avisos(page,label)
-      comprobar_fichas(page,label)
-      verses=page.locator('.mv-texto > p').evaluate_all('es=>es.map(e=>({id:e.getAttribute("data-versiculo"),text:e.textContent.trim()}))')
-      check(len(verses)==12 and all(v['id']==f'marcos:12:{i}' and expected[i-1] in v['text'] for i,v in enumerate(verses,1)),label+' 12 versículos RV1909 completos y ordenados')
-      check(page.locator('.mv-portada').count()==(1 if modo=='visual' else 0),label+' portada')
-      check(page.locator('.mv-recurso').count()==(2 if modo=='visual' and enfoque=='estudio' else 0),label+' recursos según composición')
-      check(page.locator('.mv-contexto').count()==(1 if enfoque=='estudio' else 0),label+' contexto')
-      check(page.locator('.mv-devocional').count()==(1 if enfoque=='devocional' else 0),label+' devocional')
-      check(page.locator('.mv-abrir-completa').count()==0,label+' sin botón Pantalla completa')
-      check(page.locator('.mv-recurso').evaluate_all('es=>es.every(e=>e.querySelector(".mv-ficha-recurso").nextElementSibling.classList.contains("mv-explorador"))'),label+' sin hueco del botón eliminado')
-      if modo=='texto':
-       page.locator('[data-recurso-acceso]').last.click();page.wait_for_selector('dialog .mv-visor')
-       comprobar_fichas(page,label+' modal')
-       check(page.locator('dialog img').count()==1,label+' modal opcional')
-       dialogo=page.locator('dialog');acceso=page.locator('[data-recurso-acceso]').last
-       check(dialogo.locator('.mv-abrir-completa').count()==0 and dialogo.get_by_role('button',name='Cerrar recurso',exact=True).is_visible(),label+' modal sin pantalla completa conserva cierre')
-       dialogo.get_by_role('button',name='Aumentar zoom',exact=True).click()
-       expect(dialogo.locator('[data-zoom]')).to_have_attribute('data-zoom','125')
-       cerrar=dialogo.get_by_role('button',name='Cerrar recurso',exact=True)
-       if device=='movil':cerrar.tap()
-       else:cerrar.click()
-       expect(page.locator('dialog')).to_have_count(0);expect(acceso).to_be_focused()
-      else:
-       if enfoque=='estudio':
-        page.locator('[data-elemento="vina-1"]').click()
-        check(page.locator('[data-marcador="vina-1"]').get_attribute('aria-pressed')=='true',label+' selección sincronizada')
-        recurso=page.locator('.mv-recurso').first
-        barra=recurso.locator('.mv-herramientas')
-        check(barra.locator('button').count()==4 and barra.locator('input').count()==0,label+' barra compacta sin deslizador')
-        check(recurso.locator('[data-elemento]').first.get_attribute('aria-pressed')=='true',label+' primer elemento seleccionado')
-        check(recurso.locator('.mv-panel h4').inner_text()=='La viña',label+' explicación inicial')
-        check(recurso.locator('.mv-visor > small').count()==0 and not recurso.locator('.mv-ficha-recurso').get_attribute('open'),label+' sin descripción general permanente')
-        # Esperar fuentes y dos cuadros: el paginador mide sus columnas tras montar.
-        page.evaluate('async()=>{await document.fonts.ready;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))}')
-        pagina_explicativa=recurso.locator('.mv-panel output').inner_text()
-        panel_original=recurso.locator('.mv-panel').element_handle()
-        barra.get_by_role('button',name='Ocultar puntos',exact=True).click()
-        check(recurso.locator('.mv-panel').is_visible() and recurso.locator('.mv-elementos').is_visible() and recurso.locator('[data-marcador]:visible').count()==0,label+' solo marcadores ocultos')
-        ultimo=recurso.locator('[data-elemento]').last
-        ultimo.click();actual=ultimo.get_attribute('data-elemento')
-        expect(recurso.locator(f'[data-marcador="{actual}"]')).to_have_attribute('aria-pressed','true')
-        check(recurso.locator('.mv-panel h4').inner_text()==ultimo.inner_text() and recurso.locator('[data-marcador]:visible').count()==0,label+' botones cambian explicación con puntos ocultos')
-        page.evaluate('async()=>{await document.fonts.ready;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))}')
-        pagina_explicativa=recurso.locator('.mv-panel output').inner_text()
-        barra.get_by_role('button',name='Mostrar puntos',exact=True).click()
-        expect(recurso.locator('.mv-panel output')).to_have_text(pagina_explicativa)
-        check(recurso.locator('.mv-panel').evaluate('(e,original)=>e===original',panel_original) and recurso.locator('[data-elemento][aria-pressed=true]').get_attribute('data-elemento')==actual,label+' selección actual, panel y página restaurados')
-        slider=recurso.locator('[data-zoom]');ajustar_zoom(slider,250)
-        check(slider.get_attribute('data-zoom')=='250',label+' zoom')
-      check(page.evaluate('document.documentElement.scrollWidth<=innerWidth'),label+' sin desbordamiento')
-    # Nuevo relato: verificar carga y continuidad del índice en ambos dispositivos.
-    for modo in ['visual','texto']:
-     for enfoque in ['estudio','devocional']:
-      page.goto(base+f'revision/motor-visual/desarrollo/index.html?relato=mc-12-13-17&modo={modo}&enfoque={enfoque}')
-      page.wait_for_selector('#motor[data-listo=true]')
-      check('El tributo al César' in page.locator('body').inner_text(),f'{device}/{modo}/{enfoque} estudio 2 visible')
-      check(page.locator('.mv-portada').count()==(1 if modo=='visual' else 0),f'{device}/{modo}/{enfoque} portada estudio 2')
-      check(page.locator('.mv-recurso').count()==(2 if modo=='visual' and enfoque=='estudio' else 0),f'{device}/{modo}/{enfoque} recursos estudio 2')
-      check(page.evaluate('document.documentElement.scrollWidth<=innerWidth'),f'{device}/{modo}/{enfoque} estudio 2 sin desbordamiento')
-    # Comprueba que el mismo sitio sigue sirviendo la demo sintética independiente.
-    page.goto(base+'motor-visual/demo.html?relato=demo-dos&modo=visual')
-    page.wait_for_selector('.mv-relato')
-    check('Los labradores malvados' not in page.locator('body').inner_text(),device+' demo sintética separada')
-    check(not errors and not bad,device+' sin errores JS ni HTTP')
+      check(page.locator('[data-relato-indice]').count()==len(catalogo['relatos'])==3,label+' tres relatos en índice')
+      check(page.locator('.mv-texto > p').count()==27,label+' lectura continua con 27 versículos')
+      check('no disponibles' not in page.locator('body').inner_text() and 'No fue posible' not in page.locator('body').inner_text(),label+' sin errores de contenido')
+      check(all(a not in page.locator('body').inner_text() for a in avisos),label+' avisos antiguos permanecen fuera de lectura')
+      for relato in catalogo['relatos']:
+       rid=relato['id'];art=page.locator(f'[data-relato-contenido="{rid}"]');ref=relato['referencia']['rangos'][0]
+       nums=list(range(ref['desde'],ref['hasta']+1));versos=art.locator('.mv-texto > p').all()
+       check(len(versos)==len(nums) and all(v.get_attribute('data-versiculo')==f'marcos:12:{n}' and libro['capitulos']['12'][str(n)] in v.inner_text() for n,v in zip(nums,versos)),label+' '+rid+' texto completo y ordenado')
+       check(art.locator('.mv-portada').count()==int(modo=='visual'),label+' '+rid+' portada según modo')
+       check(art.locator('.mv-contexto').count()==int(enfoque=='estudio'),label+' '+rid+' contexto según enfoque')
+       check(art.locator('.mv-devocional').count()==int(enfoque=='devocional'),label+' '+rid+' devocional según enfoque')
+       check(art.locator('.mv-recurso').count()==(len(relato['recursos']) if modo=='visual' and enfoque=='estudio' else 0),label+' '+rid+' recursos según enfoque')
+       check(art.locator('[data-recurso-acceso]').count()==(len(relato['recursos']) if modo=='texto' else 0),label+' '+rid+' accesos opcionales')
+       if modo=='visual':
+        expect(art.locator('.mv-portada img')).to_have_js_property('complete',True)
+        check(art.locator('.mv-portada img').evaluate('(e)=>e.naturalWidth>0'),label+' '+rid+' portada cargada')
+       for uso in relato['recursos']:
+        if modo=='visual' and enfoque=='devocional':continue
+        modal=modo=='texto'
+        if modal:
+         acceso=art.locator(f'[data-recurso-acceso="{uso["id"]}"]');acceso.click();page.wait_for_selector('dialog .mv-visor');host=page.locator('dialog')
+        else:host=art.locator(f'[data-uso="{uso["id"]}"]')
+        imagen=host.locator('.mv-visor img');expect(imagen).to_have_js_property('complete',True)
+        check(imagen.evaluate('(e)=>e.naturalWidth>0 && e.naturalHeight>0'),label+' '+uso['id']+' imagen cargada')
+        ficha=host.locator('.mv-ficha-recurso');ficha.locator('summary').click()
+        check(all(a not in ficha.inner_text() for a in avisos),label+' ficha sin avisos retirados')
+        ficha.locator('summary').click()
+        if not modal:
+         check(host.evaluate('(e)=>e.previousElementSibling.dataset.versiculo')==f'marcos:12:{uso["anclajeBiblico"]["versiculo"]}',label+' '+uso['id']+' anclaje correcto')
+        check(host.locator('[data-elemento][aria-pressed=true]').get_attribute('data-elemento')==uso['marcadores'][0]['id'],label+' '+uso['id']+' selección inicial')
+        for marcador in uso['marcadores']:
+         mid=marcador['id'];boton=host.locator(f'[data-elemento="{mid}"]');boton.click()
+         expect(host.locator(f'[data-marcador="{mid}"]')).to_have_attribute('aria-pressed','true')
+         check(host.locator('.mv-panel h4').inner_text()==marcador['titulo'],label+' '+mid+' botón, marcador y explicación sincronizados')
+        ojo=host.get_by_role('button',name='Ocultar puntos',exact=True);ojo.click()
+        check(host.locator('[data-marcador]:visible').count()==0 and host.locator('.mv-panel').is_visible() and host.locator('.mv-elementos').is_visible(),label+' '+uso['id']+' ojo oculta solo puntos')
+        host.locator('[data-elemento]').first.click();expect(host.locator('.mv-panel h4')).to_have_text(uso['marcadores'][0]['titulo'])
+        host.get_by_role('button',name='Mostrar puntos',exact=True).click()
+        host.locator('[data-marcador]').first.click();expect(host.locator('[data-elemento]').first).to_have_attribute('aria-pressed','true')
+        host.get_by_role('button',name='Aumentar zoom',exact=True).click();expect(host.locator('[data-zoom]')).to_have_attribute('data-zoom','125')
+        host.get_by_role('button',name='Restablecer',exact=True).click();expect(host.locator('[data-zoom]')).to_have_attribute('data-zoom','100')
+        check(host.locator('.mv-abrir-completa').count()==0,label+' sin botón pantalla completa')
+        if modal:
+         cerrar=host.get_by_role('button',name='Cerrar recurso',exact=True)
+         if ancho<500:cerrar.tap()
+         else:cerrar.click()
+         expect(page.locator('dialog')).to_have_count(0);expect(acceso).to_be_focused()
+      if modo=='visual' and enfoque=='estudio':
+       visor3=page.locator('[data-uso="mc-12-19-levirato"]')
+       visor3.get_by_role('button',name='Aumentar zoom',exact=True).click()
+       page.locator('[data-enfoque="devocional"]').click();expect(page.locator('.mv-recurso')).to_have_count(0)
+       page.locator('[data-enfoque="estudio"]').click();expect(page.locator('[data-uso="mc-12-19-levirato"] [data-zoom]')).to_have_attribute('data-zoom','125')
+       check(True,label+' visor conserva estado al cambiar enfoque')
+       hoja=page.locator('[data-relato-contenido="mc-12-18-27"] .mv-contexto')
+       siguiente=hoja.get_by_role('button',name='Siguiente →',exact=True)
+       expect(siguiente).to_be_enabled();antes=hoja.locator('output').inner_text();siguiente.click()
+       expect(hoja.locator('output')).not_to_have_text(antes)
+       check(True,label+' contexto con paginación horizontal')
+      if modo=='visual':
+       tercera=page.locator('[data-relato-contenido="mc-12-18-27"]')
+       check('Una pregunta sobre la muerte, una respuesta sobre la vida' in tercera.inner_text(),label+' frase de interés en HTML')
+       img=tercera.locator('.mv-portada img')
+       check(img.evaluate('(e)=>Math.abs(e.clientWidth/e.clientHeight-e.naturalWidth/e.naturalHeight)<.02'),label+' portada panorámica completa')
+      for relato in catalogo['relatos']:
+       page.locator(f'[data-relato-indice="{relato["id"]}"]').click();expect(page.locator('#motor')).to_have_attribute('data-relato',relato['id'])
+       expect(page.locator(f'[data-relato-indice="{relato["id"]}"]')).to_have_attribute('aria-current','true')
+      check(page.evaluate('document.documentElement.scrollWidth<=innerWidth'),label+' sin desbordamiento horizontal')
+    page.goto(base+'motor-visual/demo.html?relato=demo-dos&modo=visual');page.wait_for_selector('.mv-relato')
+    check('Los labradores malvados' not in page.locator('body').inner_text(),f'{ancho} demo sintética independiente')
+    check(not errores and not fallos,f'{ancho} sin errores JavaScript ni HTTP: {errores} {fallos}')
     ctx.close()
    browser.close()
  finally:server.shutdown();server.server_close()
 args.informe.write_text(json.dumps({'ok':True,'urlPublica':args.url,'comprobaciones':len(checks),'casos':checks},ensure_ascii=False,indent=2)+'\n')
-print('Rutas Pages y cuatro modos:',len(checks),'comprobaciones correctas.')
+print('Tres estudios y cuatro modos:',len(checks),'comprobaciones correctas.')
