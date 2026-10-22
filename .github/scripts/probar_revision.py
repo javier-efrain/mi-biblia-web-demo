@@ -46,10 +46,19 @@ with tempfile.TemporaryDirectory() as temp:
       check(page.locator('.mv-recurso').count()==(2 if modo=='visual' and enfoque=='estudio' else 0),label+' recursos según composición')
       check(page.locator('.mv-contexto').count()==(1 if enfoque=='estudio' else 0),label+' contexto')
       check(page.locator('.mv-devocional').count()==(1 if enfoque=='devocional' else 0),label+' devocional')
+      check(page.locator('.mv-abrir-completa').count()==0,label+' sin botón Pantalla completa')
+      check(page.locator('.mv-recurso').evaluate_all('es=>es.every(e=>e.querySelector(".mv-ficha-recurso").nextElementSibling.classList.contains("mv-explorador"))'),label+' sin hueco del botón eliminado')
       if modo=='texto':
        page.locator('[data-recurso-acceso]').last.click();page.wait_for_selector('dialog .mv-visor')
        check(page.locator('dialog img').count()==1,label+' modal opcional')
-       page.keyboard.press('Escape');expect(page.locator('dialog')).to_have_count(0)
+       dialogo=page.locator('dialog');acceso=page.locator('[data-recurso-acceso]').last
+       check(dialogo.locator('.mv-abrir-completa').count()==0 and dialogo.get_by_role('button',name='Cerrar recurso',exact=True).is_visible(),label+' modal sin pantalla completa conserva cierre')
+       dialogo.get_by_role('button',name='Aumentar zoom',exact=True).click()
+       expect(dialogo.locator('[data-zoom]')).to_have_attribute('data-zoom','125')
+       cerrar=dialogo.get_by_role('button',name='Cerrar recurso',exact=True)
+       if device=='movil':cerrar.tap()
+       else:cerrar.click()
+       expect(page.locator('dialog')).to_have_count(0);expect(acceso).to_be_focused()
       else:
        if enfoque=='estudio':
         page.locator('[data-elemento="vina-1"]').click()
