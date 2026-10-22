@@ -1,0 +1,13 @@
+{
+  "advertenciasHistoricas": [
+    "Portada narrativa cinematográfica horizontal: ataque de labradores al hijo en viña; interpretación artística de la parábola, no documentación de un hecho histórico.",
+    "Reconstrucción histórica aproximada. Los detalles arquitectónicos y del paisaje no representan un sitio arqueológico identificado.",
+    "Reconstrucción posible, no identificación arqueológica. El sentido arquitectónico exacto de «cabeza del ángulo» es debatido; el énfasis del pasaje es el rechazo y la reivindicación."
+  ],
+  "procedencia": {
+    "declaradaPorUsuario": "Imágenes generadas con ChatGPT y estudios elaborados en conversaciones para Mi Biblia Web. Sin copia deliberada de imágenes externas ni estudios completos de terceros; sin atribuciones obligatorias conocidas.",
+    "verificada": "Tres imágenes idénticas por SHA-256 a V15; estudios y 12 versículos coinciden con el respaldo. No se encontró evidencia documental independiente del proceso de generación.",
+    "textoBiblico": "Reina-Valera 1909; autorizado por el usuario para la revisión pública. RVC excluida.",
+    "alcance": "La declaración de procedencia no constituye una auditoría de similitud con todas las obras de terceros."
+  }
+}

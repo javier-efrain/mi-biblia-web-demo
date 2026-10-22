@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "relatos": [
+    {
+      "schemaVersion": 1,
+      "estadoEditorial": "en_revision",
+      "demostracion": false,
+      "id": "mc-12-1-12",
+      "titulo": "Los labradores malvados",
+      "presentacion": "Cuando olvidamos quién es el dueño",
+      "referenciaEtiqueta": "Marcos 12:1–12 · Reina-Valera 1909 · revisión editorial y de derechos pendiente",
+      "referencia": {
+        "version": "RV1909",
+        "libro": "marcos",
+        "rangos": [
+          {
+            "capitulo": 12,
+            "desde": 1,
+            "hasta": 12
+          }
+        ]
+      },
+      "estudioId": "mc-12-1-12-v15",
+      "portadaId": "mc-12-portada-v15",
+      "coleccionId": "marcos-desarrollo",
+      "orden": 0,
+      "recursos": [
+        {
+          "id": "mc-12-1-vina",
+          "recursoId": "mc-12-vina-v15",
+          "presentacion": "interactivo",
+          "anclajeBiblico": {
+            "version": "RV1909",
+            "libro": "marcos",
+            "capitulo": 12,
+            "versiculo": 1,
+            "posicion": "despues"
+          },
+          "marcadores": [
+            {
+              "id": "vina-1",
+              "x": 0.54,
+              "y": 0.48,
+              "titulo": "La viña",
+              "certezaHistorica": "Reconstrucción histórica aproximada. Los detalles arquitectónicos y del paisaje no representan un sitio arqueológico identificado.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "La viña",
+                  "parrafos": [
+                    "En la Judea del siglo I, las vides se cultivaban en terrenos diversos, incluidos campos y laderas acondicionadas con terrazas de piedra. El cultivo requería preparar el suelo, podar las plantas, cuidar los racimos y proteger la cosecha. Las uvas podían consumirse frescas, secarse como pasas o utilizarse para elaborar vino. Una viña bien mantenida podía producir durante muchos años."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "vina-2",
+              "x": 0.25,
+              "y": 0.7,
+              "titulo": "El lagar",
+              "certezaHistorica": "Reconstrucción histórica aproximada. Los detalles arquitectónicos y del paisaje no representan un sitio arqueológico identificado.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "El lagar",
+                  "parrafos": [
+                    "El lagar era una instalación utilizada para extraer el jugo de las uvas. Muchos lagares antiguos consistían en una superficie excavada o revestida donde se pisaban los racimos. El mosto escurría por un canal hacia un depósito inferior, desde donde podía recogerse para su posterior elaboración. Se han documentado instalaciones de este tipo en distintos lugares de la antigua tierra de Israel."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "vina-3",
+              "x": 0.87,
+              "y": 0.18,
+              "titulo": "La torre",
+              "certezaHistorica": "Reconstrucción histórica aproximada. Los detalles arquitectónicos y del paisaje no representan un sitio arqueológico identificado.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "La torre",
+                  "parrafos": [
+                    "Las torres de vigilancia permitían observar los campos y detectar animales o personas que pudieran dañar o robar la cosecha. Algunas estructuras agrícolas también podían proporcionar refugio o espacio para guardar herramientas. Su construcción variaba según el terreno, los recursos disponibles y las necesidades del propietario. La torre representada en nuestra ilustración es una reconstrucción posible, no un edificio identificado arqueológicamente con la parábola."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "vina-4",
+              "x": 0.8,
+              "y": 0.53,
+              "titulo": "La cerca",
+              "certezaHistorica": "Reconstrucción histórica aproximada. Los detalles arquitectónicos y del paisaje no representan un sitio arqueológico identificado.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "La cerca",
+                  "parrafos": [
+                    "Los cercados ayudaban a delimitar y proteger los terrenos cultivados. En regiones pedregosas podían construirse muros de piedra seca, aprovechando materiales recogidos durante la preparación del suelo. Estas barreras dificultaban el ingreso de animales y contribuían a organizar el espacio agrícola. No todas las viñas tenían necesariamente el mismo tipo de cerramiento."
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mc-12-10-piedra",
+          "recursoId": "mc-12-piedra-v15",
+          "presentacion": "interactivo",
+          "anclajeBiblico": {
+            "version": "RV1909",
+            "libro": "marcos",
+            "capitulo": 12,
+            "versiculo": 10,
+            "posicion": "despues"
+          },
+          "marcadores": [
+            {
+              "id": "piedra-1",
+              "x": 0.44,
+              "y": 0.76,
+              "titulo": "La piedra de esquina",
+              "certezaHistorica": "Reconstrucción posible, no identificación arqueológica. El sentido arquitectónico exacto de «cabeza del ángulo» es debatido; el énfasis del pasaje es el rechazo y la reivindicación.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "La piedra de esquina",
+                  "parrafos": [
+                    "En las construcciones de piedra de la antigüedad, las esquinas requerían especial cuidado porque allí se encontraban dos muros. Los constructores podían utilizar bloques cuidadosamente preparados para formar una unión estable y mantener la alineación de la estructura. En edificios importantes, algunas piedras de esquina eran especialmente grandes o estaban trabajadas con precisión."
+                  ]
+                },
+                {
+                  "id": "parte-2",
+                  "titulo": "La piedra de esquina",
+                  "parrafos": [
+                    "La ilustración muestra una posible piedra angular situada en la parte inferior de un muro, pero la expresión bíblica «cabeza del ángulo» no permite identificar con certeza una única posición arquitectónica. También se han propuesto otras interpretaciones, como una piedra destacada en la parte superior de la construcción."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "piedra-2",
+              "x": 0.6,
+              "y": 0.37,
+              "titulo": "Los constructores",
+              "certezaHistorica": "Reconstrucción posible, no identificación arqueológica. El sentido arquitectónico exacto de «cabeza del ángulo» es debatido; el énfasis del pasaje es el rechazo y la reivindicación.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "Los constructores",
+                  "parrafos": [
+                    "La construcción en la Judea del siglo I exigía conocimientos prácticos sobre los materiales, el terreno y la estabilidad de los edificios. Los trabajadores seleccionaban piedras según su tamaño, forma y resistencia, y podían tallarlas con herramientas de hierro antes de colocarlas. Para mover bloques pesados se utilizaban procedimientos adaptados a la obra, como cuerdas, palancas, rampas y estructuras de madera."
+                  ]
+                },
+                {
+                  "id": "parte-2",
+                  "titulo": "Los constructores",
+                  "parrafos": [
+                    "No todas las piedras servían para cualquier posición. En el lenguaje del Salmo 118:22, los constructores representan a quienes evalúan y rechazan una piedra que, contra sus expectativas, llega a ocupar un lugar principal."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "piedra-3",
+              "x": 0.17,
+              "y": 0.56,
+              "titulo": "El muro de piedra",
+              "certezaHistorica": "Reconstrucción posible, no identificación arqueológica. El sentido arquitectónico exacto de «cabeza del ángulo» es debatido; el énfasis del pasaje es el rechazo y la reivindicación.",
+              "paginas": [
+                {
+                  "id": "parte-1",
+                  "titulo": "El muro de piedra",
+                  "parrafos": [
+                    "La piedra caliza era uno de los materiales de construcción habituales en Jerusalén y otras zonas de Judea. Los muros podían levantarse con bloques de distintos tamaños y grados de elaboración, dependiendo de la época, la función del edificio y los recursos disponibles. La disposición de las hiladas, el ajuste de las piezas y la preparación de los cimientos contribuían a la estabilidad de la construcción."
+                  ]
+                },
+                {
+                  "id": "parte-2",
+                  "titulo": "El muro de piedra",
+                  "parrafos": [
+                    "La escena representada es una reconstrucción ilustrativa de técnicas antiguas, no la reproducción de una obra arqueológica concreta. Su propósito es ayudar a visualizar el trabajo de los constructores y el valor que podía adquirir una piedra dentro de la estructura."
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

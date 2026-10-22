@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [publicacion-demo]
-    paths: ['.github/**']
+    paths: ['.github/**', 'revision/**']
   schedule:
     - cron: '*/5 * * * *'
 
@@ -25,7 +25,7 @@ jobs:
     timeout-minutes: 15
     outputs:
       revision: ${{ steps.paquete.outputs.revision }}
-      huella: ${{ steps.paquete.outputs.huella }}
+      huella: ${{ steps.revision.outputs.huella }}
       nueva: ${{ steps.publicada.outputs.cache-hit != 'true' }}
     steps:
       - uses: actions/checkout@v4
@@ -34,15 +34,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Leer solo los 27 archivos del commit fuente
+      - name: Preparar los 27 archivos sintéticos del commit fuente
         id: paquete
         run: python .github/scripts/paquete.py --actualizar --salida _site --informe candidato.json
+      - name: Validar autorización y calcular huella conjunta
+        id: revision
+        run: python .github/scripts/revision.py --sitio _site --informe candidato.json
       - name: Detectar si esta misma versión ya se publicó
         id: publicada
         uses: actions/cache/restore@v4
         with:
           path: .estado-publicacion
-          key: demo-publicada-v2-${{ steps.paquete.outputs.huella }}
+          key: demo-publicada-v3-${{ steps.revision.outputs.huella }}
           lookup-only: true
 
       - name: Comprobar validadores
@@ -58,20 +61,26 @@ jobs:
       - name: Probar el paquete bajo la subruta de Pages
         if: steps.publicada.outputs.cache-hit != 'true'
         run: python .github/scripts/probar_paquete.py --paquete _site --informe pruebas.json
+      - name: Incorporar la revisión autorizada sin alterar los 27 archivos sintéticos
+        if: steps.publicada.outputs.cache-hit != 'true'
+        run: python .github/scripts/revision.py --sitio _site --informe candidato.json --incorporar
+      - name: Probar la revisión en escritorio y móvil bajo la subruta de Pages
+        if: steps.publicada.outputs.cache-hit != 'true'
+        run: python .github/scripts/probar_revision.py --sitio _site --informe pruebas-revision.json
       - name: Registrar el commit validado
         if: steps.publicada.outputs.cache-hit != 'true'
         env:
           REVISION: ${{ steps.paquete.outputs.revision }}
-          HUELLA: ${{ steps.paquete.outputs.huella }}
+          HUELLA: ${{ steps.revision.outputs.huella }}
         run: |
           python - <<'PY'
           import os
           with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
-              f.write('## Demostración técnica sintética\n\n')
+              f.write('## Demostración sintética y revisión editorial\n\n')
               f.write('Fuente: `desarrollo-motor-visual`\n\n')
               f.write('Commit fuente: `' + os.environ['REVISION'] + '`\n\n')
-              f.write('Huella del paquete de 27 archivos: `' + os.environ['HUELLA'] + '`\n\n')
-              f.write('Publicación automática habilitada solo después de superar las pruebas del paquete sintético.\n')
+              f.write('Huella del paquete combinado: `' + os.environ['HUELLA'] + '`\n\n')
+              f.write('Revisión autorizada y paquete sintético validado por separado antes de componer el sitio.\n')
           PY
       - name: Guardar evidencia de las pruebas
         if: steps.publicada.outputs.cache-hit != 'true'
@@ -81,6 +90,7 @@ jobs:
           path: |
             candidato.json
             pruebas.json
+            pruebas-revision.json
           retention-days: 7
       - name: Empaquetar únicamente _site
         if: steps.publicada.outputs.cache-hit != 'true'
@@ -102,6 +112,12 @@ jobs:
       name: github-pages
       url: ${{ steps.despliegue.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Usar Pages ya habilitado por el propietario, sin activarlo automáticamente
         uses: actions/configure-pages@v5
         with:
@@ -113,7 +129,7 @@ jobs:
         with:
           name: revision-candidata
           path: _verificacion
-      - name: Verificar los 27 archivos realmente servidos por Pages
+      - name: Verificar todos los archivos del paquete combinado servidos por Pages
         env:
           URL_PAGES: ${{ steps.despliegue.outputs.page_url }}
         run: |
@@ -139,8 +155,15 @@ jobs:
           if pendientes:
               raise SystemExit('La web servida no coincide con el paquete probado: ' + ', '.join(pendientes))
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
-              f.write('Verificación pública: los 27 archivos servidos coinciden con el commit fuente `' + informe['revisionFuente'] + '`.\n')
+              f.write('Verificación pública: todos los archivos servidos coinciden con el inventario del despliegue; commit fuente sintético `' + informe['revisionFuente'] + '`.\n')
           PY
+      - name: Comprobar el lector desde la URL pública en escritorio y móvil
+        env:
+          URL_PAGES: ${{ steps.despliegue.outputs.page_url }}
+        run: |
+          python -m pip install -r .github/requirements-pruebas.txt
+          python -m playwright install --with-deps chromium
+          python .github/scripts/probar_revision.py --sitio . --url "$URL_PAGES" --informe pruebas-publicas.json
       - name: Recordar la versión publicada
         env:
           HUELLA: ${{ needs.preparar.outputs.huella }}
@@ -150,4 +173,4 @@ jobs:
       - uses: actions/cache/save@v4
         with:
           path: .estado-publicacion
-          key: demo-publicada-v2-${{ needs.preparar.outputs.huella }}
+          key: demo-publicada-v3-${{ needs.preparar.outputs.huella }}

@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "estadoEditorial": "en_revision",
+  "demostracion": false,
+  "id": "mc-12-1-12-v15",
+  "relatoId": "mc-12-1-12",
+  "fuentes": [
+    "Respaldo maestro V15 · lector/index.html"
+  ],
+  "secciones": [
+    {
+      "id": "contexto",
+      "tipo": "contexto",
+      "titulo": "Contexto",
+      "paginas": [
+        {
+          "id": "contexto-1",
+          "titulo": "Contexto · Parte 1",
+          "parrafos": [
+            "Jesús se encuentra en Jerusalén, durante los días previos a su crucifixión. En el capítulo anterior, los principales sacerdotes, los escribas y los ancianos habían cuestionado su autoridad (Marcos 11:27–33). La parábola de los labradores malvados continúa ese enfrentamiento."
+          ],
+          "referencias": []
+        },
+        {
+          "id": "contexto-2",
+          "titulo": "Contexto · Parte 2",
+          "parrafos": [
+            "La imagen de la viña tenía un significado especial dentro de las Escrituras de Israel. En Isaías 5:1–7, Dios presenta a su pueblo como una viña que ha cultivado cuidadosamente, pero que no produce los frutos esperados."
+          ],
+          "referencias": []
+        },
+        {
+          "id": "contexto-3",
+          "titulo": "Contexto · Parte 3",
+          "parrafos": [
+            "Jesús retoma esa imagen conocida, aunque introduce un elemento decisivo: el conflicto entre el propietario de la viña y los labradores a quienes les ha confiado su cuidado.",
+            "Para comprender la parábola, es importante recordar que Jesús está confrontando especialmente la responsabilidad de los dirigentes religiosos, no condenando indiscriminadamente al pueblo de Israel."
+          ],
+          "referencias": []
+        }
+      ]
+    },
+    {
+      "id": "exegesis",
+      "tipo": "exegesis",
+      "titulo": "Exégesis",
+      "paginas": [
+        {
+          "id": "exegesis-1",
+          "titulo": "La viña y su propietario",
+          "parrafos": [
+            "La parábola comienza con un hombre que planta una viña, la rodea con una cerca, prepara un lagar y construye una torre. Después la arrienda a unos labradores y se ausenta. La descripción recuerda deliberadamente Isaías 5:1–7, donde la viña representa a Israel y su propietario es Dios.",
+            "Sin embargo, existe una diferencia importante: en Isaías el problema es el fruto de la viña; en Marcos, la atención se desplaza hacia la conducta de quienes la administran. Los labradores reciben una responsabilidad legítima, pero no adquieren la propiedad. Esta distinción prepara el conflicto central del relato: quienes fueron puestos al cuidado de algo ajeno terminan comportándose como sus dueños."
+          ],
+          "referencias": [
+            "Marcos 12:1",
+            "Conexión bíblica: Isaías 5:1–7. Los dos textos comparten imágenes, pero no desarrollan exactamente el mismo argumento."
+          ]
+        },
+        {
+          "id": "exegesis-2",
+          "titulo": "El rechazo de los siervos",
+          "parrafos": [
+            "Cuando llega el tiempo de la cosecha, el propietario envía un siervo para recibir la parte del fruto que le corresponde. Los labradores lo golpean y lo despiden sin nada. Luego envía otros siervos, que sufren humillaciones, heridas y, en algunos casos, la muerte.",
+            "La repetición de los envíos muestra una resistencia persistente. Dentro del marco bíblico, los siervos evocan a los mensajeros de Dios y el rechazo que sufrieron los profetas. Esta relación aparece también en Jeremías 7:25–26 y 2 Crónicas 36:15–16. No es necesario identificar a cada siervo con un profeta concreto: el énfasis está en el patrón continuo de rechazo."
+          ],
+          "referencias": [
+            "Marcos 12:2–5",
+            "Observación literaria: la violencia aumenta progresivamente y prepara el punto culminante de la parábola."
+          ]
+        },
+        {
+          "id": "exegesis-3",
+          "titulo": "El envío del hijo amado",
+          "parrafos": [
+            "El propietario envía finalmente a su hijo amado. La expresión tiene un peso especial en Marcos: Jesús es llamado Hijo amado en su bautismo (1:11) y en la transfiguración (9:7).",
+            "Los labradores reconocen al heredero y deciden matarlo para apoderarse de la herencia. El relato no presenta una simple disputa agrícola: la oposición alcanza al hijo que representa de manera singular al propietario. En el contexto del Evangelio, la muerte del hijo anticipa el rechazo y la muerte de Jesús.",
+            "Sin embargo, conviene no convertir cada detalle narrativo en una equivalencia rígida. La parábola utiliza una historia dramática para revelar la gravedad del rechazo a la autoridad de Dios manifestada en su Hijo."
+          ],
+          "referencias": [
+            "Marcos 12:6–8",
+            "Término importante: el griego agapētós significa «amado» o «querido» y vincula este pasaje con otros momentos decisivos del Evangelio."
+          ]
+        },
+        {
+          "id": "exegesis-4",
+          "titulo": "El juicio y la responsabilidad",
+          "parrafos": [
+            "Jesús pregunta qué hará el dueño de la viña. La respuesta anuncia que vendrá, pondrá fin a la actuación de los labradores y confiará la viña a otros.",
+            "El juicio recae sobre quienes han abusado de la responsabilidad recibida y han rechazado deliberadamente a los enviados. La expresión «otros» ha recibido diferentes explicaciones, pero el texto no exige interpretarla como un rechazo absoluto de todo Israel. El contexto inmediato identifica a los dirigentes religiosos como destinatarios principales de la crítica.",
+            "La parábola denuncia el uso ilegítimo de la autoridad y afirma que ninguna posición religiosa coloca a una persona por encima de su responsabilidad ante Dios."
+          ],
+          "referencias": [
+            "Marcos 12:9",
+            "Precaución interpretativa: no utilizar este pasaje para justificar hostilidad hacia el pueblo judío."
+          ]
+        },
+        {
+          "id": "exegesis-5",
+          "titulo": "La piedra que fue rechazada",
+          "parrafos": [
+            "Jesús introduce una cita del Salmo 118:22–23. La imagen cambia: ya no estamos ante una viña, sino ante constructores que rechazan una piedra que termina ocupando una posición fundamental.",
+            "El término griego kephalē gōnias puede relacionarse con una piedra principal de esquina; su función arquitectónica exacta se debate. Lo decisivo es el contraste entre la valoración humana y la acción de Dios. Aquello que los constructores consideraron inadecuado es establecido por Dios en un lugar de honor.",
+            "En el desarrollo del Evangelio, la imagen ilumina el rechazo de Jesús y su posterior vindicación. La última palabra no pertenece a quienes rechazan la piedra, sino a Dios."
+          ],
+          "referencias": [
+            "Marcos 12:10–11",
+            "Conexión bíblica: Salmo 118:22–23; Hechos 4:11; 1 Pedro 2:7."
+          ]
+        },
+        {
+          "id": "exegesis-6",
+          "titulo": "La reacción de las autoridades",
+          "parrafos": [
+            "El relato concluye indicando que los dirigentes comprendieron que Jesús había contado la parábola contra ellos. Intentaron arrestarlo, pero temieron a la multitud.",
+            "Este cierre confirma que la parábola no era una enseñanza abstracta sobre la maldad humana: constituía una confrontación directa con personas que ejercían autoridad religiosa. También muestra la creciente tensión que atraviesa los últimos capítulos del ministerio de Jesús en Jerusalén.",
+            "La reacción de los dirigentes resulta especialmente significativa: reconocen que la advertencia los alcanza, pero su respuesta inmediata es buscar la manera de detener a quien la pronuncia."
+          ],
+          "referencias": [
+            "Marcos 12:12",
+            "Clave de lectura: Marcos 11:27–33 y 12:12 forman parte de una misma secuencia de confrontación sobre la autoridad de Jesús."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ensenanzas",
+      "tipo": "ensenanzas",
+      "titulo": "Enseñanzas",
+      "paginas": [
+        {
+          "id": "ensenanzas-1",
+          "titulo": "Idea teológica central",
+          "parrafos": [
+            "Dios es el verdadero Señor de aquello que confía al ser humano, y espera una respuesta fiel a su autoridad. La parábola muestra que el rechazo de sus mensajeros culmina en el rechazo de su Hijo.",
+            "Sin embargo, la cita del Salmo 118 anuncia que el rechazo humano no puede frustrar el propósito de Dios. La autoridad de Jesús no depende de la aprobación de los dirigentes que lo cuestionan."
+          ],
+          "referencias": []
+        },
+        {
+          "id": "ensenanzas-2",
+          "titulo": "El punto de tensión",
+          "parrafos": [
+            "Los labradores recibieron la viña para trabajarla, pero pretendieron apropiarse de lo que no les pertenecía. Aquí aparece una tensión profundamente humana: recibir responsabilidades de Dios y, al mismo tiempo, resistirse a reconocer su autoridad.",
+            "La parábola plantea una pregunta incómoda: ¿podemos ocuparnos de las cosas de Dios mientras rechazamos lo que Dios nos pide? En el relato, esa contradicción se manifiesta especialmente en quienes debían ejercer liderazgo espiritual."
+          ],
+          "referencias": []
+        },
+        {
+          "id": "ensenanzas-3",
+          "titulo": "Aplicación práctica y espiritual",
+          "parrafos": [
+            "El pasaje invita a examinar cómo ejercemos las responsabilidades que recibimos. El liderazgo, los dones, los recursos y las oportunidades no deberían convertirse en instrumentos de dominio personal.",
+            "También nos advierte contra una actitud religiosa que reconoce exteriormente a Dios, pero se resiste a escuchar su palabra. La respuesta adecuada no consiste simplemente en producir más actividad religiosa, sino en reconocer la autoridad de Cristo y actuar con fidelidad, humildad y justicia."
+          ],
+          "referencias": []
+        },
+        {
+          "id": "ensenanzas-4",
+          "titulo": "Preguntas de reflexión",
+          "parrafos": [
+            "1. ¿En qué situaciones puedo confundir una responsabilidad confiada con algo que me pertenece de manera absoluta?",
+            "2. ¿Cómo reacciono cuando la enseñanza de Jesús cuestiona mis decisiones o intereses?",
+            "3. ¿Mi manera de ejercer autoridad o influencia refleja servicio y responsabilidad, o deseo de control?",
+            "4. ¿Qué significa para mí reconocer a Jesús como la piedra que Dios ha establecido?"
+          ],
+          "referencias": []
+        }
+      ]
+    },
+    {
+      "id": "devocional",
+      "tipo": "devocional",
+      "titulo": "Cuando olvidamos quién es el dueño",
+      "paginas": [
+        {
+          "id": "devocional-1",
+          "titulo": "Lo que se nos confía",
+          "parrafos": [
+            "Hay una diferencia enorme entre cuidar algo que se nos ha confiado y creer que nos pertenece por completo.",
+            "En la parábola de Jesús, los labradores recibieron una viña preparada para producir fruto. No tuvieron que plantarla desde cero. El propietario había realizado el trabajo inicial y les había entregado la responsabilidad de administrarla.",
+            "Pero llegó el momento de rendir cuentas."
+          ],
+          "referencias": []
+        },
+        {
+          "id": "devocional-2",
+          "titulo": "El rechazo del dueño",
+          "parrafos": [
+            "En lugar de reconocer al dueño, comenzaron a rechazar a sus enviados. Finalmente, cuando llegó su hijo, decidieron eliminarlo para quedarse con la herencia.",
+            "Jesús dirigió esta parábola a dirigentes religiosos que cuestionaban su autoridad. No debemos perder de vista esa intención original.",
+            "Sin embargo, su enseñanza también nos invita a reflexionar sobre una actitud que puede aparecer en nuestra propia vida: vivir como propietarios absolutos de aquello que hemos recibido para administrar."
+          ],
+          "referencias": []
+        },
+        {
+          "id": "devocional-3",
+          "titulo": "Reconocer su autoridad",
+          "parrafos": [
+            "A veces podemos acostumbrarnos tanto a nuestras capacidades, nuestros logros o nuestras responsabilidades que dejamos de reconocer a Dios.",
+            "Incluso es posible estar involucrados en actividades religiosas y resistirnos a escuchar aquello que Jesús nos está enseñando.",
+            "La parábola también presenta una esperanza decisiva: la piedra que fue rechazada llegó a ocupar el lugar que Dios había determinado. El rechazo humano no tuvo la última palabra.",
+            "Nuestra respuesta no debería ser el temor de unos trabajadores ante un propietario distante, sino el reconocimiento humilde del Señor que nos llama a vivir en fidelidad."
+          ],
+          "referencias": []
+        },
+        {
+          "id": "devocional-4",
+          "titulo": "Para meditar",
+          "parrafos": [
+            "¿Hay alguna responsabilidad, decisión o área de mi vida en la que estoy actuando sin reconocer verdaderamente la autoridad de Dios?"
+          ],
+          "referencias": []
+        },
+        {
+          "id": "devocional-5",
+          "titulo": "Un paso concreto",
+          "parrafos": [
+            "Elegí una responsabilidad importante de tu vida. Durante esta semana, buscá una manera concreta de ejercerla con mayor humildad, justicia y fidelidad."
+          ],
+          "referencias": []
+        },
+        {
+          "id": "devocional-6",
+          "titulo": "Oración",
+          "parrafos": [
+            "Señor, gracias por todo lo que me has confiado. Perdoname cuando actúo como si no necesitara escucharte. Enseñame a reconocer la autoridad de Jesús, a recibir tu palabra con humildad y a vivir fielmente delante de vos. Amén."
+          ],
+          "referencias": []
+        }
+      ]
+    }
+  ]
+}

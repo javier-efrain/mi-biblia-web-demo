@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "recursos": [
+    {
+      "schemaVersion": 1,
+      "estadoEditorial": "en_revision",
+      "demostracion": false,
+      "id": "mc-12-portada-v15",
+      "tipo": "portada",
+      "src": "recursos/marcos-12-1-12-portada-web.jpg",
+      "alt": "Reconstrucción artística de la parábola: tres labradores agreden al hijo del propietario en una viña; el hombre yace herido en el suelo.",
+      "dimensiones": {
+        "ancho": 1672,
+        "alto": 941
+      },
+      "leyenda": "Portada narrativa cinematográfica horizontal: ataque de labradores al hijo en viña; interpretación artística de la parábola, no documentación de un hecho histórico.",
+      "autoria": "Generada con ChatGPT para Mi Biblia Web, según declaración del responsable del proyecto.",
+      "derechos": "Procedencia declarada por el responsable; publicación de revisión propuesta, pendiente de autorización final. Sin atribuciones obligatorias conocidas según su declaración."
+    },
+    {
+      "schemaVersion": 1,
+      "estadoEditorial": "en_revision",
+      "demostracion": false,
+      "id": "mc-12-vina-v15",
+      "tipo": "imagen",
+      "src": "recursos/marcos-12-1-vina-v12.webp",
+      "alt": "La viña en tiempos de Jesús",
+      "dimensiones": {
+        "ancho": 1024,
+        "alto": 1536
+      },
+      "leyenda": "Reconstrucción ilustrativa de una viña de la antigua Judea. Podés observar el terreno cultivado, el lagar de pisado, una torre de vigilancia y los cercados de piedra. Tocá «Mostrar puntos» para explorar cada elemento y leer su explicación histórica.\n\nReconstrucción histórica aproximada. Los detalles arquitectónicos y del paisaje no representan un sitio arqueológico identificado.",
+      "autoria": "Generada con ChatGPT para Mi Biblia Web, según declaración del responsable del proyecto.",
+      "derechos": "Procedencia declarada por el responsable; publicación de revisión propuesta, pendiente de autorización final. Sin atribuciones obligatorias conocidas según su declaración."
+    },
+    {
+      "schemaVersion": 1,
+      "estadoEditorial": "en_revision",
+      "demostracion": false,
+      "id": "mc-12-piedra-v15",
+      "tipo": "imagen",
+      "src": "recursos/marcos-12-10-piedra-reconstruccion.png",
+      "alt": "La piedra principal de esquina",
+      "dimensiones": {
+        "ancho": 1024,
+        "alto": 1536
+      },
+      "leyenda": "Reconstrucción ilustrativa de una construcción de piedra caliza en la antigua Judea. Tocá «Mostrar puntos» para explorar los elementos y sus explicaciones.\n\nReconstrucción posible, no identificación arqueológica. El sentido arquitectónico exacto de «cabeza del ángulo» es debatido; el énfasis del pasaje es el rechazo y la reivindicación.",
+      "autoria": "Generada con ChatGPT para Mi Biblia Web, según declaración del responsable del proyecto.",
+      "derechos": "Procedencia declarada por el responsable; publicación de revisión propuesta, pendiente de autorización final. Sin atribuciones obligatorias conocidas según su declaración."
+    }
+  ]
+}

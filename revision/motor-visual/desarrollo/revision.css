@@ -1,0 +1,2 @@
+/* Mantener completa la portada original, cuyo 16:9 tiene redondeo de píxeles. */
+.mv-portada img { object-fit:contain; }
