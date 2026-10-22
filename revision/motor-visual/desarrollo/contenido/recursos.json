@@ -96,6 +96,54 @@
       "leyenda": "Infografía interpretativa del desarrollo narrativo de Marcos 12:13–17. Las reacciones hipotéticas son escenarios posibles, no hechos descritos por Marcos.",
       "autoria": "Generada con ChatGPT para Mi Biblia Web; recurso artístico de revisión.",
       "derechos": "Generación original para el proyecto; revisión editorial pendiente."
+    },
+    {
+      "schemaVersion": 1,
+      "estadoEditorial": "en_revision",
+      "demostracion": false,
+      "id": "mc-12-18-27-portada",
+      "tipo": "portada",
+      "src": "recursos/marcos-12-18-27-portada.webp",
+      "alt": "Jesús conversa con interlocutores saduceos en una reconstrucción artística de Jerusalén del siglo I",
+      "dimensiones": {
+        "ancho": 1600,
+        "alto": 667
+      },
+      "leyenda": "Reconstrucción artística educativa. No identifica lugares ni rostros históricos verificables; el caso de los siete hermanos es hipotético.",
+      "autoria": "Generada con ChatGPT para Mi Biblia Web",
+      "derechos": "Recurso generado para revisión editorial del proyecto."
+    },
+    {
+      "schemaVersion": 1,
+      "estadoEditorial": "en_revision",
+      "demostracion": false,
+      "id": "mc-12-18-27-levirato",
+      "tipo": "imagen",
+      "src": "recursos/marcos-12-18-27-levirato.webp",
+      "alt": "Infografía del caso hipotético de una mujer y siete hermanos con matrimonios sucesivos",
+      "dimensiones": {
+        "ancho": 1024,
+        "alto": 1536
+      },
+      "leyenda": "Reconstrucción artística educativa. No identifica lugares ni rostros históricos verificables; el caso de los siete hermanos es hipotético.",
+      "autoria": "Generada con ChatGPT para Mi Biblia Web",
+      "derechos": "Recurso generado para revisión editorial del proyecto."
+    },
+    {
+      "schemaVersion": 1,
+      "estadoEditorial": "en_revision",
+      "demostracion": false,
+      "id": "mc-12-18-27-zarza",
+      "tipo": "imagen",
+      "src": "recursos/marcos-12-18-27-zarza.webp",
+      "alt": "Infografía artística del encuentro de Moisés con Dios en la zarza y su uso en el argumento de Jesús",
+      "dimensiones": {
+        "ancho": 1024,
+        "alto": 1536
+      },
+      "leyenda": "Reconstrucción artística educativa. No identifica lugares ni rostros históricos verificables; el caso de los siete hermanos es hipotético.",
+      "autoria": "Generada con ChatGPT para Mi Biblia Web",
+      "derechos": "Recurso generado para revisión editorial del proyecto."
     }
   ]
 }
