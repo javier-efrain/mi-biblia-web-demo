@@ -7,6 +7,17 @@ import argparse,os
 parser=argparse.ArgumentParser();parser.add_argument('--sitio',type=Path,required=True);parser.add_argument('--informe',type=Path,required=True);parser.add_argument('--url');args=parser.parse_args()
 SITIO=args.sitio.resolve()
 checks=[]
+registro=json.loads((SITIO/'revision/motor-visual/desarrollo/contenido/registro-v15.json').read_text())
+avisos=[registro['avisoEditorial'],*registro['advertenciasHistoricas']]
+def sin_avisos(page,label):
+ texto=page.locator('body').inner_text()
+ check(all(aviso not in texto for aviso in avisos),label+' cuatro avisos fuera de la lectura')
+def comprobar_fichas(page,label):
+ for ficha in page.locator('.mv-ficha-recurso').all():
+  ficha.locator('summary').click()
+  sin_avisos(page,label+' ficha abierta')
+  check(bool(ficha.locator('p').first.inner_text().strip()),label+' descripción restante conservada')
+  ficha.locator('summary').click()
 def check(ok,name):
  assert ok,name
  checks.append(name)
@@ -40,6 +51,8 @@ with tempfile.TemporaryDirectory() as temp:
       label=f'{device}/{modo}/{enfoque}'
       page.goto(base+f'revision/motor-visual/desarrollo/index.html?relato=mc-12-1-12&modo={modo}&enfoque={enfoque}')
       page.wait_for_selector('#motor[data-listo=true]')
+      sin_avisos(page,label)
+      comprobar_fichas(page,label)
       verses=page.locator('.mv-texto > p').evaluate_all('es=>es.map(e=>[...e.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE).map(n=>n.textContent).join("").trim())')
       check(verses==expected,label+' 12 versículos RV1909 completos')
       check(page.locator('.mv-portada').count()==(1 if modo=='visual' else 0),label+' portada')
@@ -50,6 +63,7 @@ with tempfile.TemporaryDirectory() as temp:
       check(page.locator('.mv-recurso').evaluate_all('es=>es.every(e=>e.querySelector(".mv-ficha-recurso").nextElementSibling.classList.contains("mv-explorador"))'),label+' sin hueco del botón eliminado')
       if modo=='texto':
        page.locator('[data-recurso-acceso]').last.click();page.wait_for_selector('dialog .mv-visor')
+       comprobar_fichas(page,label+' modal')
        check(page.locator('dialog img').count()==1,label+' modal opcional')
        dialogo=page.locator('dialog');acceso=page.locator('[data-recurso-acceso]').last
        check(dialogo.locator('.mv-abrir-completa').count()==0 and dialogo.get_by_role('button',name='Cerrar recurso',exact=True).is_visible(),label+' modal sin pantalla completa conserva cierre')

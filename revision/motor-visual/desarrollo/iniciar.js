@@ -4,15 +4,31 @@ import {crearMotor} from '../js/estado/lectura.js';
 import {leerRuta} from '../js/estado/navegacion.js';
 import {crearPreferencias} from '../js/estado/preferencias.js';
 import {crearControlesPreferencias} from '../js/componentes/preferencias.js';
-import {nodo} from '../js/componentes/dom.js';
 
 const root=document.querySelector('#motor');
 try {
   const baseURL=new URL('contenido/',import.meta.url);
-  const contenidos=crearServicioContenidos({baseURL});
-  const catalogo=await contenidos.cargarCatalogo();
   const registro=await (await fetch(new URL('registro-v15.json',baseURL))).json();
-  document.querySelector('#avisos').append(...registro.advertenciasHistoricas.map(texto=>nodo('p',{className:'mv-aviso'},texto)));
+  // Los avisos históricos permanecen íntegros en los metadatos de origen.
+  // Proyectar únicamente sus campos de presentación; nunca tocar párrafos educativos.
+  const sinAvisos=texto=>registro.advertenciasHistoricas.reduce(
+    (actual,aviso)=>actual.replaceAll(aviso,''),texto
+  ).replace(/(?:\\n|\s)+$/g,'').trim();
+  const presentarRecurso=recurso=>({...recurso,leyenda:sinAvisos(recurso.leyenda)});
+  const servicio=crearServicioContenidos({baseURL});
+  const contenidos={...servicio,
+    async cargarRecurso(...args) { return presentarRecurso(await servicio.cargarRecurso(...args)); },
+    async cargarVisuales(...args) {
+      const datos=await servicio.cargarVisuales(...args);
+      return {...datos,recursos:datos.recursos.map(presentarRecurso)};
+    }
+  };
+  const original=await contenidos.cargarCatalogo();
+  const catalogo={...original,relatos:original.relatos.map(relato=>({...relato,
+    recursos:relato.recursos.map(uso=>({...uso,
+      marcadores:uso.marcadores.map(m=>({...m,certezaHistorica:sinAvisos(m.certezaHistorica??'')}))
+    }))
+  }))};
   const biblia=crearServicioBiblia({baseURL:new URL('biblia/',baseURL),version:'RV1909'});
   const controlesPreferencias=crearControlesPreferencias(crearPreferencias(),{compacto:true}).el;
   await crearMotor({root,catalogo,biblia,contenidos,controlesPreferencias,inicial:leerRuta(location.search,catalogo),usarHistorial:true});

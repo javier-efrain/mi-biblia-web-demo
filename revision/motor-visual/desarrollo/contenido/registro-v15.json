@@ -9,5 +9,6 @@
     "verificada": "Tres imágenes idénticas por SHA-256 a V15; estudios y 12 versículos coinciden con el respaldo. No se encontró evidencia documental independiente del proceso de generación.",
     "textoBiblico": "Reina-Valera 1909; autorizado por el usuario para la revisión pública. RVC excluida.",
     "alcance": "La declaración de procedencia no constituye una auditoría de similitud con todas las obras de terceros."
-  }
+  },
+  "avisoEditorial": "VERSIÓN DE REVISIÓN. Texto bíblico: Reina-Valera 1909. Estudios e imágenes en revisión editorial. No es RVC ni la edición definitiva. La demostración sintética permanece separada."
 }
