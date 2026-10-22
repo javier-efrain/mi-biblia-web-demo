@@ -45,7 +45,7 @@ with tempfile.TemporaryDirectory() as temp:
     page.on('pageerror',lambda e:errors.append(str(e)))
     page.on('response',lambda r:bad.append(r.url) if r.status>=400 else None)
     base=args.url.rstrip('/')+'/' if args.url else f'http://127.0.0.1:{server.server_port}/mi-biblia-web-demo/'
-    expected=list(json.loads((SITIO/'revision/motor-visual/desarrollo/contenido/biblia/marcos.json').read_text())['capitulos']['12'].values())
+    expected=list(json.loads((SITIO/'revision/motor-visual/desarrollo/contenido/biblia/marcos.json').read_text())['capitulos']['12'][str(i)] for i in range(1,13))
     for modo in ['visual','texto']:
      for enfoque in ['estudio','devocional']:
       label=f'{device}/{modo}/{enfoque}'
@@ -101,6 +101,15 @@ with tempfile.TemporaryDirectory() as temp:
         slider=recurso.locator('[data-zoom]');ajustar_zoom(slider,250)
         check(slider.get_attribute('data-zoom')=='250',label+' zoom')
       check(page.evaluate('document.documentElement.scrollWidth<=innerWidth'),label+' sin desbordamiento')
+    # Nuevo relato: verificar carga y continuidad del índice en ambos dispositivos.
+    for modo in ['visual','texto']:
+     for enfoque in ['estudio','devocional']:
+      page.goto(base+f'revision/motor-visual/desarrollo/index.html?relato=mc-12-13-17&modo={modo}&enfoque={enfoque}')
+      page.wait_for_selector('#motor[data-listo=true]')
+      check('El tributo al César' in page.locator('body').inner_text(),f'{device}/{modo}/{enfoque} estudio 2 visible')
+      check(page.locator('.mv-portada').count()==(1 if modo=='visual' else 0),f'{device}/{modo}/{enfoque} portada estudio 2')
+      check(page.locator('.mv-recurso').count()==(2 if modo=='visual' and enfoque=='estudio' else 0),f'{device}/{modo}/{enfoque} recursos estudio 2')
+      check(page.evaluate('document.documentElement.scrollWidth<=innerWidth'),f'{device}/{modo}/{enfoque} estudio 2 sin desbordamiento')
     # Comprueba que el mismo sitio sigue sirviendo la demo sintética independiente.
     page.goto(base+'motor-visual/demo.html?relato=demo-dos&modo=visual')
     page.wait_for_selector('.mv-relato')
