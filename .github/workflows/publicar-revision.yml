@@ -1,0 +1,71 @@
+name: Publicar revisión rápida
+
+on:
+  push:
+    branches: [publicacion-demo]
+    paths:
+      - 'revision/**'
+      - '.github/workflows/publicar-revision.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-revision-rapida
+  cancel-in-progress: true
+
+jobs:
+  publicar:
+    if: github.repository == 'javier-efrain/mi-biblia-web-demo'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Comprobar contenido sin bloquear por cantidad fija de estudios
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          base=Path('revision/motor-visual/desarrollo/contenido')
+          catalogo=json.loads((base/'catalogo.json').read_text())
+          recursos=json.loads((base/'recursos.json').read_text())
+          libro=json.loads((base/'biblia/marcos.json').read_text())
+          assert libro['version']=='RV1909'
+          ids={r['id'] for r in recursos['recursos']}
+          assert catalogo['relatos']
+          for relato in catalogo['relatos']:
+              estudio=base/'estudios'/f"{relato['estudioId']}.json"
+              assert estudio.is_file(), estudio
+              json.loads(estudio.read_text())
+              assert relato['portadaId'] in ids
+              for recurso in relato['recursos']:
+                  assert recurso['recursoId'] in ids
+              for rango in relato['referencia']['rangos']:
+                  cap=libro['capitulos'][str(rango['capitulo'])]
+                  for n in range(rango['desde'],rango['hasta']+1):
+                      assert cap.get(str(n)), (relato['id'],n)
+          for recurso in recursos['recursos']:
+              assert (base/recurso['src']).is_file(), recurso['src']
+          print('Revisión lista:',len(catalogo['relatos']),'estudios')
+          PY
+      - name: Preparar sitio de revisión
+        run: |
+          mkdir -p _site
+          cp -R revision _site/revision
+          cat > _site/index.html <<'HTML'
+          <!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=revision/motor-visual/desarrollo/index.html"><title>Mi Biblia Web · Revisión</title><a href="revision/motor-visual/desarrollo/index.html">Abrir revisión</a></html>
+          HTML
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Publicar GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
