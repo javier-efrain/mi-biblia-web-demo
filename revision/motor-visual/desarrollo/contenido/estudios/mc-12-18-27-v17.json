@@ -1,0 +1,337 @@
+{
+  "schemaVersion": 1,
+  "estadoEditorial": "en_revision",
+  "demostracion": false,
+  "id": "mc-12-18-27-v17",
+  "relatoId": "mc-12-18-27",
+  "fuentes": [
+    "Marcos 12:18–27, Reina-Valera 1909",
+    "Deuteronomio 25:5–10",
+    "Éxodo 3:1–6",
+    "Daniel 12:2",
+    "Hechos 23:8",
+    "Lucas 20:27–40",
+    "1 Corintios 15",
+    "Flavio Josefo, Antigüedades judías XVIII (fuente externa, interpretación crítica)"
+  ],
+  "secciones": [
+    {
+      "id": "contexto",
+      "tipo": "contexto",
+      "titulo": "Contexto",
+      "paginas": [
+        {
+          "id": "contexto-1",
+          "titulo": "Una nueva confrontación en Jerusalén",
+          "parrafos": [
+            "Jesús continúa enseñando en Jerusalén. Después de la pregunta sobre el tributo al César, Marcos presenta a otro grupo que lo interroga: los saduceos.",
+            "Esta vez la controversia no trata sobre Roma, sino sobre la resurrección de los muertos. Marcos señala desde el principio que sus interlocutores niegan esa esperanza."
+          ],
+          "referencias": [
+            "Marcos 12:13–18"
+          ]
+        },
+        {
+          "id": "contexto-2",
+          "titulo": "¿Quiénes eran los saduceos?",
+          "parrafos": [
+            "Los saduceos formaban parte de los grupos religiosos del judaísmo del Segundo Templo. Las fuentes antiguas los relacionan especialmente con sectores de la élite sacerdotal y aristocrática de Jerusalén, aunque no todos los sacerdotes eran saduceos.",
+            "Conocemos sus posiciones sobre todo mediante testimonios externos, como Josefo, el Nuevo Testamento y tradiciones rabínicas posteriores. Esas fuentes deben leerse críticamente; no conservamos una exposición completa redactada por los propios saduceos."
+          ],
+          "referencias": [
+            "Marcos 12:18",
+            "Hechos 23:6–8"
+          ]
+        },
+        {
+          "id": "contexto-3",
+          "titulo": "La resurrección en el judaísmo antiguo",
+          "parrafos": [
+            "En el judaísmo antiguo existían diferentes maneras de comprender la vida después de la muerte. Daniel 12:2 expresa la esperanza de que algunos despierten del polvo de la tierra, mientras que otros textos bíblicos emplean un lenguaje distinto.",
+            "Por eso no corresponde atribuir una única doctrina sobre la resurrección a todos los judíos del tiempo de Jesús."
+          ],
+          "referencias": [
+            "Daniel 12:2",
+            "Isaías 26:19",
+            "Hechos 23:8"
+          ]
+        },
+        {
+          "id": "contexto-4",
+          "titulo": "La ley del levirato",
+          "parrafos": [
+            "Deuteronomio 25:5–10 contempla el caso de hermanos que viven juntos y de uno que muere sin descendencia. Dentro de las condiciones de la ley, su hermano debía asumir una obligación matrimonial respecto de la viuda.",
+            "La disposición buscaba preservar el nombre y la continuidad familiar del difunto y se relacionaba con la permanencia de los bienes dentro del grupo familiar. La ley también establecía un procedimiento público cuando el hermano se negaba.",
+            "El nombre «levirato» procede del latín levir, «cuñado». No era una obligación indiscriminada para cualquier pariente ni para toda viuda."
+          ],
+          "referencias": [
+            "Deuteronomio 25:5–10",
+            "Génesis 38:6–11"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "exegesis",
+      "tipo": "exegesis",
+      "titulo": "Exégesis",
+      "paginas": [
+        {
+          "id": "exegesis-1",
+          "titulo": "Una pregunta que parte de una negación",
+          "parrafos": [
+            "Marcos identifica a los saduceos como quienes dicen que no hay resurrección. Su intervención no es una consulta neutral: presentan un caso pensado para cuestionar la coherencia de esa esperanza.",
+            "Su argumento presupone que las relaciones matrimoniales de la vida presente tendrían que continuar de la misma manera después de la resurrección."
+          ],
+          "referencias": [
+            "Marcos 12:18"
+          ]
+        },
+        {
+          "id": "exegesis-2",
+          "titulo": "La autoridad de Moisés",
+          "parrafos": [
+            "Los interlocutores apelan a una disposición real de la Ley de Moisés. La dificultad no reside en que inventen una norma, sino en la conclusión que pretenden extraer de ella.",
+            "Una ley que regula circunstancias de la vida terrenal no determina necesariamente las condiciones de la vida resucitada."
+          ],
+          "referencias": [
+            "Marcos 12:19",
+            "Deuteronomio 25:5–10"
+          ]
+        },
+        {
+          "id": "exegesis-3",
+          "titulo": "Los siete hermanos",
+          "parrafos": [
+            "El ejemplo describe siete hermanos que, sucesivamente, se casan con la misma mujer y mueren sin dejar descendencia. Finalmente también muere ella.",
+            "El número siete intensifica el argumento hasta su expresión extrema. Marcos no presenta el episodio como una familia histórica documentada: se trata de un caso hipotético."
+          ],
+          "referencias": [
+            "Marcos 12:20–22"
+          ]
+        },
+        {
+          "id": "exegesis-4",
+          "titulo": "¿De cuál será esposa?",
+          "parrafos": [
+            "Los saduceos preguntan de cuál de los siete será esposa la mujer en la resurrección. Su dificultad depende de trasladar sin cambios el matrimonio terrenal a la vida futura.",
+            "Jesús no escogerá a uno de los hermanos: cuestionará la premisa que sostiene toda la pregunta."
+          ],
+          "referencias": [
+            "Marcos 12:23"
+          ]
+        },
+        {
+          "id": "exegesis-5",
+          "titulo": "Las Escrituras y el poder de Dios",
+          "parrafos": [
+            "Jesús señala dos errores: no comprender las Escrituras y desconocer el poder de Dios.",
+            "No significa que cualquier imaginación acerca del más allá sea verdadera. Jesús fundamenta su respuesta en la revelación bíblica y en la capacidad de Dios para dar una vida que no está limitada por nuestras experiencias."
+          ],
+          "referencias": [
+            "Marcos 12:24"
+          ]
+        },
+        {
+          "id": "exegesis-6",
+          "titulo": "Como los ángeles, no convertidos en ángeles",
+          "parrafos": [
+            "Jesús enseña que los resucitados no se casarán ni serán dados en casamiento, sino que serán como los ángeles en los cielos.",
+            "No afirma que las personas se transformen en ángeles. La comparación debe interpretarse dentro de la respuesta sobre el matrimonio; no describe por sí sola toda la naturaleza del cuerpo resucitado ni las relaciones personales de la vida futura."
+          ],
+          "referencias": [
+            "Marcos 12:25",
+            "Lucas 20:34–36"
+          ]
+        },
+        {
+          "id": "exegesis-7",
+          "titulo": "La zarza y la identidad de Dios",
+          "parrafos": [
+            "Jesús cita el encuentro de Moisés con Dios en la zarza ardiente. En Éxodo 3:6, Dios se presenta como el Dios de Abraham, Isaac y Jacob, aunque los patriarcas habían muerto mucho antes de Moisés.",
+            "Éxodo 3:6 no ofrece una descripción explícita de la resurrección corporal. Jesús desarrolla su argumento a partir de la identidad de Dios y su relación con los patriarcas."
+          ],
+          "referencias": [
+            "Marcos 12:26",
+            "Éxodo 3:1–6"
+          ]
+        },
+        {
+          "id": "exegesis-8",
+          "titulo": "Dios de vivos",
+          "parrafos": [
+            "Jesús afirma que Dios no es Dios de muertos, sino de vivos. En Marcos, esta afirmación defiende la resurrección frente a quienes la niegan.",
+            "Entre los intérpretes hay diferentes explicaciones del razonamiento: algunas destacan la continuidad de la relación divina con los patriarcas; otras, la fidelidad de Dios al pacto y al cumplimiento de sus promesas. No debe reducirse el argumento a una prueba basada solamente en el tiempo verbal «Yo soy»."
+          ],
+          "referencias": [
+            "Marcos 12:26–27",
+            "Éxodo 3:6"
+          ]
+        },
+        {
+          "id": "exegesis-9",
+          "titulo": "Una esperanza mayor que nuestras categorías",
+          "parrafos": [
+            "La declaración final de Jesús denuncia el error de convertir las condiciones de nuestra existencia actual en límites para el poder de Dios.",
+            "La esperanza de resurrección se apoya en el Dios que da vida y permanece fiel a sus promesas, no en nuestra capacidad de imaginar todos los detalles de la vida futura."
+          ],
+          "referencias": [
+            "Marcos 12:24–27"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ensenanzas",
+      "tipo": "ensenanzas",
+      "titulo": "Enseñanzas",
+      "paginas": [
+        {
+          "id": "ensenanzas-1",
+          "titulo": "La resurrección es obra de Dios",
+          "parrafos": [
+            "Resucitar no significa simplemente recuperar la vida terrenal sin transformación. Jesús afirma que la existencia futura no estará sometida a todas las condiciones actuales.",
+            "Pablo desarrollará más ampliamente la transformación de la resurrección en 1 Corintios 15."
+          ],
+          "referencias": [
+            "Marcos 12:24–25",
+            "1 Corintios 15:35–49"
+          ]
+        },
+        {
+          "id": "ensenanzas-2",
+          "titulo": "Leer las Escrituras en su contexto",
+          "parrafos": [
+            "Los saduceos citan una ley auténtica, pero la utilizan para una conclusión que Jesús rechaza. Conocer un pasaje no garantiza comprender correctamente su alcance.",
+            "La ley del levirato regula una situación familiar concreta; no pretende explicar el matrimonio después de la resurrección."
+          ],
+          "referencias": [
+            "Deuteronomio 25:5–10",
+            "Marcos 12:19–25"
+          ]
+        },
+        {
+          "id": "ensenanzas-3",
+          "titulo": "La fidelidad de Dios trasciende la muerte",
+          "parrafos": [
+            "Dios se identifica con Abraham, Isaac y Jacob, personas concretas dentro de la historia de la salvación. Jesús encuentra allí fundamento para la esperanza de resurrección.",
+            "La fidelidad de Dios no depende de que los seres humanos puedan vencer la muerte por sí mismos."
+          ],
+          "referencias": [
+            "Éxodo 3:6",
+            "Marcos 12:26–27"
+          ]
+        },
+        {
+          "id": "ensenanzas-4",
+          "titulo": "Lo que el texto no revela",
+          "parrafos": [
+            "Jesús enseña que el matrimonio no funcionará en la resurrección como en la vida presente. No explica aquí todos los aspectos del reconocimiento entre seres queridos, la memoria o las relaciones personales.",
+            "La interpretación responsable distingue lo que el pasaje afirma de lo que deja abierto."
+          ],
+          "referencias": [
+            "Marcos 12:25",
+            "1 Corintios 15:42–49"
+          ]
+        },
+        {
+          "id": "ensenanzas-5",
+          "titulo": "Esperanza sin negar el dolor",
+          "parrafos": [
+            "La esperanza de resurrección no elimina automáticamente el duelo. En otros pasajes, Jesús llora ante la muerte de Lázaro y Pablo presenta la muerte como un enemigo que será vencido.",
+            "Estas referencias amplían la reflexión cristiana; no deben atribuirse como si fueran afirmaciones explícitas de Marcos 12."
+          ],
+          "referencias": [
+            "Juan 11:32–36",
+            "1 Corintios 15:25–26",
+            "1 Tesalonicenses 4:13–18"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "devocional",
+      "tipo": "devocional",
+      "titulo": "Una esperanza más grande que la muerte",
+      "paginas": [
+        {
+          "id": "devocional-1",
+          "titulo": "Las preguntas que nadie puede evitar",
+          "parrafos": [
+            "¿Qué sucede después de la muerte? ¿Volveremos a ver a quienes amamos? Algunas preguntas nacen de la curiosidad; otras, del dolor de una ausencia.",
+            "Los saduceos preguntaron para cuestionar a Jesús. Sin embargo, su respuesta también ofrece esperanza a quienes preguntan desde la tristeza."
+          ],
+          "referencias": [
+            "Marcos 12:18–27"
+          ]
+        },
+        {
+          "id": "devocional-2",
+          "titulo": "Cuando queremos comprenderlo todo",
+          "parrafos": [
+            "Imaginamos la resurrección a partir de nuestra experiencia: crecer, formar relaciones, envejecer. Jesús nos recuerda que el poder de Dios supera nuestras categorías.",
+            "No conocer todos los detalles del futuro no significa que la promesa de Dios carezca de fundamento."
+          ],
+          "referencias": [
+            "Marcos 12:24–25"
+          ]
+        },
+        {
+          "id": "devocional-3",
+          "titulo": "El Dios que conoce nuestros nombres",
+          "parrafos": [
+            "Dios se presentó a Moisés como el Dios de Abraham, Isaac y Jacob. Mencionó personas, historias y relaciones concretas.",
+            "Su fidelidad permanece aunque las generaciones pasen. La muerte no puede frustrar definitivamente sus promesas."
+          ],
+          "referencias": [
+            "Éxodo 3:6",
+            "Marcos 12:26–27"
+          ]
+        },
+        {
+          "id": "devocional-4",
+          "titulo": "Esperanza en medio de una pérdida",
+          "parrafos": [
+            "La esperanza de resurrección no exige esconder las lágrimas. Jesús lloró ante la muerte de Lázaro, aunque sabía lo que iba a hacer.",
+            "Podemos lamentar una ausencia y confiar en que Dios es más poderoso que la muerte. La esperanza cristiana no niega el dolor: afirma que no tendrá la última palabra."
+          ],
+          "referencias": [
+            "Juan 11:33–36",
+            "1 Corintios 15:54–57"
+          ]
+        },
+        {
+          "id": "devocional-5",
+          "titulo": "Vivir hoy a la luz de la eternidad",
+          "parrafos": [
+            "Si la muerte no tiene la última palabra, nuestras decisiones adquieren una perspectiva más amplia. El amor, la justicia, la fidelidad y el servicio no son esfuerzos vacíos.",
+            "La esperanza futura nos invita a vivir el presente con responsabilidad."
+          ],
+          "referencias": [
+            "1 Corintios 15:57–58"
+          ]
+        },
+        {
+          "id": "devocional-6",
+          "titulo": "Para meditar",
+          "parrafos": [
+            "¿Qué incertidumbre acerca del futuro te pesa más? ¿Estás buscando seguridad únicamente en aquello que podés explicar?",
+            "¿De qué manera la esperanza de resurrección podría ayudarte a enfrentar tus temores sin negar las dificultades reales de tu vida? La invitación es a formular las preguntas desde la confianza en Dios."
+          ],
+          "referencias": [
+            "Marcos 12:24–27"
+          ]
+        },
+        {
+          "id": "devocional-7",
+          "titulo": "Oración",
+          "parrafos": [
+            "Señor, gracias porque tu poder es mayor que nuestros límites y tus promesas no terminan donde termina nuestra comprensión.",
+            "Cuando piense en la muerte, ayudame a recordar la esperanza de la resurrección. Acompañame en la tristeza, enseñame a comprender tu Palabra y a vivir hoy con amor, fidelidad y confianza en vos. Amén."
+          ],
+          "referencias": []
+        }
+      ]
+    }
+  ]
+}
