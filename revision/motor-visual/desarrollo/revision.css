@@ -7,3 +7,34 @@
 .mv-relato[data-relato-contenido="mc-12-18-27"] .mv-portada-hook::after { content:""; position:absolute; inset:45% 0 0; background:linear-gradient(transparent,rgba(0,0,0,.82)); pointer-events:none; }
 .mv-relato[data-relato-contenido="mc-12-18-27"] .mv-portada-hook-texto { position:absolute; z-index:1; left:5%; right:5%; bottom:6%; color:#fff; text-shadow:0 1px 5px #000; font:600 clamp(16px,3.6vw,29px)/1.3 system-ui,sans-serif; }
 .mv-relato[data-relato-contenido="mc-12-18-27"] .mv-portada-hook-texto p { margin:0; }
+
+/* Composición cinematográfica: los rostros quedan en la zona superior de la imagen. */
+.mv-relato[data-relato-contenido="mc-12-18-27"] .mv-portada-hook::after {
+  inset:0;
+  background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.35) 55%,rgba(0,0,0,.86) 80%,rgba(0,0,0,.96));
+}
+.mv-relato[data-relato-contenido="mc-12-18-27"] .mv-portada-hook-texto {
+  bottom:4%;
+  font:400 clamp(12px,1.5vw,18px)/1.3 Georgia,'Times New Roman',serif;
+  text-shadow:0 2px 8px #000;
+}
+.mv-relato[data-relato-contenido="mc-12-18-27"] .mv-portada-titulo-cine {
+  color:#fff;
+  font:500 clamp(24px,5vw,52px)/1.02 Georgia,'Times New Roman',serif;
+  letter-spacing:.005em;
+}
+.mv-relato[data-relato-contenido="mc-12-18-27"] .mv-portada-titulo-cine > span { display:block; }
+.mv-relato[data-relato-contenido="mc-12-18-27"] .mv-portada-titulo-dorado { color:#e6c77e; }
+.mv-relato[data-relato-contenido="mc-12-18-27"] .mv-portada-filete {
+  display:block;
+  width:clamp(40px,6vw,72px);
+  height:1px;
+  margin:6px 0;
+  background:#e6c77e;
+}
+.mv-relato[data-relato-contenido="mc-12-18-27"] .mv-portada-subtitulo-cine {
+  max-width:46ch;
+  color:#faf4e7;
+  font-style:italic;
+  text-wrap:pretty;
+}
