@@ -5,6 +5,8 @@ on:
     branches: [publicacion-demo]
     paths:
       - 'revision/**'
+      - '.github/scripts/**'
+      - '.github/revision-permitidos.json'
       - '.github/workflows/publicar-revision.yml'
   workflow_dispatch:
 
