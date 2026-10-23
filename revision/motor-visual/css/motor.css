@@ -114,7 +114,7 @@
 .mv h1, .mv h2, .mv h3, .mv h4 { color:var(--mv-verde-oscuro); }
 
 /* Bloque 2: texto completo distribuido en columnas de altura estable. */
-.mv-hoja { position:relative; block-size:clamp(190px,32dvh,260px); overflow:hidden; }
+.mv-hoja { position:relative; block-size:clamp(190px,32svh,260px); overflow:hidden; }
 .mv-pagina-columnas { block-size:100%; column-count:1; column-gap:24px; column-fill:auto; }
 .mv-pagina-columnas > :first-child { margin-top:0; }
 .mv-pagina-columnas > :last-child { margin-bottom:0; }
