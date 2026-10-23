@@ -9,11 +9,11 @@ export function crearSelectorEnfoque(enfoque, cambiar) {
 // Por ahora solo existen estas reglas generales, sin excepciones implícitas.
 const enfoques = Object.freeze({
   estudio:Object.freeze({contexto:['contexto'],cierre:['exegesis','ensenanzas','aplicacion'],recursos:true}),
-  devocional:Object.freeze({contexto:[],cierre:['devocional'],recursos:false})
+  devocional:Object.freeze({contexto:[],cierre:['devocional'],recursos:true})
 });
 export function composicionLectura(enfoque,modo) {
   const plan=enfoques[enfoque];
   if(!plan||!['visual','texto'].includes(modo))throw new Error('Composición inválida.');
   return {...plan,portada:modo==='visual',intercalados:modo==='visual'&&plan.recursos,
-    accesos:modo==='texto',pantallaCompletaIntegrada:false,pantallaCompletaModal:true};
+    accesos:modo==='texto',puntosInteractivos:enfoque==='estudio',pantallaCompletaIntegrada:false,pantallaCompletaModal:true};
 }
