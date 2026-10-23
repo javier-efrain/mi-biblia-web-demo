@@ -57,7 +57,9 @@ with tempfile.TemporaryDirectory() as temp:
     seleccionado=visor.locator('[data-elemento][aria-pressed=true]').get_attribute('data-elemento')
     visor.get_by_role('button',name='Aumentar zoom',exact=True).click();instancia=visor.element_handle()
     verso=page.locator('[data-versiculo="marcos:12:14"]');original=verso.element_handle()
-    verso.evaluate('(e)=>scrollTo(0,e.getBoundingClientRect().top+scrollY-120)');esperar(page)
+    verso.evaluate('(e)=>scrollTo(0,e.getBoundingClientRect().top+scrollY-8)');esperar(page)
+    # El versículo observado es el primero completo en pantalla, también con
+    # las fuentes del servidor CI; los accesos pueden refluir otros párrafos.
     for experiencia in ['devocional','texto','estudio','texto','devocional','estudio']:
      page.evaluate('''()=>{window.muestras=[];window.midiendo=true;function medir(){muestras.push(document.querySelector('[data-versiculo="marcos:12:14"]').getBoundingClientRect().top);if(midiendo)requestAnimationFrame(medir)}medir()}''')
      elegir(page,experiencia);page.wait_for_timeout(120)
@@ -76,7 +78,7 @@ with tempfile.TemporaryDirectory() as temp:
     # La carga lenta no debe devolver al lector al punto anterior a su gesto.
     page.goto(base+'?relato=mc-12-1-12&modo=texto&enfoque=estudio');page.wait_for_selector('#motor[data-listo=true]');esperar(page)
     cdp=ctx.new_cdp_session(page);cdp.send('Network.enable');cdp.send('Network.setCacheDisabled',{'cacheDisabled':True});cdp.send('Network.emulateNetworkConditions',{'offline':False,'latency':350,'downloadThroughput':-1,'uploadThroughput':-1})
-    verso=page.locator('[data-versiculo="marcos:12:14"]');verso.evaluate('(e)=>scrollTo(0,e.getBoundingClientRect().top+scrollY-150)')
+    verso=page.locator('[data-versiculo="marcos:12:14"]');verso.evaluate('(e)=>scrollTo(0,e.getBoundingClientRect().top+scrollY-80)')
     page.locator('button[data-experiencia="estudio"]').evaluate('(e)=>e.click()');page.wait_for_function('document.querySelector("#motor").hasAttribute("aria-busy")')
     page.mouse.wheel(0,60);page.wait_for_timeout(120);antes=verso.bounding_box()['y']
     expect(page.locator('#motor')).to_have_attribute('data-experiencia','estudio');esperar(page)

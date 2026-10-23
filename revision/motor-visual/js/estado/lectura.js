@@ -6,7 +6,7 @@ import { crearNavegacion, crearIndiceCapitulo, relatosDelCapitulo, leerRuta, esc
 
 export async function crearMotor({ root, catalogo, biblia, contenidos, inicial, usarHistorial = false, controlesPreferencias }) {
   let estado = { relatoId:catalogo.relatos[0].id, modo:'texto', enfoque:'estudio', ...inicial };
-  let generacion=0,transicion=0,carga,destruido=false,listo=Promise.resolve();
+  let generacion=0,transicion=0,carga,reserva,destruido=false,listo=Promise.resolve();
   const eventos=new AbortController(),memorias=new Map(),educadores=new Set();
   function posicionLectura() {
     const versos=[...root.querySelectorAll('[data-versiculo]')];
@@ -21,7 +21,18 @@ export async function crearMotor({ root, catalogo, biblia, contenidos, inicial, 
     if(!p)return;
     const relato=root.querySelector(`[data-relato-contenido="${p.relato}"]`);
     const el=p.versiculo?relato?.querySelector(`[data-versiculo="${p.versiculo}"]`):relato?.querySelector('.mv-titulo-relato');
-    if(el)scrollBy(0,el.getBoundingClientRect().top-p.top);
+    if(!el)return;
+    reserva?.remove();
+    const destino=scrollY+el.getBoundingClientRect().top-p.top;
+    // Al retirar imágenes, el capítulo puede quedar demasiado corto para mantener
+    // el pasaje a la misma altura. Reservar solo el espacio que falta evita que el
+    // navegador fuerce el scroll al nuevo final; se recalcula en cada cambio.
+    const falta=Math.ceil(destino+innerHeight-document.documentElement.scrollHeight);
+    if(falta>0) {
+      reserva??=nodo('div',{'aria-hidden':'true','data-reserva-lectura':''});
+      reserva.style.height=`${falta}px`;root.append(reserva);
+    }
+    scrollTo(0,destino);
   }
   function señalar() {
     root.dataset.relato=estado.relatoId;
@@ -34,6 +45,7 @@ export async function crearMotor({ root, catalogo, biblia, contenidos, inicial, 
     root.querySelectorAll('[data-experiencia]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.experiencia===root.dataset.experiencia)));
   }
   function irAlRelato(suave=true) {
+    reserva?.remove();
     const titulo=root.querySelector(`[data-relato-contenido="${estado.relatoId}"] .mv-titulo-relato`);
     titulo?.focus({preventScroll:true});
     titulo?.scrollIntoView({block:'start',behavior:suave&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'instant'});

@@ -60,7 +60,7 @@
     "revision/motor-visual/js/componentes/selector-enfoque.js": "b9b90532c25d7b51c455d045c214dba704712cb8d1c501dde4075d9891665794",
     "revision/motor-visual/js/componentes/selector-modo.js": "b008ee7841d39ce3356897f52ac467c9e6d894df52d9f0cb1ce7c835bc6b3343",
     "revision/motor-visual/js/componentes/visor.js": "804cb6873c6ad8e0e7f4fa2e2ee83b0ede961aea3a3beae2c5eccc2654fec857",
-    "revision/motor-visual/js/estado/lectura.js": "4180a6e7180d537d1947b61e2eb323988ed04bc65fedcb8691bfce4dd26a60fa",
+    "revision/motor-visual/js/estado/lectura.js": "a403318542d4546f3c7862e9a51bb12c5f40d3706c521f17c38bf57ba96120cf",
     "revision/motor-visual/js/estado/navegacion.js": "c5c83cb8e2d8f5e24648d7790e3523598197c2198ef4d86efcc15d90fd6b1e34",
     "revision/motor-visual/js/estado/preferencias.js": "cb874aa7cee678a62310025c111734620457f98750613af57769a46de45233e2",
     "revision/motor-visual/js/servicios/biblia.js": "ab201eb534e7c7716349aed49785f7b0a0454ae720b002dac5b6bc6743895329",
