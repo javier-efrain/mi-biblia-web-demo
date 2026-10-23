@@ -85,7 +85,7 @@ export async function crearMotor({ root, catalogo, biblia, contenidos, inicial, 
         if(visual){
           const {crearPortada}=await import('../componentes/portada.js');
           if(!vigente())return;
-          cuerpo.insertBefore(crearPortada(recursos.get(relato.portadaId),relato.titulo,{pieVisible:false}),antes);
+          cuerpo.insertBefore(crearPortada(recursos.get(relato.portadaId),relato.titulo,{pieVisible:false,hook:relato.id==='mc-12-18-27' ? relato.presentacion : ''}),antes);
         }
         const intercalados=new Map();
         let revisionEnfoque=0;
