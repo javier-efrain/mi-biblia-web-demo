@@ -78,11 +78,12 @@ with tempfile.TemporaryDirectory() as temp:
     # La carga lenta no debe devolver al lector al punto anterior a su gesto.
     page.goto(base+'?relato=mc-12-1-12&modo=texto&enfoque=estudio');page.wait_for_selector('#motor[data-listo=true]');esperar(page)
     cdp=ctx.new_cdp_session(page);cdp.send('Network.enable');cdp.send('Network.setCacheDisabled',{'cacheDisabled':True});cdp.send('Network.emulateNetworkConditions',{'offline':False,'latency':350,'downloadThroughput':-1,'uploadThroughput':-1})
-    verso=page.locator('[data-versiculo="marcos:12:14"]');verso.evaluate('(e)=>scrollTo(0,e.getBoundingClientRect().top+scrollY-80)')
+    verso=page.locator('[data-versiculo="marcos:12:5"]');verso.evaluate('(e)=>scrollTo(0,e.getBoundingClientRect().top+scrollY-80)')
     page.locator('button[data-experiencia="estudio"]').evaluate('(e)=>e.click()');page.wait_for_function('document.querySelector("#motor").hasAttribute("aria-busy")')
     page.mouse.wheel(0,60);page.wait_for_timeout(120);antes=verso.bounding_box()['y']
+    check(0<=antes<=30,f'{ancho} gesto manual mueve el pasaje observado sin llegar al final del documento')
     expect(page.locator('#motor')).to_have_attribute('data-experiencia','estudio');esperar(page)
-    check(abs(verso.bounding_box()['y']-antes)<=3,f'{ancho} respeta scroll manual realizado durante la carga')
+    check(abs(verso.bounding_box()['y']-antes)<=3,f'{ancho} respeta scroll manual realizado durante la carga: {antes:.2f} → {verso.bounding_box()["y"]:.2f}px')
     cdp.send('Network.emulateNetworkConditions',{'offline':False,'latency':0,'downloadThroughput':-1,'uploadThroughput':-1});cdp.detach()
     elegir(page,'texto')
     page.evaluate('''()=>{for(const m of ['estudio','devocional','texto'])document.querySelector(`button[data-experiencia="${m}"]`).click()}''');esperar(page);page.wait_for_timeout(200)
