@@ -74,6 +74,7 @@ with tempfile.TemporaryDirectory() as temp:
        y=page.evaluate('scrollY');page.mouse.wheel(0,120);esperar(page);actual=estado(page)
        check(actual['y']>y and not actual['llamadas'],label+' scroll de escritorio nativo')
       # Paginación explícita: sigue funcionando sin mover el documento al medir.
+      if modo=='texto':continue
       caja=page.locator('[data-relato-contenido="mc-12-18-27"] .mv-contexto' if enfoque=='estudio' else '[data-relato-contenido="mc-12-18-27"] .mv-devocional')
       caja.scroll_into_view_if_needed();esperar(page)
       siguiente=caja.get_by_role('button',name='Siguiente →',exact=True)

@@ -71,6 +71,7 @@ jobs:
           python -m playwright install --with-deps chromium
           python .github/scripts/probar_revision.py --sitio _site --informe pruebas-revision.json
           python .github/scripts/probar_scroll.py --sitio _site --informe pruebas-scroll.json
+          python .github/scripts/probar_modos.py --sitio _site --informe pruebas-modos.json
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
@@ -86,3 +87,4 @@ jobs:
         run: |
           python .github/scripts/probar_revision.py --sitio _site --url "$URL_PAGES" --informe pruebas-publicas.json
           python .github/scripts/probar_scroll.py --sitio _site --url "$URL_PAGES" --informe pruebas-scroll-publicas.json
+          python .github/scripts/probar_modos.py --sitio _site --url "$URL_PAGES" --informe pruebas-modos-publicas.json

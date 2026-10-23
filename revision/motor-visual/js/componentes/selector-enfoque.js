@@ -14,6 +14,6 @@ const enfoques = Object.freeze({
 export function composicionLectura(enfoque,modo) {
   const plan=enfoques[enfoque];
   if(!plan||!['visual','texto'].includes(modo))throw new Error('Composición inválida.');
-  return {...plan,portada:modo==='visual',intercalados:modo==='visual'&&plan.recursos,
+  return {...plan,contexto:modo==='texto'?[]:plan.contexto,cierre:modo==='texto'?[]:plan.cierre,portada:modo==='visual',intercalados:modo==='visual'&&plan.recursos,
     accesos:modo==='texto',puntosInteractivos:enfoque==='estudio',pantallaCompletaIntegrada:false,pantallaCompletaModal:true};
 }

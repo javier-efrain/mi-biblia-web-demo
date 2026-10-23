@@ -38,3 +38,6 @@
   font-style:italic;
   text-wrap:pretty;
 }
+
+/* El selector de tres experiencias ocupa el ancho de la barra existente. */
+.mv-selectores > .mv-tres-modos { grid-column:1/-1; }

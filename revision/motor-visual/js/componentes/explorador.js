@@ -3,6 +3,14 @@ import { crearVisor } from './visor.js';
 import { crearLecturaHorizontal } from './lectura-horizontal.js';
 export function crearExplorador(recurso, uso, { signal, interactivo = true } = {}) {
   const el = nodo('section', { className:'mv-recurso', 'data-educativo':'recurso', 'data-uso':uso.id });
+  el.dataset.interactivo=String(interactivo);
+  if (!interactivo) {
+    const visor=crearVisor(recurso,{signal});
+    const cuerpo=nodo('div',{className:'mv-explorador'},visor.el);
+    cuerpo.style.gridTemplateColumns='minmax(0,1fr)';
+    el.append(nodo('h3',{},recurso.alt),cuerpo);
+    return el;
+  }
   const panel = nodo('aside', { className:'mv-panel', 'aria-live':'polite' });
   const nombres = nodo('div', { className:'mv-elementos', role:'group', 'aria-label':'Elementos del recurso' });
   const estados = new Map();
@@ -19,7 +27,7 @@ export function crearExplorador(recurso, uso, { signal, interactivo = true } = {
       signal:paginasAbort.signal, compacto:true, etiqueta:`Explicación de ${m.titulo}`, estado:estados.get(m.id)
     }));
   }
-  const visor = crearVisor(recurso, { marcadores:interactivo ? uso.marcadores : [], seleccionar, signal });
+  const visor = crearVisor(recurso, { marcadores:uso.marcadores, seleccionar, signal });
   uso.marcadores.forEach(m => nombres.append(boton(m.titulo, () => seleccionar(m), {
     'data-elemento':m.id, 'aria-pressed':'false'
   })));
@@ -31,18 +39,17 @@ export function crearExplorador(recurso, uso, { signal, interactivo = true } = {
     puntos.setAttribute('aria-pressed',String(visibles));
     if (visibles && !activo) seleccionar(uso.marcadores[0]);
   }, {'aria-pressed':'true', 'aria-label':'Ocultar puntos', title:'Ocultar puntos', 'data-control':'puntos'});
-  if (interactivo && uso.marcadores.length) visor.agregarControl(puntos);
+  if (uso.marcadores.length) visor.agregarControl(puntos);
   else { nombres.hidden = true; panel.hidden = true; }
-  if (interactivo) visor.el.append(nombres);
+  visor.el.append(nombres);
   const cuerpo = nodo('div', { className:'mv-explorador' }, visor.el, panel);
   signal?.addEventListener('abort', () => { paginasAbort?.abort(); visor.destruir(); }, {once:true});
-  if (interactivo && uso.marcadores.length) seleccionar(uso.marcadores[0]);
+  if (uso.marcadores.length) seleccionar(uso.marcadores[0]);
   const ficha = nodo('details', {className:'mv-ficha-recurso'},
     nodo('summary', {title:'Información del recurso'}, nodo('h3', {}, recurso.alt),
       nodo('span', {'aria-hidden':'true'}, 'ⓘ'), nodo('span', {className:'mv-solo-lectores'}, 'Información del recurso')),
     nodo('p', {}, recurso.leyenda),
     ...[...new Set(uso.marcadores.map(m=>m.certezaHistorica).filter(t=>t && !recurso.leyenda.includes(t)))].map(t=>nodo('p',{},t)));
-  if (!interactivo) { panel.hidden = true; nombres.hidden = true; }
   el.append(ficha,cuerpo);
   return el;
 }

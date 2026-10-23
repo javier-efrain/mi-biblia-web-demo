@@ -40,23 +40,26 @@ with tempfile.TemporaryDirectory() as temp:
        nums=list(range(ref['desde'],ref['hasta']+1));versos=art.locator('.mv-texto > p').all()
        check(len(versos)==len(nums) and all(v.get_attribute('data-versiculo')==f'marcos:12:{n}' and libro['capitulos']['12'][str(n)] in v.inner_text() for n,v in zip(nums,versos)),label+' '+rid+' texto completo y ordenado')
        check(art.locator('.mv-portada').count()==int(modo=='visual'),label+' '+rid+' portada según modo')
-       check(art.locator('.mv-contexto').count()==int(enfoque=='estudio'),label+' '+rid+' contexto según enfoque')
-       check(art.locator('.mv-devocional').count()==int(enfoque=='devocional'),label+' '+rid+' devocional según enfoque')
-       check(art.locator('.mv-recurso').count()==(len(relato['recursos']) if modo=='visual' and enfoque=='estudio' else 0),label+' '+rid+' recursos según enfoque')
-       check(art.locator('[data-recurso-acceso]').count()==(len(relato['recursos']) if modo=='texto' else 0),label+' '+rid+' accesos opcionales')
+       check(art.locator('.mv-contexto').count()==int(modo=='visual' and enfoque=='estudio'),label+' '+rid+' contexto según enfoque')
+       check(art.locator('.mv-devocional').count()==int(modo=='visual' and enfoque=='devocional'),label+' '+rid+' devocional según enfoque')
+       check(art.locator('.mv-recurso').count()==(len(relato['recursos']) if modo=='visual' else 0),label+' '+rid+' recursos según enfoque')
+       check(art.locator('[data-recurso-acceso]:visible').count()==(len(relato['recursos']) if modo=='texto' else 0),label+' '+rid+' accesos opcionales')
        if modo=='visual':
         expect(art.locator('.mv-portada img')).to_have_js_property('complete',True)
         check(art.locator('.mv-portada img').evaluate('(e)=>e.naturalWidth>0'),label+' '+rid+' portada cargada')
         if rid!='mc-12-18-27':
          check(art.locator('.mv-portada-hook-texto').count()==0 and art.locator('.mv-portada img').evaluate('(e)=>Math.abs(e.clientWidth/e.clientHeight-16/9)<.02 && getComputedStyle(e).objectFit==="contain"'),label+' '+rid+' portada anterior conservada')
        for uso in relato['recursos']:
-        if modo=='visual' and enfoque=='devocional':continue
         modal=modo=='texto'
         if modal:
          acceso=art.locator(f'[data-recurso-acceso="{uso["id"]}"]');acceso.click();page.wait_for_selector('dialog .mv-visor');host=page.locator('dialog')
         else:host=art.locator(f'[data-uso="{uso["id"]}"]')
         imagen=host.locator('.mv-visor img');expect(imagen).to_have_js_property('complete',True)
         check(imagen.evaluate('(e)=>e.naturalWidth>0 && e.naturalHeight>0'),label+' '+uso['id']+' imagen cargada')
+        if modo=='visual' and enfoque=='devocional':
+         check(host.locator('[data-marcador],.mv-panel,.mv-elementos,[data-control="puntos"]').count()==0,label+' '+uso['id']+' devocional sin marcadores ni paneles montados')
+         check(imagen.evaluate('(e)=>{const a=e.getBoundingClientRect(),b=e.closest(".mv-viewport").getBoundingClientRect();return Math.abs(a.width/a.height-e.naturalWidth/e.naturalHeight)<.01&&a.left>=b.left-1&&a.right<=b.right+1&&a.top>=b.top-1&&a.bottom<=b.bottom+1}'),label+' '+uso['id']+' devocional con imagen completa y proporcionada')
+         continue
         ficha=host.locator('.mv-ficha-recurso');ficha.locator('summary').click()
         check(all(a not in ficha.inner_text() for a in avisos),label+' ficha sin avisos retirados')
         ficha.locator('summary').click()
@@ -83,8 +86,8 @@ with tempfile.TemporaryDirectory() as temp:
       if modo=='visual' and enfoque=='estudio':
        visor3=page.locator('[data-uso="mc-12-19-levirato"]')
        visor3.get_by_role('button',name='Aumentar zoom',exact=True).click()
-       page.locator('[data-enfoque="devocional"]').click();expect(page.locator('.mv-recurso')).to_have_count(0)
-       page.locator('[data-enfoque="estudio"]').click();expect(page.locator('[data-uso="mc-12-19-levirato"] [data-zoom]')).to_have_attribute('data-zoom','125')
+       page.locator('[data-experiencia="devocional"]').click();expect(page.locator('#motor')).to_have_attribute('data-experiencia','devocional');expect(page.locator('.mv-panel')).to_have_count(0)
+       page.locator('[data-experiencia="estudio"]').click();expect(page.locator('#motor')).to_have_attribute('data-experiencia','estudio');expect(page.locator('[data-uso="mc-12-19-levirato"] [data-zoom]')).to_have_attribute('data-zoom','125')
        check(True,label+' visor conserva estado al cambiar enfoque')
        hoja=page.locator('[data-relato-contenido="mc-12-18-27"] .mv-contexto')
        siguiente=hoja.get_by_role('button',name='Siguiente →',exact=True)
@@ -95,7 +98,7 @@ with tempfile.TemporaryDirectory() as temp:
        tercera=page.locator('[data-relato-contenido="mc-12-18-27"]')
        check('Una pregunta sobre la muerte, una respuesta sobre la vida' in tercera.inner_text(),label+' frase de interés en HTML')
        img=tercera.locator('.mv-portada img')
-       check(tercera.locator('.mv-portada-hook-texto').count()==1 and tercera.get_by_text('Una pregunta sobre la muerte, una respuesta sobre la vida',exact=True).count()==1,label+' hook HTML presente sin duplicados')
+       check(tercera.locator('.mv-portada-hook-texto').count()==1 and tercera.get_by_text('Una pregunta sobre la muerte, una respuesta sobre la vida',exact=True).evaluate_all('es=>es.filter(e=>e.checkVisibility()).length')==1,label+' hook HTML presente sin duplicados')
        for tamano in [8,12,20,30]:
         page.evaluate('(n)=>document.body.style.setProperty("--mv-tamano-lectura",n+"px")',tamano)
         page.evaluate('async()=>{await document.fonts.ready;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))}')
@@ -108,7 +111,7 @@ with tempfile.TemporaryDirectory() as temp:
        page.evaluate('document.body.style.setProperty("--mv-tamano-lectura","12px")')
       else:
        tercera=page.locator('[data-relato-contenido="mc-12-18-27"]')
-       check(tercera.locator('.mv-portada-hook-texto').count()==0 and tercera.get_by_text('Una pregunta sobre la muerte, una respuesta sobre la vida',exact=True).count()==1,label+' Solo texto conserva presentación sin banner ni hook superpuesto')
+       check(tercera.locator('.mv-portada-hook-texto').count()==0 and not tercera.get_by_text('Una pregunta sobre la muerte, una respuesta sobre la vida',exact=True).is_visible() and page.locator('.mv-estudio').count()==0,label+' Solo texto sin contenido educativo ni hook visible')
       for relato in catalogo['relatos']:
        page.locator(f'[data-relato-indice="{relato["id"]}"]').click();expect(page.locator('#motor')).to_have_attribute('data-relato',relato['id'])
        expect(page.locator(f'[data-relato-indice="{relato["id"]}"]')).to_have_attribute('aria-current','true')
@@ -120,4 +123,4 @@ with tempfile.TemporaryDirectory() as temp:
    browser.close()
  finally:server.shutdown();server.server_close()
 args.informe.write_text(json.dumps({'ok':True,'urlPublica':args.url,'comprobaciones':len(checks),'casos':checks},ensure_ascii=False,indent=2)+'\n')
-print('Tres estudios y cuatro modos:',len(checks),'comprobaciones correctas.')
+print('Tres relatos y compatibilidad de modos:',len(checks),'comprobaciones correctas.')
