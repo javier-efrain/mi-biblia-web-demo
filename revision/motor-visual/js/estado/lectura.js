@@ -118,8 +118,15 @@ export async function crearMotor({ root, catalogo, biblia, contenidos, inicial, 
             for(const versiculo of lector.querySelectorAll('[data-versiculo]')){
               let cursor=versiculo;
               for(const uso of relato.recursos.filter(u=>claveVersiculo({libro:u.anclajeBiblico.libro,capitulo:u.anclajeBiblico.capitulo,numero:u.anclajeBiblico.versiculo})===versiculo.dataset.versiculo)){
-                if(!intercalados.has(uso.id))intercalados.set(uso.id,crearExplorador(recursos.get(uso.recursoId),uso,{signal,pantallaCompleta:plan.pantallaCompletaIntegrada}));
-                const el=intercalados.get(uso.id);cursor.after(el);cursor=el;
+                if(!intercalados.has(uso.id))intercalados.set(uso.id,crearExplorador(recursos.get(uso.recursoId),uso,{signal,interactivo:plan.puntosInteractivos,pantallaCompleta:plan.pantallaCompletaIntegrada}));
+                const el=intercalados.get(uso.id);
+                // Al alternar entre estudio y devocional, reconstruir los controles del recurso.
+                if (el.dataset.interactivo !== String(plan.puntosInteractivos)) {
+                  el.remove();
+                  const nuevo=crearExplorador(recursos.get(uso.recursoId),uso,{signal,interactivo:plan.puntosInteractivos,pantallaCompleta:plan.pantallaCompletaIntegrada});
+                  nuevo.dataset.interactivo=String(plan.puntosInteractivos);intercalados.set(uso.id,nuevo);
+                }
+                const actual=intercalados.get(uso.id);cursor.after(actual);cursor=actual;
               }
             }
           }catch(error){
@@ -160,15 +167,19 @@ export async function crearMotor({ root, catalogo, biblia, contenidos, inicial, 
     estado={...proximo};root.dataset.modo=estado.modo;root.dataset.enfoque=estado.enfoque;
     if(usarHistorial&&historial)escribirRuta(estado);
     const seleccionar=relatoId=>renderizar({...estado,relatoId},{irAlInicio:true});
+    const elegirExperiencia=opcion=>{
+      if(opcion==='texto')return renderizar({...estado,modo:'texto'});
+      return renderizar({...estado,modo:'visual',enfoque:opcion});
+    };
     const cabecera=nodo('header',{className:'mv-barra-lector','aria-label':'Controles del lector'},
-      nodo('div',{className:'mv-selectores'},crearSelectorEnfoque(estado.enfoque,cambiarEnfoque),crearSelectorModo(estado.modo,modo=>renderizar({...estado,modo}))));
+      nodo('div',{className:'mv-selectores'},crearSelectorModo(estado.modo, elegirExperiencia, estado.enfoque)));
     if(controlesPreferencias)cabecera.append(controlesPreferencias);
     root.replaceChildren(cabecera,crearIndiceCapitulo(catalogo,estado.relatoId,seleccionar),
       nodo('div',{className:'mv-capitulo-lectura'}),crearNavegacion(catalogo,estado.relatoId,seleccionar));
     // Cada relato usa la misma composición; los lugares se insertan en orden antes
     // de esperar respuestas, de modo que una carga lenta nunca reordena versículos.
     listo=Promise.all(relatos.map(relato=>montarRelato(relato,signal,vigente)));señalar();
-    if(focoModo)root.querySelector(`[data-modo="${estado.modo}"]`)?.focus({preventScroll:true});
+    if(focoModo)root.querySelector(`[data-experiencia="${estado.modo==='texto'?'texto':estado.enfoque}"]`)?.focus({preventScroll:true});
     await listo;
     if(!vigente())return;
     if(posicion)restaurarPosicion(posicion);
