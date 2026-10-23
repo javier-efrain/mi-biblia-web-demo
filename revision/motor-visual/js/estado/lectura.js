@@ -48,11 +48,12 @@ export async function crearMotor({ root, catalogo, biblia, contenidos, inicial, 
     }});
   }
   async function montarRelato(relato,signal,vigente) {
+    const hook = estado.modo === 'visual' && relato.id === 'mc-12-18-27' ? relato.presentacion : '';
     const titulo=nodo('h2',{className:'mv-titulo-relato',tabindex:-1,id:`relato-${relato.id}`},relato.titulo);
     const referencia=nodo('p',{className:'mv-referencia'},relato.referenciaEtiqueta);
     const cuerpo=nodo('div',{className:'mv-cuerpo'},mensaje('Cargando texto…'));
     const articulo=nodo('article',{className:'mv-relato','data-relato-contenido':relato.id,'aria-labelledby':titulo.id},titulo,referencia,cuerpo);
-    if (relato.mostrarPresentacion && relato.presentacion) referencia.before(nodo('p',{className:'mv-referencia'},relato.presentacion));
+    if (relato.mostrarPresentacion && relato.presentacion && !hook) referencia.before(nodo('p',{className:'mv-referencia'},relato.presentacion));
     root.querySelector('.mv-capitulo-lectura').append(articulo);
     try {
       const pasaje = await biblia.obtenerPasaje(relato.referencia);
@@ -85,7 +86,7 @@ export async function crearMotor({ root, catalogo, biblia, contenidos, inicial, 
         if(visual){
           const {crearPortada}=await import('../componentes/portada.js');
           if(!vigente())return;
-          cuerpo.insertBefore(crearPortada(recursos.get(relato.portadaId),relato.titulo,{pieVisible:false,hook:relato.id==='mc-12-18-27' ? relato.presentacion : ''}),antes);
+          cuerpo.insertBefore(crearPortada(recursos.get(relato.portadaId),relato.titulo,{pieVisible:false,hook}),antes);
         }
         const intercalados=new Map();
         let revisionEnfoque=0;

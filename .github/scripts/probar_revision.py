@@ -47,6 +47,8 @@ with tempfile.TemporaryDirectory() as temp:
        if modo=='visual':
         expect(art.locator('.mv-portada img')).to_have_js_property('complete',True)
         check(art.locator('.mv-portada img').evaluate('(e)=>e.naturalWidth>0'),label+' '+rid+' portada cargada')
+        if rid!='mc-12-18-27':
+         check(art.locator('.mv-portada-hook-texto').count()==0 and art.locator('.mv-portada img').evaluate('(e)=>Math.abs(e.clientWidth/e.clientHeight-16/9)<.02 && getComputedStyle(e).objectFit==="contain"'),label+' '+rid+' portada anterior conservada')
        for uso in relato['recursos']:
         if modo=='visual' and enfoque=='devocional':continue
         modal=modo=='texto'
@@ -93,7 +95,17 @@ with tempfile.TemporaryDirectory() as temp:
        tercera=page.locator('[data-relato-contenido="mc-12-18-27"]')
        check('Una pregunta sobre la muerte, una respuesta sobre la vida' in tercera.inner_text(),label+' frase de interés en HTML')
        img=tercera.locator('.mv-portada img')
-       check(img.evaluate('(e)=>Math.abs(e.clientWidth/e.clientHeight-e.naturalWidth/e.naturalHeight)<.02'),label+' portada panorámica completa')
+       check(tercera.locator('.mv-portada-hook-texto').count()==1 and tercera.get_by_text('Una pregunta sobre la muerte, una respuesta sobre la vida',exact=True).count()==1,label+' hook HTML presente sin duplicados')
+       for tamano in [8,12,20,30]:
+        page.evaluate('(n)=>document.body.style.setProperty("--mv-tamano-lectura",n+"px")',tamano)
+        page.evaluate('async()=>{await document.fonts.ready;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))}')
+        medidas=tercera.evaluate('''e=>{const f=e.querySelector('.mv-portada'),i=f.querySelector('img'),h=f.querySelector('.mv-portada-hook-texto'),t=e.querySelector('.mv-titulo-relato');const r=f.getBoundingClientRect(),s=h.getBoundingClientRect(),a=i.getBoundingClientRect();return {ratio:r.width/r.height,imagen:a.width/a.height,titulo:t.getBoundingClientRect().bottom<=r.top&&!f.contains(t),hook:s.left>=r.left&&s.right<=r.right&&s.top>=r.top&&s.bottom<=r.bottom,html:h.querySelector('p').textContent,visible:getComputedStyle(h).position==='absolute'&&getComputedStyle(h).color==='rgb(255, 255, 255)',recorte:h.scrollHeight<=h.clientHeight&&h.scrollWidth<=h.clientWidth}}''')
+        check(abs(medidas['ratio']-16/9)<.005 and abs(medidas['imagen']-16/9)<.005,label+f'/{tamano}px banner e imagen 16:9')
+        check(medidas['titulo'] and medidas['hook'] and medidas['recorte'] and medidas['visible'] and medidas['html']=='Una pregunta sobre la muerte, una respuesta sobre la vida',label+f'/{tamano}px título externo y hook HTML superpuesto sin recortes')
+       page.evaluate('document.body.style.setProperty("--mv-tamano-lectura","12px")')
+      else:
+       tercera=page.locator('[data-relato-contenido="mc-12-18-27"]')
+       check(tercera.locator('.mv-portada-hook-texto').count()==0 and tercera.get_by_text('Una pregunta sobre la muerte, una respuesta sobre la vida',exact=True).count()==1,label+' Solo texto conserva presentación sin banner ni hook superpuesto')
       for relato in catalogo['relatos']:
        page.locator(f'[data-relato-indice="{relato["id"]}"]').click();expect(page.locator('#motor')).to_have_attribute('data-relato',relato['id'])
        expect(page.locator(f'[data-relato-indice="{relato["id"]}"]')).to_have_attribute('aria-current','true')

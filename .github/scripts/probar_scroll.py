@@ -41,10 +41,13 @@ with tempfile.TemporaryDirectory() as temp:
       page.goto(base+f'revision/motor-visual/desarrollo/index.html?relato=mc-12-18-27&modo={modo}&enfoque={enfoque}')
       page.wait_for_selector('#motor[data-listo=true]');esperar(page)
       if ancho<500:
-       for superficie in ['versiculo','imagen'] if modo=='visual' else ['versiculo']:
+       superficies=['versiculo','imagen'] if modo=='visual' else ['versiculo']
+       if page.locator('.mv-portada-hook-texto').count():superficies.append('hook')
+       for superficie in superficies:
         page.set_viewport_size({'width':ancho,'height':780})
         cdp.send('Emulation.setSmallViewportHeightDifferenceOverride',{'difference':0});esperar(page)
         selector='[data-versiculo="marcos:12:14"]' if superficie=='versiculo' else '[data-relato-contenido="mc-12-13-17"] .mv-portada img'
+        if superficie=='hook':selector='[data-relato-contenido="mc-12-18-27"] .mv-portada-hook-texto'
         page.locator(selector).evaluate('(e)=>scrollTo(0,e.getBoundingClientRect().top+scrollY-180)');esperar(page)
         # Desplazamiento táctil nativo, sin inercia posterior ni scroll JS.
         page.evaluate('''()=>{movimientos=[];window.trayectoria=[scrollY];window.midiendo=true;function tomar(){trayectoria.push(scrollY);if(midiendo)requestAnimationFrame(tomar)}requestAnimationFrame(tomar)}''')
