@@ -33,7 +33,7 @@ export async function crearMotor({ root, catalogo, biblia, contenidos, inicial, 
     if(!['estudio','devocional'].includes(enfoque))throw new Error('Enfoque inválido.');
     if(destruido||estado.enfoque===enfoque)return;
     const posicion=posicionLectura();estado={...estado,enfoque};root.dataset.enfoque=enfoque;
-    root.querySelectorAll('[data-enfoque]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.enfoque===enfoque)));
+    root.querySelectorAll('[data-experiencia]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.experiencia===enfoque)));
     if(usarHistorial&&historial)escribirRuta(estado);
     const turno=generacion,revision=++transicion;
     const pendientes=[...educadores].map(pintar=>pintar());
@@ -161,7 +161,7 @@ export async function crearMotor({ root, catalogo, biblia, contenidos, inicial, 
       return;
     }
     const posicion=mismoCapitulo?posicionLectura():null;
-    const focoModo=root.contains(document.activeElement)&&document.activeElement?.dataset.modo;
+    const focoModo=root.contains(document.activeElement)&&document.activeElement?.dataset.experiencia;
     carga?.abort();carga=new AbortController();educadores.clear();const {signal}=carga,turno=++generacion;
     const vigente=()=>!destruido&&!signal.aborted&&turno===generacion;
     estado={...proximo};root.dataset.modo=estado.modo;root.dataset.enfoque=estado.enfoque;
